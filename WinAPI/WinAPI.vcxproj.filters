@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="WinAPI.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CEngine.h">
+      <Filter>Game\02. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="enum.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CSelectGDI.h">
+      <Filter>Game\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="CBase.h">
+      <Filter>Game\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>Game\05. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CTimeMgr.h">
+      <Filter>Game\03. Manager\01. Time</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>Game\03. Manager\02. Key</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel.h">
+      <Filter>Game\04. Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevelMgr.h">
+      <Filter>Game\03. Manager\03. Level</Filter>
+    </ClInclude>
+    <ClInclude Include="func_template.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Game\05. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Game\05. Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Game\05. Object\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="CTaskMgr.h">
+      <Filter>Game\03. Manager\04. Task</Filter>
+    </ClInclude>
+    <ClInclude Include="func.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CComponent.h">
+      <Filter>Game\06. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>Game\06. Component\01. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CDbgRender.h">
+      <Filter>Game\03. Manager\05. DbgRender</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollisionMgr.h">
+      <Filter>Game\03. Manager\06. CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CGuidedMissile.h">
+      <Filter>Game\05. Object\Missile\GuidedMissile</Filter>
+    </ClInclude>
+    <ClInclude Include="CAsset.h">
+      <Filter>Game\07. Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>Game\07. Asset\1. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="CAssetMgr.h">
+      <Filter>Game\03. Manager\07. Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="CPathMgr.h">
+      <Filter>Game\03. Manager\08. PathMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CSprite.h">
+      <Filter>Game\07. Asset\2. Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="CFlipbook.h">
+      <Filter>Game\07. Asset\3. Flipbook</Filter>
+    </ClInclude>
+    <ClInclude Include="CFlipbookPlayer.h">
+      <Filter>Game\06. Component\02. FlipbookPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="CRigidBody.h">
+      <Filter>Game\06. Component\03. RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlatform.h">
+      <Filter>Game\05. Object\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="CTileMap.h">
+      <Filter>Game\06. Component\04. TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="CCamera.h">
+      <Filter>Game\03. Manager\09. Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CMap.h">
+      <Filter>Game\05. Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel_Editor.h">
+      <Filter>Game\04. Level\Level_Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel_Start.h">
+      <Filter>Game\04. Level\Level_Start</Filter>
+    </ClInclude>
+    <ClInclude Include="CUI.h">
+      <Filter>Game\05. Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIMgr.h">
+      <Filter>Game\03. Manager\10. UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CPanelUI.h">
+      <Filter>Game\05. Object\UI\PanelUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CBtnUI.h">
+      <Filter>Game\05. Object\UI\BtnUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>Game\07. Asset\4. Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundMgr.h">
+      <Filter>Game\03. Manager\11. Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CFSM.h">
+      <Filter>Game\06. Component\05. FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Game\State\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>Game\State\Trace</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Default</Filter>
+    </Image>
+    <Image Include="WinAPI.ico">
+      <Filter>Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="CEngine.cpp">
+      <Filter>Game\02. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CSelectGDI.cpp">
+      <Filter>Game\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="CBase.cpp">
+      <Filter>Game\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="CObj.cpp">
+      <Filter>Game\05. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeMgr.cpp">
+      <Filter>Game\03. Manager\01. Time</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyMgr.cpp">
+      <Filter>Game\03. Manager\02. Key</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel.cpp">
+      <Filter>Game\04. Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevelMgr.cpp">
+      <Filter>Game\03. Manager\03. Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Game\05. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Game\05. Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Game\05. Object\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="CTaskMgr.cpp">
+      <Filter>Game\03. Manager\04. Task</Filter>
+    </ClCompile>
+    <ClCompile Include="func.cpp">
+      <Filter>Game\01. Header</Filter>
+    </ClCompile>
+    <ClCompile Include="CComponent.cpp">
+      <Filter>Game\06. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>Game\06. Component\01. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CDbgRender.cpp">
+      <Filter>Game\03. Manager\05. DbgRender</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionMgr.cpp">
+      <Filter>Game\03. Manager\06. CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CGuidedMissile.cpp">
+      <Filter>Game\05. Object\Missile\GuidedMissile</Filter>
+    </ClCompile>
+    <ClCompile Include="CAsset.cpp">
+      <Filter>Game\07. Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>Game\07. Asset\1. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="CAssetMgr.cpp">
+      <Filter>Game\03. Manager\07. Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="CPathMgr.cpp">
+      <Filter>Game\03. Manager\08. PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CSprite.cpp">
+      <Filter>Game\07. Asset\2. Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="CFlipbook.cpp">
+      <Filter>Game\07. Asset\3. Flipbook</Filter>
+    </ClCompile>
+    <ClCompile Include="CFlipbookPlayer.cpp">
+      <Filter>Game\06. Component\02. FlipbookPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidBody.cpp">
+      <Filter>Game\06. Component\03. RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlatform.cpp">
+      <Filter>Game\05. Object\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileMap.cpp">
+      <Filter>Game\06. Component\04. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="CCamera.cpp">
+      <Filter>Game\03. Manager\09. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CMap.cpp">
+      <Filter>Game\05. Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel_Editor.cpp">
+      <Filter>Game\04. Level\Level_Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel_Start.cpp">
+      <Filter>Game\04. Level\Level_Start</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI.cpp">
+      <Filter>Game\05. Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIMgr.cpp">
+      <Filter>Game\03. Manager\10. UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CPanelUI.cpp">
+      <Filter>Game\05. Object\UI\PanelUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CBtnUI.cpp">
+      <Filter>Game\05. Object\UI\BtnUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>Game\07. Asset\4. Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="CSoundMgr.cpp">
+      <Filter>Game\03. Manager\11. Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="CFSM.cpp">
+      <Filter>Game\06. Component\05. FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Game\State\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>Game\State\Trace</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Default">
+      <UniqueIdentifier>{7483f281-3719-4d17-907b-801bf6286e1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{70d14ce5-afba-4025-ba13-54324dd8457d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\01. Header">
+      <UniqueIdentifier>{622c06d0-8ba3-4b08-82ea-6d2677ba6c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\02. Engine">
+      <UniqueIdentifier>{f77ae0f6-6b9b-4fd6-952c-c3b38d606000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Module">
+      <UniqueIdentifier>{8cd93ad2-534b-4036-a84d-1c6d23b2640a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager">
+      <UniqueIdentifier>{b7b55327-4974-4122-bffe-ad4a3c70087e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\01. Time">
+      <UniqueIdentifier>{a8bf3e2b-60e2-47e4-9d3f-7fa43d33aea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\02. Key">
+      <UniqueIdentifier>{3c28a35e-c8da-4ae9-a0a7-1ecb2f1e7c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object">
+      <UniqueIdentifier>{e17a9ac2-65f5-4902-bc17-ae5bdfe85ee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level">
+      <UniqueIdentifier>{f4e876d7-2309-4b05-8f71-ca3e8b6f1452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\03. Level">
+      <UniqueIdentifier>{0c73f03c-dce6-4fbb-9e21-1574f8b9284d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Player">
+      <UniqueIdentifier>{3f8bcf77-e85c-4ad7-8601-68d1fde18162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Monster">
+      <UniqueIdentifier>{5baa8d0a-8169-4616-b03d-b5301d8226eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Missile">
+      <UniqueIdentifier>{c52c2ac2-980a-4edf-b139-f38195c8f54d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\04. Task">
+      <UniqueIdentifier>{35478a27-922c-415a-906d-7a04b2ca258a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component">
+      <UniqueIdentifier>{cafa2a6d-528b-4b95-8d04-163f96cbfd49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\01. Collider">
+      <UniqueIdentifier>{a9c8bfae-691f-4c69-a37d-7f4c69ce73c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\05. DbgRender">
+      <UniqueIdentifier>{bf326e40-09a0-40bf-b2f9-ac433f0d5f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\06. CollisionMgr">
+      <UniqueIdentifier>{d5925ffe-1cf9-4839-9887-97f9bd013d99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Missile\GuidedMissile">
+      <UniqueIdentifier>{d1f38a70-7d24-4935-b138-87eeee29ca41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\07. Asset">
+      <UniqueIdentifier>{6d9dbe1d-5943-4610-ab07-928345c3ae01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\07. Asset">
+      <UniqueIdentifier>{87c98fc8-797a-476d-9534-a3553ab869a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\07. Asset\1. Texture">
+      <UniqueIdentifier>{a2c012b6-cddb-4d23-8b99-99dd275c4ac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\08. PathMgr">
+      <UniqueIdentifier>{93baf8e6-b73c-40a3-aef8-6babe7a2433a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\07. Asset\2. Sprite">
+      <UniqueIdentifier>{c44b2345-b29b-4f2b-99f5-0d6b76100797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\07. Asset\3. Flipbook">
+      <UniqueIdentifier>{69cba1ba-3e80-4f1b-a6a7-994550561917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\02. FlipbookPlayer">
+      <UniqueIdentifier>{93915c35-be07-43a9-b0b8-a620a8b96dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\03. RigidBody">
+      <UniqueIdentifier>{4648f219-c025-406b-a14b-d4121c6fe315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Platform">
+      <UniqueIdentifier>{9c733706-251f-4738-8960-b60d09fe4c7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\04. TileMap">
+      <UniqueIdentifier>{9cd33749-06c2-4afd-8a29-aa001956cba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\09. Camera">
+      <UniqueIdentifier>{7baed918-be3d-46a0-b701-a8b2fed10df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Map">
+      <UniqueIdentifier>{41c04507-f2a4-4b7a-b2aa-d1905298950b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level_Editor">
+      <UniqueIdentifier>{38f42483-fa84-408a-a87f-b2d5b023a947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level_Start">
+      <UniqueIdentifier>{917814d0-fe1e-4a73-ac74-aeb8c1df710e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\UI">
+      <UniqueIdentifier>{2e5b4e6b-0e1e-492d-bba6-822425950d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\10. UIMgr">
+      <UniqueIdentifier>{e4c48863-1b73-41b6-ad3d-1120881eb82c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\UI\PanelUI">
+      <UniqueIdentifier>{bf9dc511-314a-468d-a7d3-f5ec96dc29d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\UI\BtnUI">
+      <UniqueIdentifier>{f7bd4d1a-892d-4fd3-a7e2-36b3af994ae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\07. Asset\4. Sound">
+      <UniqueIdentifier>{188fe770-26b1-4b85-b47b-a8ea68d6b441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager\11. Sound">
+      <UniqueIdentifier>{3cd604a2-7fbd-4b2d-9b04-4cd718f4ec0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\05. FSM">
+      <UniqueIdentifier>{3e762c39-65af-4370-9577-a81972e9a55c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\State">
+      <UniqueIdentifier>{6318c495-9b93-4133-b348-406a86e84974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\State\Idle">
+      <UniqueIdentifier>{b8cc514f-a594-437e-9c17-d788e0e41488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\State\Trace">
+      <UniqueIdentifier>{f63c433a-e559-406d-98e6-3544f8620360}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WinAPI.rc">
+      <Filter>Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,20 @@
+[KEY]
+PLAY_IDLE_1
+
+[PATH]
+Sprite\PLAY_IDLE_1.sprite
+
+[ATLAS_KEY]
+PlayIdle
+[ATLAS_PATH]
+Texture\Knight\001.Idle\idle.png
+
+[LEFT_TOP]
+61, 0
+
+[SLICE]
+61, 130
+
+[OFFSET]
+0, 0
+
