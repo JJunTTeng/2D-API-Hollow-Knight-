@@ -26,10 +26,13 @@
 enum PLAYER_ANIM_STATE
 {
 	IDLE,
-	IDLE_UP,
-	IDLE_DOWN,
 	IDLE_LEFT,
 	IDLE_RIGHT,
+
+	LEFT_UP,
+	LEFT_DOWN,
+	RIGHT_UP,
+	RIGHT_DOWN,
 
 	MOVE_UP,
 	MOVE_DOWN,
@@ -45,6 +48,7 @@ CPlayer::CPlayer()
 	, m_HitBox(nullptr)
 	, m_FlipbookPlayer(nullptr)
 	, m_RigidBody(nullptr)
+	, m_Dir(P_DIR::D_LEFT)
 {
 	// Collider 컴포넌트 추가
 	m_HitBox = new CCollider;
@@ -75,7 +79,7 @@ void CPlayer::Begin()
 {
 	m_AccTime = 1.f / m_AttSpeed;
 
-	m_FlipbookPlayer->Play(IDLE, 5.f, true);
+	m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true , false);
 
 	
 
@@ -86,29 +90,60 @@ void CPlayer::Tick()
 {
 	if (KEY_TAP(LEFT))
 	{
-		m_FlipbookPlayer->Play(MOVE_LEFT, 15.f, true);		
+		m_FlipbookPlayer->Play(MOVE_LEFT, 15.f, true, false);
 	}	
 	if (KEY_TAP(RIGHT))
 	{
-		m_FlipbookPlayer->Play(MOVE_RIGHT, 15.f, true);		
+		m_FlipbookPlayer->Play(MOVE_RIGHT, 15.f, true, true);
 	}		
-	//if (KEY_TAP(UP))
-	//{
-	//	m_FlipbookPlayer->Play(MOVE_UP, 15.f, true);		
-	//}	
-	//if (KEY_TAP(DOWN))
-	//{
-	//	m_FlipbookPlayer->Play(MOVE_DOWN, 15.f, true);		
-	//}		
+	if (KEY_TAP(UP))
+	{
+		if (m_Dir == P_DIR::D_LEFT)
+			m_FlipbookPlayer->Play(LEFT_UP, 5.f, true, false);
+
+		else
+			m_FlipbookPlayer->Play(RIGHT_UP, 5.f, true, true);
+	}	
+	if (KEY_TAP(DOWN))
+	{
+		if (m_Dir == P_DIR::D_LEFT)
+			m_FlipbookPlayer->Play(LEFT_DOWN, 5.f, true, false);
+
+		else
+			m_FlipbookPlayer->Play(RIGHT_DOWN, 5.f, true, true);
+	}		
+
+
+
+
 
 	if (KEY_RELEASED(LEFT))
-		m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true);
+	{
+		m_Dir = P_DIR::D_LEFT;
+		m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true, false);
+	}
 	if (KEY_RELEASED(RIGHT))
-		m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true);
-	/*if (KEY_RELEASED(UP))
-		m_FlipbookPlayer->Play(IDLE_UP, 5.f, true);
+	{
+		m_Dir = P_DIR::D_RIGHT;
+		m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true,true);
+	}
+	if (KEY_RELEASED(UP))
+	{
+		if(m_Dir == P_DIR::D_LEFT)
+			m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true, false);
+
+		else
+			m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true, true);
+
+	}
 	if (KEY_RELEASED(DOWN))
-		m_FlipbookPlayer->Play(IDLE_DOWN, 5.f, true);*/
+	{
+		if (m_Dir == P_DIR::D_LEFT)
+			m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true, false);
+
+		else
+			m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true, true);
+	}
 
 	if (KEY_PRESSED(LEFT))
 		m_RigidBody->AddForce(Vec2(-1000.f, 0.f), true);
@@ -180,13 +215,46 @@ void CPlayer::CreatePlayerFlipbook()
 	CTexture* pAtlas = CAssetMgr::GetInst()->LoadTexture(L"PlayIdle", L"Texture\\Knight\\001.Idle\\idle.png");
 	CreateFlipbook(L"PLAY_IDLE", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 9.0f, pAtlas->GetHeight()), 9);
 
+	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"PlayLookUp", L"Texture\\Knight\\014.LookUp\\LookUp.png");
+	CreateFlipbook(L"PLAY_LOOKUP", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6);
+
+	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"PlayDown", L"Texture\\Knight\\013.LookDown\\LookDown.png");
+	CreateFlipbook(L"PLAY_LOOKDOWN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6);
+
 	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"PlayRun", L"Texture\\Knight\\005.Run\\run.png");
 	CreateFlipbook(L"PLAY_RUN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 13.0f, pAtlas->GetHeight()), 13);
 
+	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayIdle", L"Texture\\Knight\\001.Idle\\R_idle.png");
+	CreateFlipbook(L"R_PLAY_IDLE", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 9.0f, pAtlas->GetHeight()), 9);
+
+	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayLookUp", L"Texture\\Knight\\014.LookUp\\R_LookUp.png");
+	CreateFlipbook(L"R_PLAY_LOOKUP", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6);
+
+	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayDown", L"Texture\\Knight\\013.LookDown\\R_LookDown.png");
+	CreateFlipbook(L"R_PLAY_LOOKDOWN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6);
+
+	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayRun", L"Texture\\Knight\\005.Run\\R_run.png");
+	CreateFlipbook(L"R_PLAY_RUN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 13.0f, pAtlas->GetHeight()), 13);
+
+
+
 	m_FlipbookPlayer = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
 
-	m_FlipbookPlayer->AddFlipbook(IDLE, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_IDLE" , L"Flipbook\\PLAY_IDLE.flip" ));
-	m_FlipbookPlayer->AddFlipbook(MOVE_LEFT, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_RUN",  L"Flipbook\\PLAY_RUN.flip" ));
+	{
+		//LEFT
+		m_FlipbookPlayer->AddFlipbook(IDLE_LEFT, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_IDLE", L"Flipbook\\PLAY_IDLE.flip"));
+		m_FlipbookPlayer->AddFlipbook(MOVE_LEFT, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_RUN", L"Flipbook\\PLAY_RUN.flip"));
+		m_FlipbookPlayer->AddFlipbook(LEFT_UP, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_LOOKUP", L"Flipbook\\LookUp.flip"));
+		m_FlipbookPlayer->AddFlipbook(LEFT_DOWN, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_LOOKDOWN", L"Flipbook\\LookDown.flip"));
+	}
+
+	{
+		//RIGHT
+		m_FlipbookPlayer->AddFlipbook(IDLE_RIGHT, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_IDLE", L"Flipbook\\PLAY_IDLE.flip"));
+		m_FlipbookPlayer->AddFlipbook(MOVE_RIGHT, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_RUN", L"Flipbook\\PLAY_RUN.flip"));
+		m_FlipbookPlayer->AddFlipbook(RIGHT_UP, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_LOOKUP", L"Flipbook\\LookUp.flip"));
+		m_FlipbookPlayer->AddFlipbook(RIGHT_DOWN, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_LOOKDOWN", L"Flipbook\\LookDown.flip"));
+	}
 }
 
 void CPlayer::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int MaxFrame)

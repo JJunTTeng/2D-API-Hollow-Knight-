@@ -23,6 +23,35 @@ CFlipbookPlayer::~CFlipbookPlayer()
 {
 }
 
+void CFlipbookPlayer::Play(int _FlipbookIdx, float _FPS, bool _Repeat, bool m_Right = false)
+{
+
+	m_CurFlipbook = m_vecFlipbook[_FlipbookIdx];
+	m_SpriteIdx = 0;
+	if (m_Right = true)
+	{
+		// m_SpriteIdx = m_CurFlipbook->GetMaxSpriteCount() - 1;
+	}
+	m_FPS = _FPS;
+	m_Repeat = _Repeat;
+	m_Finish = false;
+	m_Time = 0.f;
+
+}
+
+void CFlipbookPlayer::Reset()
+{
+	if (m_Right == true)
+	{
+		m_Finish = false;
+		m_SpriteIdx = m_CurFlipbook->GetMaxSpriteCount() - 1;
+		return;
+	}
+
+	m_Finish = false;
+	m_SpriteIdx = 0;
+}
+
 void CFlipbookPlayer::FinalTick()
 {
 	// 현재 재생중인 Flipbook 이 없으면 끝
@@ -47,15 +76,32 @@ void CFlipbookPlayer::FinalTick()
 	m_Time += DT;
 	if (1.f / m_FPS <= m_Time)
 	{
-		m_Time -= 1.f / m_FPS;
-		++m_SpriteIdx;
-
-		// 마지막 Sprite 에 도달했다면
-		if (m_CurFlipbook->GetMaxSpriteCount() <= m_SpriteIdx)
+		if (m_Right == true)
 		{
-			// Finish 상태 On
-			m_Finish = true;
+			m_Time -= 1.f / m_FPS;
 			--m_SpriteIdx;
+
+			// 마지막 Sprite 에 도달했다면
+			if (m_SpriteIdx < 0)
+			{
+				// Finish 상태 On
+				m_Finish = true;
+				++m_SpriteIdx;
+			}
+		}
+
+		else
+		{
+			m_Time -= 1.f / m_FPS;
+			++m_SpriteIdx;
+
+			// 마지막 Sprite 에 도달했다면
+			if (m_CurFlipbook->GetMaxSpriteCount() <= m_SpriteIdx)
+			{
+				// Finish 상태 On
+				m_Finish = true;
+				--m_SpriteIdx;
+			}
 		}
 	}
 }
@@ -81,6 +127,7 @@ void CFlipbookPlayer::Render()
 	blend.BlendFlags = 0;
 	blend.SourceConstantAlpha = 255;
 	blend.AlphaFormat = AC_SRC_ALPHA;
+
 
 	AlphaBlend(dc
 		, vPos.x - (Sprite->GetSlice().x / 2) + Sprite->GetOffset().x

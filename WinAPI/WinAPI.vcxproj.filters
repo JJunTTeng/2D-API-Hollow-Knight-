@@ -151,11 +151,11 @@
     <ClInclude Include="CState.h">
       <Filter>Game\State</Filter>
     </ClInclude>
-    <ClInclude Include="CIdleState.h">
-      <Filter>Game\State\Idle</Filter>
-    </ClInclude>
     <ClInclude Include="CTraceState.h">
       <Filter>Game\State\Trace</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Game\State\Monstor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -291,11 +291,11 @@
     <ClCompile Include="CState.cpp">
       <Filter>Game\State</Filter>
     </ClCompile>
-    <ClCompile Include="CIdleState.cpp">
-      <Filter>Game\State\Idle</Filter>
-    </ClCompile>
     <ClCompile Include="CTraceState.cpp">
       <Filter>Game\State\Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Game\State\Monstor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +430,9 @@
     </Filter>
     <Filter Include="Game\State\Trace">
       <UniqueIdentifier>{f63c433a-e559-406d-98e6-3544f8620360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\State\Monstor">
+      <UniqueIdentifier>{6035e39b-cc93-41bc-8699-f6f1f86ae1cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

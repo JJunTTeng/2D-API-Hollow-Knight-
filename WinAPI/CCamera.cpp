@@ -159,5 +159,7 @@ void CCamera::Oscillation()
 	{
 		m_bOscillation = false;
 		m_Offset = Vec2(0.f, 0.f);
+		int a = 0;
+
 	}	
 }

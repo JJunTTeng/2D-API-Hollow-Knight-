@@ -1,0 +1,20 @@
+[KEY]
+PLAY_LOOKUP_1
+
+[PATH]
+Sprite\PLAY_LOOKUP_1.sprite
+
+[ATLAS_KEY]
+PlayLookUp
+[ATLAS_PATH]
+Texture\Knight\014.LookUp\LookUp.png
+
+[LEFT_TOP]
+64, 0
+
+[SLICE]
+64, 130
+
+[OFFSET]
+0, 0
+

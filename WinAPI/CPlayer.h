@@ -6,6 +6,12 @@ class CTexture;
 class CFlipbookPlayer;
 class CRigidBody;
 
+enum P_DIR
+{
+    D_LEFT,
+    D_RIGHT
+};
+
 class CPlayer :
     public CObj
 {
@@ -18,7 +24,7 @@ private:
     CRigidBody*         m_RigidBody;
 
     
-
+    P_DIR               m_Dir;
 
 
 public:     
