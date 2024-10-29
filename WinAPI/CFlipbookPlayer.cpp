@@ -23,7 +23,7 @@ CFlipbookPlayer::~CFlipbookPlayer()
 {
 }
 
-void CFlipbookPlayer::Play(int _FlipbookIdx, float _FPS, bool _Repeat, bool m_Right = false)
+void CFlipbookPlayer::Play(int _FlipbookIdx, float _FPS, bool _Repeat)
 {
 
 	m_CurFlipbook = m_vecFlipbook[_FlipbookIdx];

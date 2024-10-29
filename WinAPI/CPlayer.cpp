@@ -62,13 +62,13 @@ CPlayer::CPlayer()
 	CreatePlayerFlipbook();
 
 	// RigidBody 컴포넌트 추가
-	m_RigidBody = (CRigidBody*)AddComponent(new CRigidBody);
-	m_RigidBody->SetMode(RIGIDBODY_MODE::BELTSCROLL);
-	m_RigidBody->SetInitialSpeed(100.f);
-	m_RigidBody->SetMaxSpeed(500.f);
-	m_RigidBody->SetMass(1.f);
-	m_RigidBody->SetFriction(700.f);
-	m_RigidBody->SetJumpVelocity(Vec2(0.f, -500.f));
+	//m_RigidBody = (CRigidBody*)AddComponent(new CRigidBody);
+	//m_RigidBody->SetMode(RIGIDBODY_MODE::BELTSCROLL);
+	//m_RigidBody->SetInitialSpeed(100.f);
+	//m_RigidBody->SetMaxSpeed(500.f);
+	//m_RigidBody->SetMass(1.f);
+	//m_RigidBody->SetFriction(700.f);
+	//m_RigidBody->SetJumpVelocity(Vec2(0.f, -500.f));
 }
 
 CPlayer::~CPlayer()
@@ -79,9 +79,9 @@ void CPlayer::Begin()
 {
 	m_AccTime = 1.f / m_AttSpeed;
 
-	m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true , false);
+	m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true );
 
-	
+	CCamera::GetInst()->SetTarget(this);
 
 	//CCamera::GetInst()->SetTarget(this);
 }
@@ -90,59 +90,98 @@ void CPlayer::Tick()
 {
 	if (KEY_TAP(LEFT))
 	{
-		m_FlipbookPlayer->Play(MOVE_LEFT, 15.f, true, false);
+		m_FlipbookPlayer->Play(MOVE_LEFT, 15.f, true);
 	}	
 	if (KEY_TAP(RIGHT))
 	{
-		m_FlipbookPlayer->Play(MOVE_RIGHT, 15.f, true, true);
+		m_FlipbookPlayer->Play(MOVE_RIGHT, 15.f, true);
 	}		
 	if (KEY_TAP(UP))
 	{
 		if (m_Dir == P_DIR::D_LEFT)
-			m_FlipbookPlayer->Play(LEFT_UP, 5.f, true, false);
+			m_FlipbookPlayer->Play(LEFT_UP, 5.f, true);
 
 		else
-			m_FlipbookPlayer->Play(RIGHT_UP, 5.f, true, true);
+			m_FlipbookPlayer->Play(RIGHT_UP, 5.f, true);
 	}	
 	if (KEY_TAP(DOWN))
 	{
 		if (m_Dir == P_DIR::D_LEFT)
-			m_FlipbookPlayer->Play(LEFT_DOWN, 5.f, true, false);
+			m_FlipbookPlayer->Play(LEFT_DOWN, 5.f, true);
 
 		else
-			m_FlipbookPlayer->Play(RIGHT_DOWN, 5.f, true, true);
+			m_FlipbookPlayer->Play(RIGHT_DOWN, 5.f, true);
 	}		
 
 
 
+	if (KEY_PRESSED(KEY::A))
+	{
+		Vec2 mPos = GetPos();
+		mPos.x -= 2.0f;
+
+		SetPos(mPos);
+		//CCamera::GetInst()->SetPlusCameraPos(Vec2(-2.0f, 0.0f));
+
+	}
+	if (KEY_PRESSED(KEY::D))
+	{
+		Vec2 mPos = GetPos();
+		mPos.x += 2.0f;
+
+		SetPos(mPos);
+
+		//CCamera::GetInst()->SetPlusCameraPos(Vec2(2.0f, 0.0f));
+
+	}
+	if (KEY_PRESSED(KEY::W))
+	{
+		Vec2 mPos = GetPos();
+		mPos.y -= 2.0f;
+
+		SetPos(mPos);
+
+		//CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0f,-2.0f));
+
+	}
+	if (KEY_PRESSED(KEY::S))
+	{
+		Vec2 mPos = GetPos();
+		mPos.y += 2.0f;
+
+		SetPos(mPos);
+
+		//CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0f, 2.0f));
+
+	}
 
 
 	if (KEY_RELEASED(LEFT))
 	{
 		m_Dir = P_DIR::D_LEFT;
-		m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true, false);
+		m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true);
 	}
 	if (KEY_RELEASED(RIGHT))
 	{
 		m_Dir = P_DIR::D_RIGHT;
-		m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true,true);
+		m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true);
 	}
 	if (KEY_RELEASED(UP))
 	{
 		if(m_Dir == P_DIR::D_LEFT)
-			m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true, false);
+			m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true);
 
 		else
-			m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true, true);
+			m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true);
 
 	}
 	if (KEY_RELEASED(DOWN))
 	{
 		if (m_Dir == P_DIR::D_LEFT)
-			m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true, false);
+			m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true);
 
 		else
-			m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true, true);
+			m_FlipbookPlayer->Play(IDLE_RIGHT, 5.f, true);
 	}
 
 	if (KEY_PRESSED(LEFT))
@@ -225,16 +264,18 @@ void CPlayer::CreatePlayerFlipbook()
 	CreateFlipbook(L"PLAY_RUN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 13.0f, pAtlas->GetHeight()), 13);
 
 	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayIdle", L"Texture\\Knight\\001.Idle\\R_idle.png");
-	CreateFlipbook(L"R_PLAY_IDLE", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 9.0f, pAtlas->GetHeight()), 9);
+	CreateFlipbook(L"R_PLAY_IDLE", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 9.0f, pAtlas->GetHeight()), 9,true);
 
 	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayLookUp", L"Texture\\Knight\\014.LookUp\\R_LookUp.png");
-	CreateFlipbook(L"R_PLAY_LOOKUP", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6);
+	CreateFlipbook(L"R_PLAY_LOOKUP", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6,true);
 
 	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayDown", L"Texture\\Knight\\013.LookDown\\R_LookDown.png");
-	CreateFlipbook(L"R_PLAY_LOOKDOWN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6);
+	CreateFlipbook(L"R_PLAY_LOOKDOWN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 6.0f, pAtlas->GetHeight()), 6,true);
 
 	pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayRun", L"Texture\\Knight\\005.Run\\R_run.png");
-	CreateFlipbook(L"R_PLAY_RUN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 13.0f, pAtlas->GetHeight()), 13);
+	CreateFlipbook(L"R_PLAY_RUN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 13.0f, pAtlas->GetHeight()), 13,true);
+
+
 
 
 
@@ -257,14 +298,23 @@ void CPlayer::CreatePlayerFlipbook()
 	}
 }
 
-void CPlayer::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int MaxFrame)
+void CPlayer::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int MaxFrame, bool IsRight)
 {
 	// Sprite 생성하기
+
 	for (int i = 0; i < MaxFrame; ++i)
 	{
 		CSprite* pSprite = new CSprite;
-		pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_Slice.x * i), _LeftTop.y), _Slice);
 
+		if (IsRight == true)
+		{
+			pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_Slice.x * (MaxFrame - (i + 1))), _LeftTop.y), _Slice);
+
+		}
+		else
+		{
+			pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_Slice.x * i), _LeftTop.y), _Slice);
+		}
 		wchar_t Key[50] = {};
 		swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);
 		CAssetMgr::GetInst()->AddSprite(Key, pSprite);
@@ -273,6 +323,7 @@ void CPlayer::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec
 		strSavePath += pSprite->GetKey();
 		pSprite->Save(strSavePath);
 	}
+
 
 	for (int i = 0; i < MaxFrame; ++i)
 	{

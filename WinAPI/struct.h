@@ -91,6 +91,7 @@ struct tDbgRenderInfo
 	Vec2			Position0;
 	Vec2			Position1;
 	Vec2			Scale;
+	Vec2			OffSet;
 	PEN_TYPE		Color;
 	float			Duration;	// 표시 시간
 	float			Time;		// 진행 시간

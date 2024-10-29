@@ -42,10 +42,10 @@ void CDbgRender::Render()
 			{
 			case DEBUG_SHAPE::RECT:
 
-				Rectangle(dc, (*iter).Position0.x - (*iter).Scale.x / 2.f
-					, (*iter).Position0.y - (*iter).Scale.y / 2.f
-					, (*iter).Position0.x + (*iter).Scale.x / 2.f
-					, (*iter).Position0.y + (*iter).Scale.y / 2.f);
+				Rectangle(dc, (*iter).Position0.x - (*iter).Scale.x / 2.f + (*iter).OffSet.x
+					, (*iter).Position0.y - (*iter).Scale.y / 2.f + (*iter).OffSet.y
+					, (*iter).Position0.x + (*iter).Scale.x / 2.f + (*iter).OffSet.x
+					, (*iter).Position0.y + (*iter).Scale.y / 2.f + (*iter).OffSet.y);
 
 				break;
 			case DEBUG_SHAPE::CIRCLE:

@@ -155,7 +155,10 @@
       <Filter>Game\State\Trace</Filter>
     </ClInclude>
     <ClInclude Include="CIdleState.h">
-      <Filter>Game\State\Monstor</Filter>
+      <Filter>Game\State\Monstor\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="Colision.h">
+      <Filter>Game\05. Object\Colision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,7 +298,10 @@
       <Filter>Game\State\Trace</Filter>
     </ClCompile>
     <ClCompile Include="CIdleState.cpp">
-      <Filter>Game\State\Monstor</Filter>
+      <Filter>Game\State\Monstor\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="Colision.cpp">
+      <Filter>Game\05. Object\Colision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,14 +431,17 @@
     <Filter Include="Game\State">
       <UniqueIdentifier>{6318c495-9b93-4133-b348-406a86e84974}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\State\Idle">
-      <UniqueIdentifier>{b8cc514f-a594-437e-9c17-d788e0e41488}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\State\Trace">
       <UniqueIdentifier>{f63c433a-e559-406d-98e6-3544f8620360}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\State\Monstor">
       <UniqueIdentifier>{6035e39b-cc93-41bc-8699-f6f1f86ae1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\State\Monstor\Idle">
+      <UniqueIdentifier>{b8cc514f-a594-437e-9c17-d788e0e41488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Colision">
+      <UniqueIdentifier>{b20115ce-0031-4874-ad5a-7813cce063a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

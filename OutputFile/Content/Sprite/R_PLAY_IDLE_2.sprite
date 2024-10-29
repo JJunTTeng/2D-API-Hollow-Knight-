@@ -10,7 +10,7 @@ R_PlayIdle
 Texture\Knight\001.Idle\R_idle.png
 
 [LEFT_TOP]
-122, 0
+366, 0
 
 [SLICE]
 61, 130

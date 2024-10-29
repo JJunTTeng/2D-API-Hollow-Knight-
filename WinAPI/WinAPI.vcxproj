@@ -163,6 +163,7 @@
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CObj.h" />
+    <ClInclude Include="Colision.h" />
     <ClInclude Include="CPanelUI.h" />
     <ClInclude Include="CPathMgr.h" />
     <ClInclude Include="CPlatform.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CObj.cpp" />
+    <ClCompile Include="Colision.cpp" />
     <ClCompile Include="CPanelUI.cpp" />
     <ClCompile Include="CPathMgr.cpp" />
     <ClCompile Include="CPlatform.cpp" />

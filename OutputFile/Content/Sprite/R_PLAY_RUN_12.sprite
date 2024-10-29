@@ -10,7 +10,7 @@ R_PlayRun
 Texture\Knight\005.Run\R_run.png
 
 [LEFT_TOP]
-1032, 0
+0, 0
 
 [SLICE]
 86, 130

@@ -10,7 +10,7 @@ R_PlayLookUp
 Texture\Knight\014.LookUp\R_LookUp.png
 
 [LEFT_TOP]
-0, 0
+320, 0
 
 [SLICE]
 64, 130

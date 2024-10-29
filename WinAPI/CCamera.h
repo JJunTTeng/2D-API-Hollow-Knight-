@@ -53,7 +53,9 @@ public:
 	Vec2 GetRenderPos(Vec2 _RealPos)  {  return _RealPos - m_Diff;  }
 	Vec2 GetRealPos(Vec2 _RenderPos) { return _RenderPos + m_Diff; }
 
+	void SetPlusCameraPos(Vec2 pos) { m_LookAt += pos; }
 	Vec2 GetLookAt() { return m_LookAt + m_Offset; }
+
 	void SetTarget(CObj* _Target) { m_Target = _Target; }
 	void Oscillation(float _Duration, float _Amplitude, float _Frequency)
 	{

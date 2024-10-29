@@ -14,7 +14,7 @@ void SaveAssetRef(CAsset* _Asset, FILE* _File);
 CAsset* LoadAssetRef(FILE* _File);
 
 
-void DrawDebugRect(PEN_TYPE _pen, Vec2 _Pos, Vec2 _Scale, float _Duration);
+void DrawDebugRect(PEN_TYPE _pen, Vec2 _Pos, Vec2 _Scale, float _Duration );
 void DrawDebugCircle(PEN_TYPE _pen, Vec2 _Pos, Vec2 _Scale, float _Duration);
 void DrawDebugLine(PEN_TYPE _pen, Vec2 _Start, Vec2 _End, float _Duration);
 

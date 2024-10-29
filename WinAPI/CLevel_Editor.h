@@ -2,6 +2,8 @@
 
 #include "CLevel.h"
 
+class CPlayer;
+class Colision;
 class CLevel_Editor :
     public CLevel
 {
@@ -25,5 +27,13 @@ public:
 public:
     CLevel_Editor();
     ~CLevel_Editor();
+
+private:
+    std::vector<Colision*> mDrawCol;
+    CPlayer* mPlayer;
+
+    Vec2 ColBeginPos;
+    Vec2 ColEndPos;
+
 };
 

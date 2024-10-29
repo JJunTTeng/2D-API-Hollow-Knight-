@@ -19,10 +19,21 @@
 #include "CAssetMgr.h"
 #include "CSound.h"
 
+#include "Colision.h"
+#include "CCollider.h"
+
+#include "CSelectGDI.h"
+#include "CPlayer.h"
+
+#include "CCollisionMgr.h"
+
+
 
 CLevel_Editor::CLevel_Editor()
 	: m_MapObj(nullptr)
 	, m_hMenu(nullptr)
+	, ColBeginPos(0,0)
+	, ColEndPos(0,0)
 {
 }
 
@@ -33,12 +44,12 @@ CLevel_Editor::~CLevel_Editor()
 void CLevel_Editor::Begin()
 {
 	// 배경음 지정
-	CSound* pSound = CAssetMgr::GetInst()->LoadSound(L"DM_Opening", L"Sound\\DM.wav");
-	if (nullptr != pSound)
-	{
-		pSound->SetVolume(70.f);
-		pSound->PlayToBGM(true);
-	}
+	//CSound* pSound = CAssetMgr::GetInst()->LoadSound(L"DM_Opening", L"Sound\\DM.wav");
+	//if (nullptr != pSound)
+	//{
+	//	pSound->SetVolume(70.f);
+	//	pSound->PlayToBGM(true);
+	//}
 
 	// 메뉴바 로드 및 메인 윈도우에 부착
 	if (nullptr == m_hMenu)
@@ -52,53 +63,23 @@ void CLevel_Editor::Begin()
 
 	Vec2 vResolution = CEngine::GetInst()->GetResolution();
 
-
-	// PanelUI 생성
-	CPanelUI* pPanel = new CPanelUI;
-	pPanel->SetName(L"Panel 1");
-	Vec2 vScale = Vec2(380.f, 500.f);
-
-	pPanel->SetPos(Vec2(vResolution.x - vScale.x - 10, 10.f));
-	pPanel->SetScale(vScale);
-
-	// Panel 에 넣을 자식 UI
-	CBtnUI* pBtn = new CBtnUI;
-	pBtn->SetScale(Vec2(150.f, 100.f));
-	pBtn->SetPos(Vec2(10.f, 10.f));
-
-	void SaveTileMap();
-	//pBtn->AddCallBack(&SaveTileMap);
-	pBtn->AddDelegate(this, (DELEGATE_0)&CLevel_Editor::SaveTileMap);
-
-	pPanel->AddChildUI(pBtn);
-	AddObject(pPanel, LAYER_TYPE::UI);
-
-	// PanelUI 생성
-	pPanel = new CPanelUI;
-	pPanel->SetName(L"Panel 2");	
-
-	pPanel->SetPos(Vec2(vResolution.x - vScale.x - 10.f- 500.f, 10.f));
-	pPanel->SetScale(vScale);
-
-	// Panel 에 넣을 자식 UI
-	pBtn = new CBtnUI;
-	pBtn->SetScale(Vec2(150.f, 100.f));
-	pBtn->SetPos(Vec2(10.f, 10.f));
-
-	void LoadTileMap();
-	//pBtn->AddCallBack(&LoadTileMap);
-	pBtn->AddDelegate(this, (DELEGATE_0)&CLevel_Editor::LoadTileMap);
-
-	pPanel->AddChildUI(pBtn);
-	AddObject(pPanel, LAYER_TYPE::UI);
 	
+	CCamera::GetInst()->GetLookAt();
+	
+	// Player 생성
+	mPlayer = new CPlayer;
+	mPlayer->SetName(L"Player");
+	mPlayer->SetPos(CEngine::GetInst()->GetResolution());
+
+
+	AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
 	// 샘플용 Map 오브젝트 생성
 	m_MapObj = new CMap;
 	AddObject(m_MapObj, LAYER_TYPE::TILE);
 
 	
-
+	//CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::COLLIDER);
 
 
 	// 레벨 소속 모든 오브젝트가 Begin 을 호출받을 수 있도록 한다
@@ -131,23 +112,70 @@ void CLevel_Editor::Tick()
 	// 마우스 클릭으로 CMap 오브젝트의 타일 이미지 인덱스 변경
 	// 일반적인 렌더링 : 실제 좌표 -> Render 좌표 변경
 	// 마우스 좌표 : Render 좌표(마우스좌표) -> 실제 좌표로 변경
+	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
 	if (KEY_TAP(KEY::LBTN))
-	{
-		Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();	
-		tTile* TileInfo = m_MapObj->GetTileMap()->GetTileInfo(vMousePos);
+	{		
 
-		if (nullptr != TileInfo)
-		{
-			TileInfo->ImgIdx = 20;
-		}		
+		ColBeginPos = vMousePos;
 	}
+
+	if (KEY_PRESSED(KEY::LBTN))
+	{
+		ColEndPos = vMousePos;
+	}
+
+
+
+	if (KEY_RELEASED(KEY::LBTN))
+	{
+
+		Vec2 pos = mPlayer->GetPos();
+
+		ColEndPos = vMousePos;
+		CObj* mColision = new Colision;
+		AddObject(mColision, LAYER_TYPE::COLLIDER);
+		CCollider* mCollider = new CCollider;
+		mColision->SetPos(mPlayer->GetPos() - CEngine::GetInst()->GetResolution() / 2  + ColBeginPos);
+		mCollider->SetScale(ColEndPos - ColBeginPos);
+		mCollider->SetOffset(mCollider->GetScale()/2);
+		mCollider->SetName(L"Tile");
+		mCollider = (CCollider*)mColision->AddComponent(mCollider);
+
+		mDrawCol.push_back((Colision*)mColision);
+
+
+		ColBeginPos = Vec2(0, 0);
+		ColEndPos = Vec2(0, 0);
+	}
+
+
+
 }
 
 void CLevel_Editor::Render()
 {
 	CLevel::Render();
 
+	SELECT_PEN(PEN_TYPE::GREEN);
+	SELECT_BRUSH(BRUSH_TYPE::HOLLOW);
+	Rectangle(CEngine::GetInst()->GetSecondDC(), ColBeginPos.x , ColBeginPos.y, 
+		ColEndPos.x , ColEndPos.y );
+
+
+
 	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 10, L"Editor Level", wcslen(L"Editor Level"));
+
+	wchar_t word[50] = L"";
+	swprintf_s(word, 50, L"%f, %f", CKeyMgr::GetInst()->GetMousePos().x, CKeyMgr::GetInst()->GetMousePos().y);
+	int len = wcsnlen_s(word, 50);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, word, len);
+
+	wchar_t word1[50] = L"";
+	swprintf_s(word1, 50, L"%f, %f", mPlayer->GetPos().x, mPlayer->GetPos().y);
+	int len1 = wcsnlen_s(word1, 50);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 50, word1, len1);
+
+
 }
 
 void CLevel_Editor::SaveTileMap()
@@ -171,7 +199,7 @@ void CLevel_Editor::SaveTileMap()
 	if (GetSaveFileName(&Desc))
 	{
 		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
-		m_MapObj->GetTileMap()->SaveTileMap(szFilePath);
+		//m_MapObj->GetTileMap()->SaveTileMap(szFilePath);
 	}
 }
 
@@ -195,7 +223,7 @@ void CLevel_Editor::LoadTileMap()
 
 	if (GetOpenFileName(&Desc))
 	{
-		m_MapObj->GetTileMap()->LoadTileMap(szFilePath);
+		//m_MapObj->GetTileMap()->LoadTileMap(szFilePath);
 	}	
 }
 

@@ -144,7 +144,7 @@ CAsset* LoadAssetRef(FILE* _File)
 	return pAsset;
 }
 
-void DrawDebugRect(PEN_TYPE _pen, Vec2 _Pos, Vec2 _Scale, float _Duration)
+void DrawDebugRect(PEN_TYPE _pen, Vec2 _Pos, Vec2 _Scale, float _Duration )
 {
 	tDbgRenderInfo info = {};
 

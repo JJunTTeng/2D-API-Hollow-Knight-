@@ -29,7 +29,7 @@ public:
         m_vecFlipbook[_idx] = _Flipbook;
     }
 
-    void Play(int _FlipbookIdx, float _FPS, bool _Repeat, bool m_Right);
+    void Play(int _FlipbookIdx, float _FPS, bool _Repeat);
 
 
     bool IsFinish() { return m_Finish; }

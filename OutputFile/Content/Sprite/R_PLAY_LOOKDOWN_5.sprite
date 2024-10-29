@@ -10,7 +10,7 @@ R_PlayDown
 Texture\Knight\013.LookDown\R_LookDown.png
 
 [LEFT_TOP]
-365, 0
+0, 0
 
 [SLICE]
 73, 126

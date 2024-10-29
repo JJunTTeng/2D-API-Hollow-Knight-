@@ -19,6 +19,8 @@
 #include "CAssetMgr.h"
 #include "CSound.h"
 
+
+
 CLevel_Start::CLevel_Start()
 {
 
@@ -50,22 +52,12 @@ void CLevel_Start::Begin()
 
     AddObject(pObject, LAYER_TYPE::PLAYER);
 
-    // Monster 생성
-    CMonster* pMonster = new CMonster;
-    pMonster->SetName(L"Monster");
-    pMonster->SetPos(300.f, 120.f);
-    pMonster->SetScale(100.f, 100.f);
-    pMonster->SetDistance(200.f);
-    pMonster->SetSpeed(300.f);
-    AddObject(pMonster, LAYER_TYPE::MONSTER);
 
-    pMonster = new CMonster;
-    pMonster->SetName(L"Monster");
-    pMonster->SetPos(1000.f, 500.f);
-    pMonster->SetScale(100.f, 100.f);
-    pMonster->SetDistance(200.f);
-    pMonster->SetSpeed(300.f);
-    AddObject(pMonster, LAYER_TYPE::MONSTER);
+    CMap* pMap = new CMap;
+    pMap->SetName(L"Monster");
+    pMap->SetPos(0, 0.f);
+    AddObject(pMap, LAYER_TYPE::BACKGROUND);
+
 
     // Platform Object 추가
     CObj* pPlatform = new CPlatform;
