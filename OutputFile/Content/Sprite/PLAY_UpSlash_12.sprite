@@ -1,0 +1,20 @@
+[KEY]
+PLAY_UPSLASH_12
+
+[PATH]
+Sprite\PLAY_UPSLASH_12.sprite
+
+[ATLAS_KEY]
+PlayUpSlash
+[ATLAS_PATH]
+Texture\Knight\009.UpSlash\UpSlash.png
+
+[LEFT_TOP]
+1392, 0
+
+[SLICE]
+116, 131
+
+[OFFSET]
+0, 0
+

@@ -9,6 +9,9 @@ public:
     virtual void Tick() override;
     virtual void Render() override;
 
+     std::vector<Colision*> LoadColision(wstring& FileName);
+
+
     virtual void BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);

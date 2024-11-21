@@ -1,0 +1,20 @@
+[KEY]
+PLAY_SLASHALT_4
+
+[PATH]
+Sprite\PLAY_SLASHALT_4.sprite
+
+[ATLAS_KEY]
+PlaySlashAlt
+[ATLAS_PATH]
+Texture\Knight\004.SlashAlt\SlashAlt.png
+
+[LEFT_TOP]
+544, 0
+
+[SLICE]
+136, 133
+
+[OFFSET]
+0, 0
+

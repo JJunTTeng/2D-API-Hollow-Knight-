@@ -1,0 +1,20 @@
+[KEY]
+UpSlashEffect_3
+
+[PATH]
+Sprite\UpSlashEffect_3.sprite
+
+[ATLAS_KEY]
+UpSlashEffect
+[ATLAS_PATH]
+Texture\Knight\015.UpSlashEffect\UpSlashEffect.png
+
+[LEFT_TOP]
+510, 0
+
+[SLICE]
+170, 189
+
+[OFFSET]
+0, 0
+

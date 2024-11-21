@@ -160,6 +160,9 @@
     <ClInclude Include="Colision.h">
       <Filter>Game\05. Object\Colision</Filter>
     </ClInclude>
+    <ClInclude Include="CBgMap.h">
+      <Filter>Game\05. Object\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -302,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="Colision.cpp">
       <Filter>Game\05. Object\Colision</Filter>
+    </ClCompile>
+    <ClCompile Include="CBgMap.cpp">
+      <Filter>Game\05. Object\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

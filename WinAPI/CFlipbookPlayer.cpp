@@ -26,11 +26,17 @@ CFlipbookPlayer::~CFlipbookPlayer()
 void CFlipbookPlayer::Play(int _FlipbookIdx, float _FPS, bool _Repeat)
 {
 
+	if (_Repeat == false)
+	{
+		m_BeFlipNum = m_FlipNum;
+		m_BeFPS = m_FPS;
+	}
+	m_FlipNum = _FlipbookIdx;
 	m_CurFlipbook = m_vecFlipbook[_FlipbookIdx];
 	m_SpriteIdx = 0;
-	if (m_Right = true)
+	if (m_Right == true)
 	{
-		// m_SpriteIdx = m_CurFlipbook->GetMaxSpriteCount() - 1;
+		 m_SpriteIdx = m_CurFlipbook->GetMaxSpriteCount() - 1;
 	}
 	m_FPS = _FPS;
 	m_Repeat = _Repeat;
@@ -69,7 +75,7 @@ void CFlipbookPlayer::FinalTick()
 		// 한번 재생이 끝났고(m_Finish), 반복 재생모드가 아니라면
 		// 마지막 프레임을 유지하도록 한다.
 		else
-			return;
+			Play(m_BeFlipNum, m_BeFPS, true);
 	}	
 
 	// FPS 에 따른 시간체크

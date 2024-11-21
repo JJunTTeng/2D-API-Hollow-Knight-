@@ -149,6 +149,11 @@ bool CCollisionMgr::IsCollision(CCollider* _LeftCol, CCollider* _RightCol)
 	Vec2 RightScale = _RightCol->GetScale();
 	Vec2 vDiff = LeftPos - RightPos;
 
+	//(400, 400) (200,200)
+	//(500, 500) (200,200)
+
+	//-400 -400 200, 200
+
 	if (fabs(vDiff.x) < (LeftScale.x + RightScale.x) / 2.f 
 		&& fabs(vDiff.y) < (LeftScale.y + RightScale.y) / 2.f )
 	{

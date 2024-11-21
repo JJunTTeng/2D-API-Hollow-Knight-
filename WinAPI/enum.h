@@ -53,6 +53,7 @@ enum class LAYER_TYPE
 	PLAYER_OBJECT,
 	MONSTER,
 	MONSTER_OBJECT,
+	FrontBg,
 
 	// 7 ~ 30
 

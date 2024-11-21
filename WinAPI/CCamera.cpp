@@ -40,7 +40,7 @@ void CCamera::Init()
 	Vec2 Resolution = CEngine::GetInst()->GetResolution();
 	m_LookAt = Resolution / 2.f;
 
-	m_Offset = Vec2(0.f, 0.f);
+	//m_Offset = Vec2(0.f, 0.f);
 }
 
 void CCamera::Tick()
@@ -59,7 +59,7 @@ void CCamera::Tick()
 
 	if (m_Target)
 	{
-		m_LookAt = m_Target->GetPos();
+		m_LookAt = m_Target->GetPos() + m_Offset;
 	}
 	
 	// 카메라 진동 효과

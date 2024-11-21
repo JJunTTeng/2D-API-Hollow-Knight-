@@ -39,10 +39,29 @@ int APIENTRY wWinMain(HINSTANCE hInstance   // 프로세스 주소(ID)
 
     RegisterClassExW(&wcex);
 
+    WNDCLASSEXW wcex2 = {};
+
+    wcex2.cbSize = sizeof(WNDCLASSEX);
+    wcex2.style = CS_HREDRAW | CS_VREDRAW;
+    wcex2.lpfnWndProc = &WndProc;
+    wcex2.cbClsExtra = 0;
+    wcex2.cbWndExtra = 0;
+    wcex2.hInstance = hInstance;
+    wcex2.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINAPI));
+    wcex2.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex2.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex2.lpszMenuName = nullptr;// MAKEINTRESOURCEW(IDC_WINAPI);
+    wcex2.lpszClassName = L"Keys";
+    wcex2.hIconSm = LoadIcon(wcex2.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+    RegisterClassExW(&wcex2);
+
     // Engine 초기화
     if (FAILED(CEngine::GetInst()->Init(g_hInst, POINT{ 1280, 768 })))
         return FALSE;
 
+    if (FAILED(CEngine::GetInst()->EditWindow(g_hInst, POINT{ 500, 500 })))
+        return FALSE;
 
     // 단축키 테이블 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINAPI));

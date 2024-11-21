@@ -13,6 +13,7 @@ private:
 
 public:
     CMap* GetMapObject() { return m_MapObj; }
+    std::list<Colision*> GetColisions() { return mDrawCol; }
 
 public:
     virtual void Begin() override;
@@ -24,16 +25,25 @@ public:
     void SaveTileMap();
     void LoadTileMap();
 
+    void SaveColider();
+    void LoadColider(wchar_t* Path);
+
+    void OpenImage();
+    void SaveImage();
+
+    void SavePlibook();
+    void LoadPlibook();
 public:
     CLevel_Editor();
     ~CLevel_Editor();
 
 private:
-    std::vector<Colision*> mDrawCol;
+    std::list<Colision*> mDrawCol;
     CPlayer* mPlayer;
 
     Vec2 ColBeginPos;
     Vec2 ColEndPos;
+    Vec2 MouseRenderPos;
 
 };
 

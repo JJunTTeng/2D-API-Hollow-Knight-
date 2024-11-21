@@ -22,6 +22,10 @@ CEngine::CEngine()
     , m_BackBuffer(nullptr)
     , m_Pen{}
     , m_Brush{}
+    , m_EhInst(nullptr)
+    , m_EhWnd(nullptr)
+    , m_EResolution{}
+    , m_EhDC(nullptr)
 {   
 }
 
@@ -83,6 +87,40 @@ int CEngine::Init(HINSTANCE _hInst, POINT _Resolution)
 
     // 더블버퍼링을 위한 추가버퍼 생성
     CreateSecondBuffer();
+
+
+    return S_OK;
+}
+
+int CEngine::EditWindow(HINSTANCE _Inst, POINT _Resolution)
+{
+    m_EhInst = _Inst;
+    m_EResolution = _Resolution;
+
+    // HWND 윈도우 ID 타입
+    // 커널 오브젝트 ( OS 차원에서 관리되는 객체 )
+    HWND hWnd = CreateWindowW(L"Keys", L"MyGames", (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX),
+        m_Resolution.x, 0, m_EResolution.x, m_EResolution.y, nullptr, nullptr, m_EhInst, nullptr);
+
+    if (!hWnd)
+        return E_FAIL;
+
+    ShowWindow(hWnd, true);
+    UpdateWindow(hWnd);
+
+    // 윈도우 크기를 해상도에 맞게 설정
+
+    RECT rt = { 0, 0, m_EResolution.x, m_EResolution.y };
+
+    // 메인윈도우가 Menu 가 있는지 확인a
+    HMENU hMenu = GetMenu(hWnd);
+
+    AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, !!hMenu);
+
+    SetWindowPos(m_EhWnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
+
+    // DC 생성   
+    m_EhDC = GetDC(hWnd);
 
 
     return S_OK;

@@ -32,10 +32,14 @@ public:
     void SetPos(float _x, float _y) { m_Pos = Vec2(_x, _y); }
     void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
     void SetScale(float _x, float _y) { m_Scale = Vec2(_x, _y); }
+    void SetPrevPos(Vec2 _Pos) { m_PrevPos = _Pos; }
+    void SetDead() { m_Dead = true; }
 
     Vec2 GetPos() { return m_Pos; }
     Vec2 GetRenderPos();
     Vec2 GetScale() { return m_Scale; }
+    Vec2 GetPrevPos() { return m_PrevPos; }
+
     LAYER_TYPE GetLayerType() { return m_LayerType; }
 
     bool IsDead() { return m_Dead; }

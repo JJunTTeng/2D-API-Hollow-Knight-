@@ -57,6 +57,7 @@ public:
 	Vec2 GetLookAt() { return m_LookAt + m_Offset; }
 
 	void SetTarget(CObj* _Target) { m_Target = _Target; }
+	void SetOffset(Vec2 _Pos) { m_Offset = _Pos; }
 	void Oscillation(float _Duration, float _Amplitude, float _Frequency)
 	{
 		m_Duration = _Duration;

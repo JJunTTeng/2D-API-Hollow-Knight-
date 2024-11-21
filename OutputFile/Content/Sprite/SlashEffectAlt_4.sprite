@@ -1,0 +1,20 @@
+[KEY]
+SlashEffectAlt_4
+
+[PATH]
+Sprite\SlashEffectAlt_4.sprite
+
+[ATLAS_KEY]
+SlashEffectAlt
+[ATLAS_PATH]
+Texture\Knight\008.SlashEffectAlt\SlashEffectAlt.png
+
+[LEFT_TOP]
+880, 0
+
+[SLICE]
+220, 110
+
+[OFFSET]
+0, 0
+

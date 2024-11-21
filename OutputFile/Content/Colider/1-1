@@ -1,0 +1,624 @@
+[Name]
+Tile
+
+[Position]
+2003, 1500
+
+[Scale]
+0, 0
+
+[OFFset]
+0, 0
+
+[Name]
+Tile
+
+[Position]
+1315, 5747
+
+[Scale]
+2087, 119
+
+[OFFset]
+1043, 59
+
+[Name]
+Tile
+
+[Position]
+3229, 5731
+
+[Scale]
+2602, 199
+
+[OFFset]
+1301, 99
+
+[Name]
+Tile
+
+[Position]
+5810, 5732
+
+[Scale]
+42, 197
+
+[OFFset]
+21, 98
+
+[Name]
+Tile
+
+[Position]
+5826, 5834
+
+[Scale]
+482, 117
+
+[OFFset]
+241, 58
+
+[Name]
+Tile
+
+[Position]
+6092, 5731
+
+[Scale]
+1177, 400
+
+[OFFset]
+588, 200
+
+[Name]
+Tile
+
+[Position]
+7264, 5935
+
+[Scale]
+269, 296
+
+[OFFset]
+134, 148
+
+[Name]
+Tile
+
+[Position]
+7516, 6045
+
+[Scale]
+1010, 204
+
+[OFFset]
+505, 102
+
+[Name]
+Tile
+
+[Position]
+8395, 5991
+
+[Scale]
+666, 122
+
+[OFFset]
+333, 61
+
+[Name]
+Tile
+
+[Position]
+8499, 6013
+
+[Scale]
+0, 0
+
+[OFFset]
+0, 0
+
+[Name]
+Tile
+
+[Position]
+8115, 5799
+
+[Scale]
+108, 107
+
+[OFFset]
+54, 53
+
+[Name]
+Tile
+
+[Position]
+7462, 5693
+
+[Scale]
+210, 47
+
+[OFFset]
+105, 23
+
+[Name]
+Tile
+
+[Position]
+7828, 5575
+
+[Scale]
+104, 103
+
+[OFFset]
+52, 51
+
+[Name]
+Tile
+
+[Position]
+8011, 5374
+
+[Scale]
+140, 29
+
+[OFFset]
+70, 14
+
+[Name]
+Tile
+
+[Position]
+7716, 5140
+
+[Scale]
+-2147483648, -2147483648
+
+[OFFset]
+-2147483648, -2147483648
+
+[Name]
+Tile
+
+[Position]
+7860, 5174
+
+[Scale]
+1, 0
+
+[OFFset]
+0, 0
+
+[Name]
+Tile
+
+[Position]
+7716, 5137
+
+[Scale]
+141, 41
+
+[OFFset]
+70, 20
+
+[Name]
+Tile
+
+[Position]
+7392, 5188
+
+[Scale]
+97, 146
+
+[OFFset]
+48, 73
+
+[Name]
+Tile
+
+[Position]
+6876, 5110
+
+[Scale]
+326, 314
+
+[OFFset]
+163, 157
+
+[Name]
+Tile
+
+[Position]
+6723, 4903
+
+[Scale]
+202, 230
+
+[OFFset]
+101, 115
+
+[Name]
+Tile
+
+[Position]
+5245, 4688
+
+[Scale]
+1539, 252
+
+[OFFset]
+769, 126
+
+[Name]
+Tile
+
+[Position]
+4158, 4896
+
+[Scale]
+-2147483648, -2147483648
+
+[OFFset]
+-2147483648, -2147483648
+
+[Name]
+Tile
+
+[Position]
+5209, 4975
+
+[Scale]
+41, -2
+
+[OFFset]
+20, -1
+
+[Name]
+Tile
+
+[Position]
+4159, 4897
+
+[Scale]
+1107, 90
+
+[OFFset]
+553, 45
+
+[Name]
+Tile
+
+[Position]
+3524, 4948
+
+[Scale]
+644, 63
+
+[OFFset]
+322, 31
+
+[Name]
+Tile
+
+[Position]
+4229, 4696
+
+[Scale]
+148, 39
+
+[OFFset]
+74, 19
+
+[Name]
+Tile
+
+[Position]
+4503, 4492
+
+[Scale]
+107, 99
+
+[OFFset]
+53, 49
+
+[Name]
+Tile
+
+[Position]
+4241, 4376
+
+[Scale]
+-2147483648, -2147483648
+
+[OFFset]
+-2147483648, -2147483648
+
+[Name]
+Tile
+
+[Position]
+4319, 4408
+
+[Scale]
+0, 0
+
+[OFFset]
+0, 0
+
+[Name]
+Tile
+
+[Position]
+4239, 4379
+
+[Scale]
+73, 29
+
+[OFFset]
+36, 14
+
+[Name]
+Tile
+
+[Position]
+4812, 4325
+
+[Scale]
+93, 149
+
+[OFFset]
+46, 74
+
+[Name]
+Tile
+
+[Position]
+5008, 4163
+
+[Scale]
+129, 39
+
+[OFFset]
+64, 19
+
+[Name]
+Tile
+
+[Position]
+4599, 4047
+
+[Scale]
+209, 52
+
+[OFFset]
+104, 26
+
+[Name]
+Tile
+
+[Position]
+3926, 4513
+
+[Scale]
+0, 0
+
+[OFFset]
+0, 0
+
+[Name]
+Tile
+
+[Position]
+3299, 4747
+
+[Scale]
+107, 101
+
+[OFFset]
+53, 50
+
+[Name]
+Tile
+
+[Position]
+3638, 4577
+
+[Scale]
+173, 177
+
+[OFFset]
+86, 88
+
+[Name]
+Tile
+
+[Position]
+3380, 4346
+
+[Scale]
+139, 37
+
+[OFFset]
+69, 18
+
+[Name]
+Tile
+
+[Position]
+3635, 4108
+
+[Scale]
+228, 171
+
+[OFFset]
+114, 85
+
+[Name]
+Tile
+
+[Position]
+3166, 3897
+
+[Scale]
+375, 105
+
+[OFFset]
+187, 52
+
+[Name]
+Tile
+
+[Position]
+4302, 3852
+
+[Scale]
+218, 103
+
+[OFFset]
+109, 51
+
+[Name]
+Tile
+
+[Position]
+4110, 3746
+
+[Scale]
+208, 115
+
+[OFFset]
+104, 57
+
+[Name]
+Tile
+
+[Position]
+3905, 3595
+
+[Scale]
+261, 150
+
+[OFFset]
+130, 75
+
+[Name]
+Tile
+
+[Position]
+3778, 3387
+
+[Scale]
+132, 211
+
+[OFFset]
+66, 105
+
+[Name]
+Tile
+
+[Position]
+3527, 3248
+
+[Scale]
+270, 152
+
+[OFFset]
+135, 76
+
+[Name]
+Tile
+
+[Position]
+2921, 3306
+
+[Scale]
+628, 43
+
+[OFFset]
+314, 21
+
+[Name]
+Tile
+
+[Position]
+4150, 3201
+
+[Scale]
+618, 47
+
+[OFFset]
+309, 23
+
+[Name]
+Tile
+
+[Position]
+4725, 3102
+
+[Scale]
+307, 76
+
+[OFFset]
+153, 38
+
+[Name]
+Tile
+
+[Position]
+5010, 3050
+
+[Scale]
+2702, 64
+
+[OFFset]
+1351, 32
+
+[Name]
+Tile
+
+[Position]
+5010, 3045
+
+[Scale]
+1227, 65
+
+[OFFset]
+613, 32
+
+[Name]
+Tile
+
+[Position]
+6094, 3104
+
+[Scale]
+0, 0
+
+[OFFset]
+0, 0
+
+[Name]
+Tile
+
+[Position]
+5429, 3031
+
+[Scale]
+2622, 74
+
+[OFFset]
+1311, 37
+
+[Name]
+Tile
+
+[Position]
+8046, 3031
+
+[Scale]
+2425, 93
+
+[OFFset]
+1212, 46
+

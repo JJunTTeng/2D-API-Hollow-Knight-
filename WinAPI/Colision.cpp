@@ -2,6 +2,8 @@
 #include "Colision.h"
 #include "CRigidBody.h"
 #include "CCamera.h"
+#include "CCollider.h"
+#include "CPathMgr.h"
 
 Colision::Colision()
 {
@@ -26,13 +28,27 @@ void Colision::Render()
 
 }
 
+//지금은 플레이어가 other임
 void Colision::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
 	if (_OtherObject->GetName() == L"Player")
 	{
-		CRigidBody* pBody = _OtherObject->GetComponent<CRigidBody>();
-		pBody->SetGround(true);
-		CCamera::GetInst()->Oscillation(0.15f, 5.f, 10.f);
+		if (_OtherCollider->GetName() == L"HitBox_01")
+		{
+			
+		}
+
+		if (_OtherCollider->GetName() == L"HeadBox")
+		{
+
+		}
+
+		if (_OtherCollider->GetName() == L"FloorBox")
+		{
+
+			CRigidBody* pBody = _OtherObject->GetComponent<CRigidBody>();
+			pBody->SetGround(true);
+		}		
 	}
 }
 
@@ -44,8 +60,22 @@ void Colision::EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _
 {
 	if (_OtherObject->GetName() == L"Player")
 	{
-		CRigidBody* pBody = _OtherObject->GetComponent<CRigidBody>();
-		pBody->SetGround(false);
+		if (_OtherCollider->GetName() == L"HitBox_01")
+		{
+
+		}
+
+		if (_OtherCollider->GetName() == L"HeadBox")
+		{
+
+		}
+
+		if (_OtherCollider->GetName() == L"FloorBox")
+		{
+
+			CRigidBody* pBody = _OtherObject->GetComponent<CRigidBody>();
+			pBody->SetGround(false);
+		}
 	}
 }
 

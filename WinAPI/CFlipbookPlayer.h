@@ -16,6 +16,14 @@ private:
     bool                m_Repeat;       // 반복재생인지 아닌지
     bool                m_Finish;       // 재생이 끝났는지 체크
     bool                m_Right;
+    int                 m_FlipNum;
+
+ 
+    //이전 플립북
+    int                 m_BeFlipNum;
+    float               m_BeFPS;
+
+
 
 public:
     void AddFlipbook(CFlipbook* _Flipbook) { m_vecFlipbook.push_back(_Flipbook); }
@@ -35,7 +43,6 @@ public:
     bool IsFinish() { return m_Finish; }
 
     void Reset();
-
 
 public:
     virtual void FinalTick() override;

@@ -26,6 +26,25 @@
 #define ID_TILE_INFO                    32776
 #define ID_TILEMAP_SAVE                 32778
 #define ID_TILEMAP_LOAD                 32779
+#define ID_32780                        32780
+#define ID_32781                        32781
+#define Col_Save                        32782
+#define Col_Load                        32783
+#define ID_32784                        32784
+#define ID_32785                        32785
+#define ID_32786                        32786
+#define ID_32787                        32787
+#define I                               32788
+#define IM_Load                         32789
+#define IM_Save                         32790
+#define IM_Open                         32791
+#define PL_Save                         32792
+#define PL_Load                         32793
+#define ID_IM_                          32794
+#define ID_IM_OPEN                      32795
+#define ID_IM_SAVE                      32796
+#define ID_PL_SAVE                      32797
+#define ID_PL_LOAD                      32798
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -34,7 +53,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        131
-#define _APS_NEXT_COMMAND_VALUE         32780
+#define _APS_NEXT_COMMAND_VALUE         32799
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
