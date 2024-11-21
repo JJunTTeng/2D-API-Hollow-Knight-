@@ -23,12 +23,10 @@ public:
 
     Vec2 GetFinalPos() { return m_FinalPos; }
 
-
     Vec2 GetLeftTopPos() { return m_FinalPos - (m_Scale / 2); }
     Vec2 GetRightTopPos() { return Vec2(m_FinalPos.x + (m_Scale.x / 2), m_FinalPos.y - (m_Scale.y / 2)); }
     Vec2 GetLeftBottomPos() { return Vec2(m_FinalPos.x - (m_Scale.x / 2), m_FinalPos.y + (m_Scale.y / 2)); }
-    Vec2 GetRightButtomPos() { return m_FinalPos + (m_Scale / 2); }
-
+    Vec2 GetRightButtomPos() { return m_FinalPos  +(m_Scale / 2); }
 
 public:
     void BeginOverlap(CCollider* _Other);   // 다른 충돌체와 최초 충돌 시

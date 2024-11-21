@@ -3,7 +3,6 @@
 #include "CRigidBody.h"
 #include "CCamera.h"
 #include "CCollider.h"
-#include "CPathMgr.h"
 
 Colision::Colision()
 {
@@ -33,22 +32,9 @@ void Colision::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 {
 	if (_OtherObject->GetName() == L"Player")
 	{
-		if (_OtherCollider->GetName() == L"HitBox_01")
-		{
-			
-		}
-
-		if (_OtherCollider->GetName() == L"HeadBox")
-		{
-
-		}
-
-		if (_OtherCollider->GetName() == L"FloorBox")
-		{
-
-			CRigidBody* pBody = _OtherObject->GetComponent<CRigidBody>();
-			pBody->SetGround(true);
-		}		
+		CRigidBody* pBody = _OtherObject->GetComponent<CRigidBody>();
+		pBody->SetGround(true);
+		CCamera::GetInst()->Oscillation(0.15f, 5.f, 10.f);
 	}
 }
 
