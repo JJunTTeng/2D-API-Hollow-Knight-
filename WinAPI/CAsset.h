@@ -23,6 +23,7 @@ protected:
 private:
     virtual int Save(const wstring& _FilePath) { return S_OK; }
     virtual int Load(const wstring& _FilePath) = 0;
+    virtual int Load(const wstring& _FilePath, bool FullPath) { return S_OK; }
 
 public:
     CAsset(ASSET_TYPE _Type);

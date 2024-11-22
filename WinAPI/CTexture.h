@@ -19,6 +19,9 @@ public:
 
 private:
     virtual int Load(const wstring& _FilePath) override;
+    virtual int Load(const wstring& _FilePath, bool FullPath)override;
+
+
     void Create(UINT _Width, UINT _Height);
 
 public:

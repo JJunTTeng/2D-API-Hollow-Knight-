@@ -36,7 +36,7 @@ CTexture* CAssetMgr::FindTexture(const wstring& _Key)
     return iter->second;
 }
 
-CTexture* CAssetMgr::LoadTexture(const wstring& _Key, const wstring& _RelativePath)
+CTexture* CAssetMgr::LoadTexture(const wstring& _Key, const wstring& _RelativePath, bool FullPath)
 {
     CAsset* pTex = FindTexture(_Key);
 
@@ -48,7 +48,12 @@ CTexture* CAssetMgr::LoadTexture(const wstring& _Key, const wstring& _RelativePa
     }
 
     pTex = new CTexture;
-    pTex->Load(_RelativePath);
+    if(FullPath == true)
+    pTex->Load(_RelativePath, FullPath);
+
+    else
+        pTex->Load(_RelativePath);
+
 
     // 에셋에, 자신이 에셋매니저에 등록될때 사용된 키값과 로딩할 때 사용한 경로를 세팅해준다.
     pTex->SetKey(_Key);

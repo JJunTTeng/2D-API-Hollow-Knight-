@@ -4,6 +4,7 @@
 
 class CPlayer;
 class Colision;
+class CTexture;
 class CLevel_Editor :
     public CLevel
 {
@@ -40,10 +41,13 @@ public:
 private:
     std::list<Colision*> mDrawCol;
     CPlayer* mPlayer;
+    CTexture* mTexture;
 
     Vec2 ColBeginPos;
     Vec2 ColEndPos;
     Vec2 MouseRenderPos;
+
+    bool FilbookMode;
 
 };
 
