@@ -390,15 +390,18 @@ void CPlayer::Move()
 			m_Dir = P_DIR::D_RIGHT;
 			m_FlipbookPlayer->Play(MOVE_RIGHT, 30.f, true);
 		}
+
 		if (KEY_TAP(UP))
 		{
 			m_Ud = P_UD::D_UP;
 			if (m_Dir == P_DIR::D_LEFT)
 				m_FlipbookPlayer->Play(LEFT_UP, 30.f, true);
-
 			else
 				m_FlipbookPlayer->Play(RIGHT_UP, 30.f, true);
+
+		 
 		}
+
 		if (KEY_TAP(DOWN))
 		{
 			m_Ud = P_UD::D_DOWN;
@@ -409,7 +412,7 @@ void CPlayer::Move()
 			else
 				m_FlipbookPlayer->Play(RIGHT_DOWN, 30.f, true);
 		}
-
+		
 
 		if (KEY_RELEASED(LEFT))
 		{
@@ -466,7 +469,9 @@ void CPlayer::Attack()
 			m_FlipbookPlayer->Play(RIGHT_UPSLASH, 30.f, false);
 
 		
-
+		//컴퓨터는 Death를 알려주면 맨처음은 Death가 뭔데요?
+		//Death는 죽는거야 죽는게 뭐에요?
+		//게임에서 사라지는게 뭐야? 게임이뭐고 사라지는건 (안보이게만 한다) (아에 지운다)
 		else if (m_Dir == P_DIR::D_LEFT && m_Ud== P_UD::D_DOWN && m_RigidBody->IsGround() == false)
 			m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 30.f, false);
 

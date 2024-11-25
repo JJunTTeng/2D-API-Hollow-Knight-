@@ -42,6 +42,7 @@ private:
     std::list<Colision*> mDrawCol;
     CPlayer* mPlayer;
     CTexture* mTexture;
+    CTexture* mSubTexture;
 
     Vec2 ColBeginPos;
     Vec2 ColEndPos;

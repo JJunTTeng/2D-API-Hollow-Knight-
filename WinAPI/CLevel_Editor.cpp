@@ -197,7 +197,8 @@ void CLevel_Editor::Tick()
 
 
 
-	//	mDrawCol.push_back((Colision*)mColision);
+
+
 		}
 
 
@@ -226,7 +227,6 @@ void CLevel_Editor::Render()
 
 	if (FilbookMode == true)
 	{
-
 		wstring strContentPath = CPathMgr::GetContentPath();
 		strContentPath += L"Texture\\Enime\\Crawlid.png";
 
@@ -253,10 +253,28 @@ void CLevel_Editor::Render()
 			, mTexture->GetHeight()
 			, blend);
 
+		HDC subdc = CEngine::GetInst()->GetEditSecondDC();
+		Vec2 subPos = CEngine::GetInst()->GetEditResolution() / 2;
+
+		AlphaBlend(subdc
+			, subPos.x - (ColEndPos.x - ColBeginPos.x)/2 //m_Tex->GetWidth() / 2.f*/
+			, subPos.y - (ColEndPos.y - ColBeginPos.y)/2//m_Tex->GetHeight() / 2.f*/
+			, ColEndPos.x - ColBeginPos.x
+			, ColEndPos.y - ColBeginPos.y
+			, mSubTexture->GetDC()
+			, ColBeginPos.x, ColBeginPos.y
+			, ColEndPos.x - ColBeginPos.x
+			, ColEndPos.y - ColBeginPos.y
+			, blend);
+
+
 		SELECT_PEN(PEN_TYPE::GREEN);
 		SELECT_BRUSH(BRUSH_TYPE::HOLLOW);
 
 		Rectangle(dc, ColBeginPos.x, ColBeginPos.y, ColEndPos.x, ColEndPos.y);
+
+
+
 
 	}
 	//wchar_t word1[50] = L"";
@@ -469,7 +487,9 @@ void CLevel_Editor::OpenImage()
 	//strContentPath = Desc.lpstrFile - strContentPath;
 	if (GetOpenFileName(&Desc))
 	{
-		mTexture = CAssetMgr::GetInst()->LoadTexture(L"Crawlid", Desc.lpstrFile , true);		
+		mTexture = CAssetMgr::GetInst()->LoadTexture(L"Crawlid", Desc.lpstrFile , true);
+		mSubTexture = CAssetMgr::GetInst()->LoadTexture(L"SubCrawlid", Desc.lpstrFile, CEngine::GetInst()->GetEditDC(), true);
+
 	}
 
 	FilbookMode = true;
@@ -479,7 +499,7 @@ void CLevel_Editor::OpenImage()
 
 void CLevel_Editor::SaveImage()
 {
-	CSprite* mSprite = new CSprite;
+	//CSprite* mSprite = new CSprite;
 
 
 
@@ -717,7 +737,7 @@ INT_PTR CALLBACK TileMapInfoProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 			// Editor 레벨에 생성해 놓은 CMap 오틒E㎷??가져옴
 			CMap* pMapObj = pEditorLevel->GetMapObject();
 
-			// 타일맵 컴포넌트의 수치를 에디트컨트롤에 입력된 숫자로 변경함
+			// 타일맵 컴포넌트의 수치를 에디트컨트롤에 입력된 숫자로 변컖E
 			CTileMap* pTileMap = pMapObj->GetComponent<CTileMap>();
 			pTileMap->SetRowCol(Row, Col);
 

@@ -60,7 +60,7 @@ void CFlipbookPlayer::Reset()
 
 void CFlipbookPlayer::FinalTick()
 {
-	// 현재 재생중인 Flipbook 이 없으면 끝
+	// 현픸E재생중인 Flipbook 이 없으툈E끝
 	if (nullptr == m_CurFlipbook)
 	{
 		return;
@@ -68,11 +68,11 @@ void CFlipbookPlayer::FinalTick()
 
 	if (m_Finish)
 	{	
-		// 반복 재생하기로 했으면 다시 0 번 스프라이트로 인덱스를 변경한다.
+		// 반복 재생하기로 했으툈E다시 0 퉩E스프라이트로 인덱스를 변경한다.
 		if (m_Repeat)
 			Reset();
 
-		// 한번 재생이 끝났고(m_Finish), 반복 재생모드가 아니라면
+		// 한퉩E재생이 끝났컖Em_Finish), 반복 재생모드가 아니라툈E
 		// 마지막 프레임을 유지하도록 한다.
 		else
 			Play(m_BeFlipNum, m_BeFPS, true);
@@ -87,7 +87,7 @@ void CFlipbookPlayer::FinalTick()
 			m_Time -= 1.f / m_FPS;
 			--m_SpriteIdx;
 
-			// 마지막 Sprite 에 도달했다면
+			// 마지막 Sprite 에 도달했다툈E
 			if (m_SpriteIdx < 0)
 			{
 				// Finish 상태 On
@@ -101,7 +101,7 @@ void CFlipbookPlayer::FinalTick()
 			m_Time -= 1.f / m_FPS;
 			++m_SpriteIdx;
 
-			// 마지막 Sprite 에 도달했다면
+			// 마지막 Sprite 에 도달했다툈E
 			if (m_CurFlipbook->GetMaxSpriteCount() <= m_SpriteIdx)
 			{
 				// Finish 상태 On

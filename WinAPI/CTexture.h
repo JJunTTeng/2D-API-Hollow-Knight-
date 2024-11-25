@@ -20,9 +20,10 @@ public:
 private:
     virtual int Load(const wstring& _FilePath) override;
     virtual int Load(const wstring& _FilePath, bool FullPath)override;
+    virtual int Load(const wstring& _FilePath, bool FullPath, HDC _hdc = nullptr)override;
 
 
-    void Create(UINT _Width, UINT _Height);
+    void Create(UINT _Width, UINT _Height, HDC _hdc = nullptr);
 
 public:
     CTexture();

@@ -11,6 +11,9 @@ private:
 	HWND		m_hWnd;			// 메인 윈도우 핸들
 	Vec2		m_Resolution;	// 메인 윈도우 해상도
 	HDC			m_hDC;			// Main DC(Device Context) 그리기 관련 관리자, 그리기 도구 집합체
+	
+	CTexture*	m_BackBuffer;	// 백버퍼 용도 텍스쳐
+
 
 	//서브 윈도우
 	HINSTANCE	m_EhInst;		// 프로세스 주소
@@ -18,7 +21,9 @@ private:
 	Vec2		m_EResolution;	// 윈도우 해상도
 	HDC			m_EhDC;			// DC(Device Context) 그리기 관련 관리자, 그리기 도구 집합체
 
-	CTexture*	m_BackBuffer;	// 백버퍼 용도 텍스쳐
+	CTexture*	m_EBackBuffer;	// 백버퍼 용도 텍스쳐
+
+
 
 	HPEN		m_Pen[(UINT)PEN_TYPE::END];
 	HBRUSH		m_Brush[(UINT)BRUSH_TYPE::END];
@@ -31,8 +36,15 @@ public:
 	HDC GetMainDC() { return m_hDC; }
 	HDC GetSecondDC() { return m_BackBuffer->GetDC(); }
 
+	Vec2 GetEditResolution() { return m_EResolution; }
+	HDC GetEditDC() { return m_EhDC; }
+	HDC GetEditSecondDC() { return m_EBackBuffer->GetDC(); }
+
 
 	void ChangeWindowSize(Vec2 _vResolution);
+
+
+
 
 
 public:

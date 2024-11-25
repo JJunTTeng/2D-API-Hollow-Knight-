@@ -65,13 +65,50 @@ CTexture* CAssetMgr::LoadTexture(const wstring& _Key, const wstring& _RelativePa
     return (CTexture*)pTex;
 }
 
-CTexture* CAssetMgr::CreateTexture(const wstring& _Key, UINT _Width, UINT _Height)
+CTexture* CAssetMgr::LoadTexture(const wstring& _Key, const wstring& _RelativePath, HDC _hdc, bool FullPath)
+{
+    CAsset* pTex = FindTexture(_Key);
+
+    // 이미 로딩한 적이 있는 Texture 라면
+    if (nullptr != pTex)
+    {
+        // 로딩한 텍스쳐를 반환
+        return (CTexture*)pTex;
+    }
+
+    pTex = new CTexture;
+    if (FullPath == true)
+    {
+        if (_hdc == nullptr)
+            pTex->Load(_RelativePath, FullPath);
+        else
+            pTex->Load(_RelativePath, FullPath, _hdc);
+    }
+    else
+        pTex->Load(_RelativePath);
+
+
+    // 에셋에, 자신이 에셋매니저에 등록될때 사용된 키값과 로딩할 때 사용한 경로를 세팅해준다.
+    pTex->SetKey(_Key);
+    pTex->SetRelativePath(_RelativePath);
+
+    // 컨테이너에 텍스쳐 등록
+    m_mapTex.insert(make_pair(_Key, (CTexture*)pTex));
+
+    return (CTexture*)pTex;
+}
+
+CTexture* CAssetMgr::CreateTexture(const wstring& _Key, UINT _Width, UINT _Height, HDC _hdc)
 {
     CTexture* pTex = FindTexture(_Key);
     assert(!pTex);
 
     pTex = new CTexture;
+    if(_hdc == nullptr)
     pTex->Create(_Width, _Height);
+
+    else
+        pTex->Create(_Width, _Height , _hdc);
 
     // 에셋에, 자신이 에셋매니저에 등록될때 사용된 키값을 세팅해준다.
     pTex->SetKey(_Key);

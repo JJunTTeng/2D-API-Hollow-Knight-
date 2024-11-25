@@ -89,6 +89,7 @@ int CEngine::Init(HINSTANCE _hInst, POINT _Resolution)
     CreateSecondBuffer();
 
 
+
     return S_OK;
 }
 
@@ -99,14 +100,14 @@ int CEngine::EditWindow(HINSTANCE _Inst, POINT _Resolution)
 
     // HWND 윈도우 ID 타입
     // 커널 오브젝트 ( OS 차원에서 관리되는 객체 )
-    HWND hWnd = CreateWindowW(L"Keys", L"MyGames", (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX),
+    m_EhWnd = CreateWindowW(L"Keys", L"MyGames", (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX),
         CW_USEDEFAULT, 0, CW_USEDEFAULT, m_EResolution.y, nullptr, nullptr, m_EhInst, nullptr);
 
-    if (!hWnd)
+    if (!m_EhWnd)
         return E_FAIL;
 
-    ShowWindow(hWnd, true);
-    UpdateWindow(hWnd);
+    ShowWindow(m_EhWnd, true);
+    UpdateWindow(m_EhWnd);
 
   
     // 윈도우 크기를 해상도에 맞게 설정
@@ -114,25 +115,19 @@ int CEngine::EditWindow(HINSTANCE _Inst, POINT _Resolution)
     RECT rt = { 0, 0, m_EResolution.x, m_EResolution.y };
    
     // 메인윈도우가 Menu 가 있는지 확인a
-    HMENU hMenu = GetMenu(hWnd);
+    HMENU hMenu = GetMenu(m_EhWnd);
 
     AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, !!hMenu);
-    SetWindowPos(hWnd, nullptr, m_Resolution.x,0, rt.right - rt.left, rt.bottom - rt.top, 0);
+    SetWindowPos(m_EhWnd, nullptr, m_Resolution.x,0, rt.right - rt.left, rt.bottom - rt.top, 0);
 
 
     //AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, true);
     //MoveWindow(hWnd, 0, 0, rt.right - rt.left, rt.bottom - rt.top, true);
 
     // DC 생성   
-    m_EhDC = GetDC(hWnd);
+    m_EhDC = GetDC(m_EhWnd);
     
-
-   
-    MoveToEx(m_EhDC, m_EResolution.x / 2,  0, nullptr);
-    LineTo(m_EhDC, m_EResolution.x / 2, m_EResolution.y);
-
-    MoveToEx(m_EhDC, 0, m_EResolution.y / 2, nullptr);
-    LineTo(m_EhDC, m_EResolution.x, m_EResolution.y / 2);
+    m_EBackBuffer = CAssetMgr::GetInst()->CreateTexture(L"SubBackBuffer", (int)m_EResolution.x, (int)m_EResolution.y , m_EhDC);
 
     return S_OK;
 }
@@ -179,6 +174,19 @@ void CEngine::Progress()
         Rectangle(m_BackBuffer->GetDC(), -1, -1, (int)m_Resolution.x + 1, (int)m_Resolution.y + 1);
     }
 
+    // 서브 윈도우 렌더링
+    // 화면 클리어
+    {
+        Rectangle(m_EBackBuffer->GetDC(), -1, -1, (int)m_EResolution.x + 1, (int)m_EResolution.y + 1);
+
+
+        MoveToEx(m_EhDC, m_EResolution.x / 2, 0, nullptr);
+        LineTo(m_EhDC, m_EResolution.x / 2, m_EResolution.y);
+
+        MoveToEx(m_EhDC, 0, m_EResolution.y / 2, nullptr);
+        LineTo(m_EhDC, m_EResolution.x, m_EResolution.y / 2);
+    }
+
     // 레벨 렌더링
     CLevelMgr::GetInst()->Render();
 
@@ -191,6 +199,10 @@ void CEngine::Progress()
     // SecondBitmap 있는 장면을 MainWindowBitmap 으로 복사해온다.
     BitBlt(m_hDC, 0, 0, (int)m_Resolution.x, (int)m_Resolution.y
         , m_BackBuffer->GetDC(), 0, 0, SRCCOPY);
+
+    // SecondBitmap 있는 장면을 MainWindowBitmap 으로 복사해온다.
+    BitBlt(m_EhDC, 0, 0, (int)m_EResolution.x, (int)m_EResolution.y
+        , m_EBackBuffer->GetDC(), 0, 0, SRCCOPY);
 
     // TaskMgr 동작
     CTaskMgr::GetInst()->Tick();
@@ -214,4 +226,5 @@ void CEngine::ChangeWindowSize(Vec2 _vResolution)
 void CEngine::CreateSecondBuffer()
 {
     m_BackBuffer = CAssetMgr::GetInst()->CreateTexture(L"BackBuffer", (int)m_Resolution.x, (int)m_Resolution.y);
+
 }
