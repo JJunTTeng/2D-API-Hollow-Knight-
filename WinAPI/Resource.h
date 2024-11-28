@@ -45,6 +45,9 @@
 #define ID_IM_SAVE                      32796
 #define ID_PL_SAVE                      32797
 #define ID_PL_LOAD                      32798
+#define ID_Animes_SAVE                  32802
+#define ID_Animes_LOAD                  32803
+#define ID_ANIMES                       32804
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -53,7 +56,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        131
-#define _APS_NEXT_COMMAND_VALUE         32799
+#define _APS_NEXT_COMMAND_VALUE         32805
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

@@ -34,6 +34,12 @@ public:
 
     void SavePlibook();
     void LoadPlibook();
+
+    void Anime();
+    void AnimeSave();
+    void AnimeLoad();
+
+    void AnimeMode();
 public:
     CLevel_Editor();
     ~CLevel_Editor();
@@ -47,8 +53,10 @@ private:
     Vec2 ColBeginPos;
     Vec2 ColEndPos;
     Vec2 MouseRenderPos;
+    Vec2 EditRenderPos;
 
     bool FilbookMode;
+    bool AnimesMode;
 
 };
 

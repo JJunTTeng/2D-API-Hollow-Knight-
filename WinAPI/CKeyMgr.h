@@ -53,11 +53,13 @@ class CKeyMgr
 private:
 	vector<KeyInfo>		m_vecKeyInfo;
 	Vec2				m_MousePos;
+	Vec2				m_EditMousePos;
 
 public:
 	KEY_STATE GetKeyState(KEY _key) { return m_vecKeyInfo[_key].State; }
 	bool GetNoneKey();
 	Vec2 GetMousePos() { return m_MousePos; }	
+	Vec2 GetEditMousePos() { return m_EditMousePos; }
 
 	bool IsMouseOffScreen();
 

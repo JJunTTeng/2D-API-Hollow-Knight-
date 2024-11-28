@@ -36,6 +36,7 @@ public:
 	HDC GetMainDC() { return m_hDC; }
 	HDC GetSecondDC() { return m_BackBuffer->GetDC(); }
 
+	HWND GetEditWndHwnd() { return m_EhWnd; }
 	Vec2 GetEditResolution() { return m_EResolution; }
 	HDC GetEditDC() { return m_EhDC; }
 	HDC GetEditSecondDC() { return m_EBackBuffer->GetDC(); }

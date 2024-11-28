@@ -57,7 +57,7 @@ void CKeyMgr::Init()
 void CKeyMgr::Tick()
 {
 	// 게임 윈도우가 포커싱 중일 때
-	if (GetFocus() == CEngine::GetInst()->GetMainWndHwnd())
+	if (GetFocus() == CEngine::GetInst()->GetMainWndHwnd() || GetFocus() == CEngine::GetInst()->GetEditWndHwnd())
 	{
 		for (size_t i = 0; i < m_vecKeyInfo.size(); ++i)
 		{
@@ -103,6 +103,12 @@ void CKeyMgr::Tick()
 		ScreenToClient(CEngine::GetInst()->GetMainWndHwnd(), &ptPos);
 
 		m_MousePos = ptPos;
+
+		GetCursorPos(&ptPos);
+		ScreenToClient(CEngine::GetInst()->GetEditWndHwnd(), &ptPos);
+
+		m_EditMousePos = ptPos;
+
 	}
 
 	// 게임 윈도우가 비활성화 되어 있을 때
@@ -127,6 +133,9 @@ void CKeyMgr::Tick()
 		// 마우스 좌표 갱신
 		*((int*)&m_MousePos.x) = 0xffffffff;
 		*((int*)&m_MousePos.y) = 0xffffffff;
+
+		*((int*)&m_EditMousePos.x) = 0xffffffff;
+		*((int*)&m_EditMousePos.y) = 0xffffffff;
 	}
 }
 
