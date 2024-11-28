@@ -2,6 +2,15 @@
 
 #include "CLevel.h"
 
+enum class EditMode
+{
+     FilbookMode,
+     ColliderMode,
+     AnimesMode,
+     None
+};
+
+
 class CPlayer;
 class Colision;
 class CTexture;
@@ -55,8 +64,7 @@ private:
     Vec2 MouseRenderPos;
     Vec2 EditRenderPos;
 
-    bool FilbookMode;
-    bool AnimesMode;
+    EditMode mEditMode;
 
 };
 

@@ -9,6 +9,8 @@ enum POST_PROCESS
 	HEART,
 };
 
+
+
 struct tCamEffect
 {	
 	POST_PROCESS	Effect;		// 진행중인 효과 종류	
@@ -54,7 +56,9 @@ public:
 	Vec2 GetRealPos(Vec2 _RenderPos) { return _RenderPos + m_Diff; }
 
 	void SetPlusCameraPos(Vec2 pos) { m_LookAt += pos; }
-	Vec2 GetLookAt() { return m_LookAt + m_Offset; }
+	Vec2 GetLookAt() { return m_LookAt; }
+
+	Vec2 GetDiff() { return m_Diff; }
 
 	void SetTarget(CObj* _Target) { m_Target = _Target; }
 	void SetOffset(Vec2 _Pos) { m_Offset = _Pos; }

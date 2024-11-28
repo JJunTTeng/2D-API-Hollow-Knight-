@@ -39,8 +39,7 @@ CLevel_Editor::CLevel_Editor()
 	, ColBeginPos(0, 0)
 	, ColEndPos(0, 0)
 	, MouseRenderPos(0, 0)
-	, FilbookMode(false)
-	, AnimesMode(false)
+	, mEditMode(EditMode::None)
 {
 }
 
@@ -68,10 +67,7 @@ void CLevel_Editor::Begin()
 	// 메뉴바가 추가되었콅E때문에, 윈도퓖E크기를 재조정한다.
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 
-	Vec2 vResolution = CEngine::GetInst()->GetResolution();
-
 	
-	CCamera::GetInst()->GetLookAt();
 	
 	// Player 생성
 	mPlayer = new CPlayer;
@@ -125,7 +121,7 @@ void CLevel_Editor::Tick()
 	// 일반적인 렌더링 : 실제 좌표 -> Render 좌표 변컖E
 	// 마퓖E?좌표 : Render 좌표(마퓖E봐쪄? -> 실제 좌표로 변컖E
 	
-	MouseRenderPos = mPlayer->GetPos() + CKeyMgr::GetInst()->GetMousePos() - CEngine::GetInst()->GetResolution() / 2;
+	MouseRenderPos = CCamera::GetInst()->GetDiff() + CKeyMgr::GetInst()->GetMousePos();
 	EditRenderPos = CKeyMgr::GetInst()->GetEditMousePos();
 	if (KEY_TAP(KEY::LBTN))
 	{		
@@ -151,7 +147,7 @@ void CLevel_Editor::Tick()
 
 	if (KEY_PRESSED(KEY::LBTN))
 	{
-		ColEndPos = MouseRenderPos;
+		//ColEndPos = MouseRenderPos;
 	}
 
 
@@ -177,7 +173,7 @@ void CLevel_Editor::Tick()
 	}
 
 
-	if (FilbookMode)
+	if (mEditMode == EditMode::ColliderMode)
 	{
 		Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
 
@@ -199,7 +195,7 @@ void CLevel_Editor::Tick()
 		}
 	}
 
-	if (AnimesMode)
+	if (mEditMode == EditMode::AnimesMode)
 	{
 		AnimeMode();
 
@@ -211,8 +207,6 @@ void CLevel_Editor::Render()
 {
 	CLevel::Render();
 
-	if (FilbookMode == false)
-	{
 		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 10, L"Editor Level", wcslen(L"Editor Level"));
 
 		wchar_t word[50] = L"";
@@ -228,9 +222,13 @@ void CLevel_Editor::Render()
 		swprintf_s(word, 50, L"%f, %f", EditRenderPos.x, EditRenderPos.y);
 		int len2 = wcsnlen_s(word, 50);
 		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 70, word, len2);
-	}
 
-	if (FilbookMode)
+		swprintf_s(word, 50, L"%f, %f", CCamera::GetInst()->GetDiff().x, CCamera::GetInst()->GetDiff().y);
+		int len3 = wcsnlen_s(word, 50);
+		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 90, word, len3);
+		
+
+	if (mEditMode == EditMode::FilbookMode)
 	{
 		wstring strContentPath = CPathMgr::GetContentPath();
 		strContentPath += L"Texture\\Enime\\Crawlid.png";
@@ -283,7 +281,7 @@ void CLevel_Editor::Render()
 
 	}
 
-	if (AnimesMode)
+	if (mEditMode == EditMode::AnimesMode)
 	{		BLENDFUNCTION blend = {};
 
 		blend.BlendOp = AC_SRC_OVER;
@@ -521,7 +519,7 @@ void CLevel_Editor::OpenImage()
 
 	}
 
-	FilbookMode = true;
+	mEditMode = EditMode::FilbookMode;
 
 
 }
@@ -568,7 +566,7 @@ void CLevel_Editor::Anime()
 
 	}
 
-	AnimesMode = true;
+	mEditMode = EditMode::AnimesMode;
 
 	
 
@@ -588,13 +586,13 @@ void CLevel_Editor::AnimeMode()
 	Vec2 TileSize = Vec2(100, 100);
 
 
-	if (mSubTexture->GetName() == L"EditEnimes01")
+	if (mSubTexture->GetKey() == L"EditEnimes01")
 	{
 		if (KEY_TAP(LBTN))
 		{
 			if (MinTileSize <= EditRenderPos)
 			{
-
+				int a = 0;
 
 
 
