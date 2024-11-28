@@ -93,8 +93,22 @@ CPlayer::CPlayer()
 	m_CFloor->SetName(L"FloorBox");
 	m_CFloor->SetScale(Vec2(50.f, 5.f));
 	m_CFloor->SetOffset(Vec2(0.f, 62.5f));
-
 	AddComponent(m_CFloor);
+
+	//왼쪽 히트박스
+	m_CLeft = new CCollider;
+	m_CLeft->SetName(L"LeftBox");
+	m_CLeft->SetScale(Vec2(5.f, 120.f));
+	m_CLeft->SetOffset(Vec2(-30.5f, 0.0f));
+	AddComponent(m_CLeft);
+
+	//오른쪽 히트박스
+	m_CRight = new CCollider;
+	m_CRight->SetName(L"RightBox");
+	m_CRight->SetScale(Vec2(5.f, 120.f));
+	m_CRight->SetOffset(Vec2(30.5f, 0.0f));
+	AddComponent(m_CRight);
+
 
 	// Collider 컴포넌트 추가
 	//m_CAttack = new CCollider;
@@ -117,6 +131,7 @@ CPlayer::CPlayer()
 	m_RigidBody->SetMass(1.f);
 	m_RigidBody->SetFriction(700.f);
 	m_RigidBody->SetJumpVelocity(Vec2(0.f, -500.f));
+	m_RigidBody->SetGravityAccel(Vec2(0, 500));
 }
 
 CPlayer::~CPlayer()
@@ -133,13 +148,12 @@ void CPlayer::Begin()
 	CCamera::GetInst()->SetTarget(this);
 
 
-
 }
 
 void CPlayer::Tick()
 {
 	SetPrevPos(GetPos());
-
+	Vec2 mPpos = GetPrevPos();
 	Move();
 	Jump();
 	Attack();
@@ -380,6 +394,17 @@ void CPlayer::Move()
 {
 	//이미지
 	{	
+		if (CKeyMgr::GetInst()->GetNoneKey() == true)
+		{
+			if(m_Dir == P_DIR::D_LEFT)
+				m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
+
+			else
+				m_FlipbookPlayer->Play(IDLE_RIGHT, 30.f, true);
+
+
+		}
+
 		if (KEY_TAP(LEFT))
 		{
 			m_Dir = P_DIR::D_LEFT;
@@ -417,14 +442,10 @@ void CPlayer::Move()
 		if (KEY_RELEASED(LEFT))
 		{
 			m_Ud = P_UD::D_NONE;
-
-			m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
 		}
 		if (KEY_RELEASED(RIGHT))
 		{
 			m_Ud = P_UD::D_NONE;
-
-			m_FlipbookPlayer->Play(IDLE_RIGHT, 30.f, true);
 		}
 		if (KEY_RELEASED(UP))
 		{

@@ -1,3 +1,4 @@
+
 #include "pch.h"
 #include "CLevel_Editor.h"
 
@@ -69,28 +70,28 @@ void CLevel_Editor::Begin()
 	Vec2 vResolution = CEngine::GetInst()->GetResolution();
 
 	
-	//CCamera::GetInst()->GetLookAt();
-	//
-	//// Player 생성
-	//mPlayer = new CPlayer;
-	//mPlayer->SetName(L"Player");
-	//mPlayer->SetPos(Vec2(1954,1348));
+	CCamera::GetInst()->GetLookAt();
+	
+	// Player 생성
+	mPlayer = new CPlayer;
+	mPlayer->SetName(L"Player");
+	mPlayer->SetPos(Vec2(1954,1348));
 
 
-	//AddObject(mPlayer, LAYER_TYPE::PLAYER);
+	AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	//// 샘플퓖EMap 오틒E㎷?생성
-	//m_MapObj = new CMap;
-	//AddObject(m_MapObj, LAYER_TYPE::TILE);
+	// 샘플퓖EMap 오틒E㎷?생성
+	m_MapObj = new CMap;
+	AddObject(m_MapObj, LAYER_TYPE::TILE);
 
-	//CBgMap* mBgMap = new CBgMap;
-	//AddObject(mBgMap, LAYER_TYPE::FrontBg);
+	CBgMap* mBgMap = new CBgMap;
+	AddObject(mBgMap, LAYER_TYPE::FrontBg);
 
-	//CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::COLLIDER);
+	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::COLLIDER);
 
-	//wchar_t m_Path[255] = L"1-1";
+	wchar_t m_Path[255] = L"1-1";
 
-	//LoadColider(m_Path);
+	LoadColider(m_Path);
 
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
 	CLevel::Begin();
@@ -110,70 +111,69 @@ void CLevel_Editor::End()
 
 void CLevel_Editor::Tick()
 {
-	//CLevel::Tick();
+	CLevel::Tick();
 
-	//// 특정 키가 눌리툈EStart 레벨로 변컖E
-	//if (KEY_TAP(KEY::M))
-	//{
-	//	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
-	//	ChangeLevel(LEVEL_TYPE::START);
-	//}
+	// 특정 키가 눌리툈EStart 레벨로 변컖E
+	if (KEY_TAP(KEY::M))
+	{
+		Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+		ChangeLevel(LEVEL_TYPE::START);
+	}
 
-	//// 마퓖E?클릭으로 CMap 오틒E㎷??타일 이미햨E인덱스 변컖E
-	//// 일반적인 렌더링 : 실제 좌표 -> Render 좌표 변컖E
-	//// 마퓖E?좌표 : Render 좌표(마퓖E봐쪄? -> 실제 좌표로 변컖E
-	//
-	//MouseRenderPos = mPlayer->GetPos() + CKeyMgr::GetInst()->GetMousePos() - CEngine::GetInst()->GetResolution() / 2;
-	//if (KEY_TAP(KEY::LBTN))
-	//{		
-	//	ColBeginPos = MouseRenderPos;
-	//}
+	// 마퓖E?클릭으로 CMap 오틒E㎷??타일 이미햨E인덱스 변컖E
+	// 일반적인 렌더링 : 실제 좌표 -> Render 좌표 변컖E
+	// 마퓖E?좌표 : Render 좌표(마퓖E봐쪄? -> 실제 좌표로 변컖E
+	
+	MouseRenderPos = mPlayer->GetPos() + CKeyMgr::GetInst()->GetMousePos() - CEngine::GetInst()->GetResolution() / 2;
+	if (KEY_TAP(KEY::LBTN))
+	{		
+		ColBeginPos = MouseRenderPos;
+	}
 
-	//if (KEY_TAP(KEY::RBTN))
-	//{
-	//	
-	//	list<Colision*>::iterator iter = mDrawCol.begin();
+	if (KEY_TAP(KEY::RBTN))
+	{
+		
+		list<Colision*>::iterator iter = mDrawCol.begin();
 
-	//	for (; iter != mDrawCol.end(); iter++)
-	//	{
-	//		CCollider* mColider = (*iter)->GetComponent<CCollider>();
-	//					
-	//		if(fabs(mColider->GetFinalPos().x - MouseRenderPos.x) < mColider->GetScale().x /2 && 
-	//			fabs(mColider->GetFinalPos().y - MouseRenderPos.y) < mColider->GetScale().y / 2)
-	//		{
-	//			(*iter)->SetDead();
+		for (; iter != mDrawCol.end(); iter++)
+		{
+			CCollider* mColider = (*iter)->GetComponent<CCollider>();
+						
+			if(fabs(mColider->GetFinalPos().x - MouseRenderPos.x) < mColider->GetScale().x /2 && 
+				fabs(mColider->GetFinalPos().y - MouseRenderPos.y) < mColider->GetScale().y / 2)
+			{
+				(*iter)->SetDead();
+				return;
+			}
+		}
+	}
 
-	//			return;
-	//		}
-	//	}
-	//}
-
-	//if (KEY_PRESSED(KEY::LBTN))
-	//{
-	//	ColEndPos = MouseRenderPos;
-	//}
-
+	if (KEY_PRESSED(KEY::LBTN))
+	{
+		ColEndPos = MouseRenderPos;
+	}
 
 
-	//if (KEY_RELEASED(KEY::LBTN))
-	//{
 
-	//	Vec2 pos = mPlayer->GetPos();
+	if (KEY_RELEASED(KEY::LBTN))
+	{
 
-	//	ColEndPos = MouseRenderPos;
-	//	CObj* mColision = new Colision;
-	//	AddObject(mColision, LAYER_TYPE::COLLIDER);
-	//	CCollider* mCollider = new CCollider;
-	//	mColision->SetPos(ColBeginPos);
-	//	mCollider->SetScale(ColEndPos - ColBeginPos);
-	//	mCollider->SetOffset(mCollider->GetScale()/2);
-	//	mCollider->SetName(L"Tile");
-	//	mCollider = (CCollider*)mColision->AddComponent(mCollider);
+		Vec2 pos = mPlayer->GetPos();
+
+		ColEndPos = MouseRenderPos;
+		CObj* mColision = new Colision;
+		AddObject(mColision, LAYER_TYPE::COLLIDER);
+		CCollider* mCollider = new CCollider;
+		mColision->SetPos(ColBeginPos);
+		mCollider->SetScale(ColEndPos - ColBeginPos);
+		mCollider->SetOffset(mCollider->GetScale()/2);
+		mCollider->SetName(L"Tile");
+		mCollider = (CCollider*)mColision->AddComponent(mCollider);
 
 
-	//	ColBeginPos = Vec2(0, 0);
-	//	ColEndPos = Vec2(0, 0);
-	//}
+		ColBeginPos = Vec2(0, 0);
+		ColEndPos = Vec2(0, 0);
+	}
 
 
 	if (FilbookMode == true)

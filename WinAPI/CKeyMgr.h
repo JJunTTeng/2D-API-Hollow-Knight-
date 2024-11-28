@@ -56,6 +56,7 @@ private:
 
 public:
 	KEY_STATE GetKeyState(KEY _key) { return m_vecKeyInfo[_key].State; }
+	bool GetNoneKey();
 	Vec2 GetMousePos() { return m_MousePos; }	
 
 	bool IsMouseOffScreen();

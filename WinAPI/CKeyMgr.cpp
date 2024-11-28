@@ -130,6 +130,17 @@ void CKeyMgr::Tick()
 	}
 }
 
+bool CKeyMgr::GetNoneKey()
+{
+	for (size_t i = 0; i < m_vecKeyInfo.size(); ++i)
+	{
+		if (!m_vecKeyInfo[i].State == KEY_STATE::NONE)
+			return false;
+	}
+
+	return true;
+}
+
 bool CKeyMgr::IsMouseOffScreen()
 {
 	Vec2 vResolution = CEngine::GetInst()->GetResolution();

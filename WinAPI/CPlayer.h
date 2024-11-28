@@ -39,6 +39,9 @@ private:
     CCollider*          m_CHitBox;
     CCollider*          m_CHead;
     CCollider*          m_CFloor;
+    CCollider*          m_CLeft;
+    CCollider*          m_CRight;
+
     CCollider*          m_CAttack;
 
 

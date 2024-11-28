@@ -67,6 +67,7 @@ public:
         }
     }
 
+    Vec2 GetJumpVelocity() {return  m_JumpVelocity; }
     void SetJumpVelocity(Vec2 _Veloticy) { m_JumpVelocity = _Veloticy; }
 
     void Jump();
