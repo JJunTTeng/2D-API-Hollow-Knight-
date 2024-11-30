@@ -1,0 +1,15 @@
+walk : 
+Left : 3 / 22
+scale : 116 / 85
+
+turn
+Left : 3 / 129
+sclae : 96 / 83
+
+death
+Left / 3 / 234
+scale :  117/ 120
+
+death2
+Left : 3 / 376
+sclae : 128 / 90

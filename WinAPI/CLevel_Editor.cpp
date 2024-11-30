@@ -31,7 +31,8 @@
 
 #include "CCollisionMgr.h"
 
-
+#include "CMonster.h"
+#include "Crawlid.h"
 
 CLevel_Editor::CLevel_Editor()
 	: m_MapObj(nullptr)
@@ -40,6 +41,7 @@ CLevel_Editor::CLevel_Editor()
 	, ColEndPos(0, 0)
 	, MouseRenderPos(0, 0)
 	, mEditMode(EditMode::None)
+	, mEnimeName(EnimesName::None)
 {
 }
 
@@ -110,6 +112,26 @@ void CLevel_Editor::Tick()
 {
 	CLevel::Tick();
 
+	MouseRenderPos = CCamera::GetInst()->GetDiff() + CKeyMgr::GetInst()->GetMousePos();
+	EditRenderPos = CKeyMgr::GetInst()->GetEditMousePos();
+
+
+	switch (mEditMode)
+	{
+	case EditMode::FilbookMode:
+		break;
+	case EditMode::ColliderMode:
+		ColliderMode();
+		break;
+	case EditMode::EnimesMode:
+		EnimeMode();
+		break;
+	case EditMode::None:
+		break;
+	default:
+		break;
+	}
+
 	// ﾆｯﾁ､ ﾅｰｰ｡ ｴｭｸｮｸ・Start ｷｹｺｧｷﾎ ｺｯｰ・
 	if (KEY_TAP(KEY::M))
 	{
@@ -117,89 +139,6 @@ void CLevel_Editor::Tick()
 		ChangeLevel(LEVEL_TYPE::START);
 	}
 
-	// ｸｶｿ・?ﾅｬｸｯﾀｸｷﾎ CMap ｿﾀｺ・ｧﾆ??ﾅｸﾀﾏ ﾀﾌｹﾌﾁ・ﾀﾎｵｦｽｺ ｺｯｰ・
-	// ﾀﾏｹﾝﾀ釥ﾎ ｷｻｴｵ : ｽﾇﾁｦ ﾁﾂﾇ･ -> Render ﾁﾂﾇ･ ｺｯｰ・
-	// ｸｶｿ・?ﾁﾂﾇ･ : Render ﾁﾂﾇ･(ｸｶｿ・ｺﾁﾂﾇ? -> ｽﾇﾁｦ ﾁﾂﾇ･ｷﾎ ｺｯｰ・
-	
-	MouseRenderPos = CCamera::GetInst()->GetDiff() + CKeyMgr::GetInst()->GetMousePos();
-	EditRenderPos = CKeyMgr::GetInst()->GetEditMousePos();
-	if (KEY_TAP(KEY::LBTN))
-	{		
-		ColBeginPos = MouseRenderPos;
-	}
-
-	if (KEY_TAP(KEY::RBTN))
-	{
-		list<Colision*>::iterator iter = mDrawCol.begin();
-
-		for (; iter != mDrawCol.end(); iter++)
-		{
-			CCollider* mColider = (*iter)->GetComponent<CCollider>();
-						
-			if(fabs(mColider->GetFinalPos().x - MouseRenderPos.x) < mColider->GetScale().x /2 && 
-				fabs(mColider->GetFinalPos().y - MouseRenderPos.y) < mColider->GetScale().y / 2)
-			{
-				(*iter)->SetDead();
-				return;
-			}
-		}
-	}
-
-	if (KEY_PRESSED(KEY::LBTN))
-	{
-		//ColEndPos = MouseRenderPos;
-	}
-
-
-
-	if (KEY_RELEASED(KEY::LBTN))
-	{
-
-		Vec2 pos = mPlayer->GetPos();
-
-		ColEndPos = MouseRenderPos;
-		CObj* mColision = new Colision;
-		AddObject(mColision, LAYER_TYPE::COLLIDER);
-		CCollider* mCollider = new CCollider;
-		mColision->SetPos(ColBeginPos);
-		mCollider->SetScale(ColEndPos - ColBeginPos);
-		mCollider->SetOffset(mCollider->GetScale()/2);
-		mCollider->SetName(L"Tile");
-		mCollider = (CCollider*)mColision->AddComponent(mCollider);
-
-
-		ColBeginPos = Vec2(0, 0);
-		ColEndPos = Vec2(0, 0);
-	}
-
-
-	if (mEditMode == EditMode::ColliderMode)
-	{
-		Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
-
-
-		if (KEY_TAP(KEY::LBTN))
-		{
-			ColBeginPos = vMousePos;
-		}
-
-		if (KEY_PRESSED(KEY::LBTN))
-		{
-			ColEndPos = vMousePos;
-		}
-
-		if (KEY_RELEASED(KEY::LBTN))
-		{
-			ColEndPos = vMousePos;
-
-		}
-	}
-
-	if (mEditMode == EditMode::AnimesMode)
-	{
-		AnimeMode();
-
-	}
 
 }
 
@@ -276,13 +215,21 @@ void CLevel_Editor::Render()
 
 		Rectangle(dc, ColBeginPos.x, ColBeginPos.y, ColEndPos.x, ColEndPos.y);
 
+		HDC m_EhDC = CEngine::GetInst()->GetEditDC();
+		Vec2 m_EResolution = CEngine::GetInst()->GetEditResolution();
 
+		MoveToEx(m_EhDC, m_EResolution.x / 2, 0, nullptr);
+		LineTo(m_EhDC, m_EResolution.x / 2, m_EResolution.y);
+
+		MoveToEx(m_EhDC, 0, m_EResolution.y / 2, nullptr);
+		LineTo(m_EhDC, m_EResolution.x, m_EResolution.y / 2);
 
 
 	}
 
-	if (mEditMode == EditMode::AnimesMode)
-	{		BLENDFUNCTION blend = {};
+	if (mEditMode == EditMode::EnimesMode)
+	{		
+		BLENDFUNCTION blend = {};
 
 		blend.BlendOp = AC_SRC_OVER;
 		blend.BlendFlags = 0;
@@ -361,6 +308,11 @@ void CLevel_Editor::LoadTileMap()
 
 		
 	}	
+}
+
+void CLevel_Editor::Collider()
+{
+	mEditMode = EditMode::ColliderMode;
 }
 
 void CLevel_Editor::SaveColider()
@@ -528,8 +480,7 @@ void CLevel_Editor::SaveImage()
 {
 	//CSprite* mSprite = new CSprite;
 
-
-
+	
 }
 
 void CLevel_Editor::SavePlibook()
@@ -540,7 +491,7 @@ void CLevel_Editor::LoadPlibook()
 {
 }
 
-void CLevel_Editor::Anime()
+void CLevel_Editor::Enime()
 {
 	wstring strContentPath = CPathMgr::GetContentPath();
 	strContentPath += L"Texture\\Enime\\";
@@ -566,40 +517,147 @@ void CLevel_Editor::Anime()
 
 	}
 
-	mEditMode = EditMode::AnimesMode;
+	mEditMode = EditMode::EnimesMode;
+}
 
-	
+void CLevel_Editor::EnimeSave()
+{
+	wstring strContentPath = CPathMgr::GetContentPath();
+	strContentPath += L"Enimes\\";
+
+	// ﾆﾄﾀﾏ ｰ豺ﾎ ｹｮﾀﾚｿｭ
+	wchar_t szFilePath[255] = {};
+
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = szFilePath;	// ﾃﾖﾁｾﾀ釥ｸｷﾎ ｰ昤･ ｰ豺ﾎｸｦ ｹﾞｾﾆｳｾ ｸ鈆・
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"Enimes\0*.enimes\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+	if (false == GetSaveFileName(&Desc))
+		return;
+
+	FILE* File = nullptr;
+	_wfopen_s(&File, szFilePath, L"w");
+
+	for(CMonster* mMonstor : mMonsters)
+	{
+		//Coliderﾀﾇ ｽｺﾅﾗﾀﾌﾆｮ ｰｪ ﾀ惕・
+		fwprintf_s(File, L"[Name]\n");
+		fwprintf_s(File, L"%s\n\n", mMonstor->GetName().c_str());
+
+		fwprintf_s(File, L"[Position]\n");
+		fwprintf_s(File, L"%d, %d\n\n", (int)mMonstor->GetPos().x, (int)mMonstor->GetPos().y);
+
+		fwprintf_s(File, L"[Scale]\n");
+		fwprintf_s(File, L"%d, %d\n\n", (int)mMonstor->GetScale().x, (int)mMonstor->GetScale().y);
+
+
+
+	}
+	fclose(File);
 
 }
 
-void CLevel_Editor::AnimeSave()
+void CLevel_Editor::EnimeLoad()
 {
 }
 
-void CLevel_Editor::AnimeLoad()
+void CLevel_Editor::ColliderMode()
 {
+	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+
+	if (KEY_TAP(KEY::LBTN))
+	{
+		ColBeginPos = MouseRenderPos;
+	}
+
+	if (KEY_TAP(KEY::RBTN))
+	{
+		list<Colision*>::iterator iter = mDrawCol.begin();
+
+		for (; iter != mDrawCol.end(); iter++)
+		{
+			CCollider* mColider = (*iter)->GetComponent<CCollider>();
+
+			if (fabs(mColider->GetFinalPos().x - MouseRenderPos.x) < mColider->GetScale().x / 2 &&
+				fabs(mColider->GetFinalPos().y - MouseRenderPos.y) < mColider->GetScale().y / 2)
+			{
+				(*iter)->SetDead();
+				return;
+			}
+		}
+	}
+
+	if (KEY_RELEASED(KEY::LBTN))
+	{
+
+			Vec2 pos = mPlayer->GetPos();
+
+			ColEndPos = MouseRenderPos;
+			CObj* mColision = new Colision;
+			AddObject(mColision, LAYER_TYPE::COLLIDER);
+			CCollider* mCollider = new CCollider;
+			mColision->SetPos(ColBeginPos);
+			mCollider->SetScale(ColEndPos - ColBeginPos);
+			mCollider->SetOffset(mCollider->GetScale() / 2);
+			mCollider->SetName(L"Tile");
+			mCollider = (CCollider*)mColision->AddComponent(mCollider);
+
+
+			ColBeginPos = Vec2(0, 0);
+			ColEndPos = Vec2(0, 0);
+		
+
+	}
+
 }
 
-void CLevel_Editor::AnimeMode()
+void CLevel_Editor::EnimeMode()
 {
 	Vec2 MinTileSize(0, 0);
 	Vec2 TileSize = Vec2(100, 100);
 
+	
 
-	if (mSubTexture->GetKey() == L"EditEnimes01")
+	if (mSubTexture->GetKey() == L"EditEnimes01" && KEY_TAP(LBTN) && MinTileSize <= EditRenderPos)
 	{
-		if (KEY_TAP(LBTN))
+		if (EditRenderPos <= TileSize)
 		{
-			if (MinTileSize <= EditRenderPos)
-			{
-				int a = 0;
-
-
-
-
-
-			}
+			mEnimeName = EnimesName::Crawlid;
 		}
+	}
+	
+
+
+
+	if (KEY_TAP(LBTN) && CKeyMgr::GetInst()->IsMouseOffScreen() == false)
+	{
+		EnimeRenderer();
+	}
+
+}
+
+void CLevel_Editor::EnimeRenderer()
+{
+	switch (mEnimeName)
+	{
+	case EnimesName::Crawlid:
+	{
+		Crawlid* mMonstor = new Crawlid;
+		mMonstor->SetPos(CKeyMgr::GetInst()->GetMousePos());
+		AddObject(mMonstor, LAYER_TYPE::MONSTER);
+		mMonsters.push_back(mMonstor);
+	}
+		break;
+	case EnimesName::None:
+		break;
+	default:
+		break;
 	}
 
 }
@@ -628,15 +686,15 @@ void SaveTileMap()
 }
 
 
-	void LoadTileMap()
-	{
-		CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pCurLevel);
-		if (nullptr == pEditorLevel)
-			return;
+void LoadTileMap()
+{
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pCurLevel);
+	if (nullptr == pEditorLevel)
+		return;
 
-		pEditorLevel->LoadTileMap();
-	}
+	pEditorLevel->LoadTileMap();
+}
 
 	void SaveColider()
 	{
@@ -695,7 +753,7 @@ void SaveTileMap()
 		if (nullptr == pEditorLevel)
 			return;
 
-		pEditorLevel->LoadColider();
+		pEditorLevel->LoadPlibook();
 	}
 
 
@@ -739,6 +797,15 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		return true;
 	}
 		
+	case ID_Colliders:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->Collider();
+		return true;
+	}
 
 	case Col_Save:
 	{
@@ -803,32 +870,32 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 	}
 	
 
-	case ID_ANIMES:
+	case ID_ENIMES:
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
 		assert(pEditorLevel);
 
-		pEditorLevel->Anime();
+		pEditorLevel->Enime();
 		return true;
 	}
 
-	case ID_Animes_SAVE:
+	case ID_Enimes_SAVE:
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
 		assert(pEditorLevel);
 
-		pEditorLevel->AnimeSave();
+		pEditorLevel->EnimeSave();
 		return true;
 	}
-	case ID_Animes_LOAD:
+	case ID_Enimes_LOAD:
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
 		assert(pEditorLevel);
 
-		pEditorLevel->AnimeLoad();
+		pEditorLevel->EnimeLoad();
 		return true;
 	}
 	};

@@ -16,9 +16,6 @@ private:
     Vec2        m_InitPos;
     float       m_Dist;
 
-
-
-
     CTexture*   m_Tex;
     CCollider*  m_Collider;
     CFSM*       m_FSM;
@@ -31,7 +28,7 @@ public:
 
 public:
     virtual void Begin() override;
-    virtual void Tick() override;            
+    virtual void Tick() = 0;
     virtual void Render() override;
     virtual void BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider) override;
 

@@ -6,14 +6,21 @@ enum class EditMode
 {
      FilbookMode,
      ColliderMode,
-     AnimesMode,
+     EnimesMode,
      None
+};
+
+enum class EnimesName
+{
+    Crawlid,
+    None
 };
 
 
 class CPlayer;
 class Colision;
 class CTexture;
+class CMonster;
 class CLevel_Editor :
     public CLevel
 {
@@ -35,6 +42,7 @@ public:
     void SaveTileMap();
     void LoadTileMap();
 
+    void Collider();
     void SaveColider();
     void LoadColider(wchar_t* Path);
 
@@ -44,17 +52,21 @@ public:
     void SavePlibook();
     void LoadPlibook();
 
-    void Anime();
-    void AnimeSave();
-    void AnimeLoad();
+    void Enime();
+    void EnimeSave();
+    void EnimeLoad();
 
-    void AnimeMode();
+    void ColliderMode();
+    void EnimeMode();
+    void EnimeRenderer();
 public:
     CLevel_Editor();
     ~CLevel_Editor();
 
 private:
     std::list<Colision*> mDrawCol;
+    std::list<CMonster*> mMonsters;
+
     CPlayer* mPlayer;
     CTexture* mTexture;
     CTexture* mSubTexture;
@@ -66,5 +78,7 @@ private:
 
     EditMode mEditMode;
 
+
+    EnimesName mEnimeName;
 };
 

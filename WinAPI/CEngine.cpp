@@ -178,13 +178,6 @@ void CEngine::Progress()
     // 화면 클리어
     {
         Rectangle(m_EBackBuffer->GetDC(), -1, -1, (int)m_EResolution.x + 1, (int)m_EResolution.y + 1);
-
-
-        MoveToEx(m_EhDC, m_EResolution.x / 2, 0, nullptr);
-        LineTo(m_EhDC, m_EResolution.x / 2, m_EResolution.y);
-
-        MoveToEx(m_EhDC, 0, m_EResolution.y / 2, nullptr);
-        LineTo(m_EhDC, m_EResolution.x, m_EResolution.y / 2);
     }
 
     // 레벨 렌더링

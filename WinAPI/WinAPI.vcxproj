@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AspidHunter.h" />
     <ClInclude Include="CAsset.h" />
     <ClInclude Include="CAssetMgr.h" />
     <ClInclude Include="CBase.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="CPathMgr.h" />
     <ClInclude Include="CPlatform.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="Crawlid.h" />
     <ClInclude Include="CRigidBody.h" />
     <ClInclude Include="CSelectGDI.h" />
     <ClInclude Include="CSound.h" />
@@ -188,13 +190,22 @@
     <ClInclude Include="func.h" />
     <ClInclude Include="func_template.h" />
     <ClInclude Include="global.h" />
+    <ClInclude Include="Gruzzer.h" />
+    <ClInclude Include="HuskGuard.h" />
+    <ClInclude Include="HuskHornhead.h" />
+    <ClInclude Include="LeapingHusk.h" />
+    <ClInclude Include="MonsterFlipbook.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tiktik.h" />
+    <ClInclude Include="Vengefly.h" />
+    <ClInclude Include="WanderingHusk.h" />
     <ClInclude Include="WinAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AspidHunter.cpp" />
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
     <ClCompile Include="CBase.cpp" />
@@ -225,6 +236,7 @@
     <ClCompile Include="CPathMgr.cpp" />
     <ClCompile Include="CPlatform.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="Crawlid.cpp" />
     <ClCompile Include="CRigidBody.cpp" />
     <ClCompile Include="CSelectGDI.cpp" />
     <ClCompile Include="CSound.cpp" />
@@ -239,11 +251,19 @@
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIMgr.cpp" />
     <ClCompile Include="func.cpp" />
+    <ClCompile Include="Gruzzer.cpp" />
+    <ClCompile Include="HuskGuard.cpp" />
+    <ClCompile Include="HuskHornhead.cpp" />
+    <ClCompile Include="LeapingHusk.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MonsterFlipbook.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Tiktik.cpp" />
+    <ClCompile Include="Vengefly.cpp" />
+    <ClCompile Include="WanderingHusk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinAPI.rc" />

@@ -50,6 +50,9 @@
 #define ID_ANIMES                       32804
 #define ID_32805                        32805
 #define ID_Colliders                    32806
+#define ID_ENIMES                       32807
+#define ID_Enimes_LOAD                  32808
+#define ID_Enimes_SAVE                  32809
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -58,7 +61,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        131
-#define _APS_NEXT_COMMAND_VALUE         32807
+#define _APS_NEXT_COMMAND_VALUE         32810
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

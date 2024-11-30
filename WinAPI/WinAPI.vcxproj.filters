@@ -58,9 +58,6 @@
     <ClInclude Include="CPlayer.h">
       <Filter>Game\05. Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Game\05. Object\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="CMissile.h">
       <Filter>Game\05. Object\Missile</Filter>
     </ClInclude>
@@ -163,6 +160,37 @@
     <ClInclude Include="CBgMap.h">
       <Filter>Game\05. Object\Map</Filter>
     </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Game\05. Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Crawlid.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="AspidHunter.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="Gruzzer.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="HuskGuard.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="HuskHornhead.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="LeapingHusk.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiktik.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="Vengefly.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderingHusk.h">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFlipbook.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -173,7 +201,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="CEngine.cpp">
       <Filter>Game\02. Engine</Filter>
     </ClCompile>
@@ -203,9 +230,6 @@
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>Game\05. Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Game\05. Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Game\05. Object\Missile</Filter>
@@ -309,6 +333,40 @@
     <ClCompile Include="CBgMap.cpp">
       <Filter>Game\05. Object\Map</Filter>
     </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Game\05. Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Crawlid.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="AspidHunter.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="Gruzzer.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="HuskGuard.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="HuskHornhead.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="LeapingHusk.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiktik.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="Vengefly.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderingHusk.cpp">
+      <Filter>Game\05. Object\Monster\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFlipbook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -448,6 +506,9 @@
     </Filter>
     <Filter Include="Game\05. Object\Colision">
       <UniqueIdentifier>{b20115ce-0031-4874-ad5a-7813cce063a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Monster\Monsters">
+      <UniqueIdentifier>{7b668100-2f0b-4a71-a113-6929d6561cf3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
