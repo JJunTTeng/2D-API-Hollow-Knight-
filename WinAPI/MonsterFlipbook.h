@@ -1,11 +1,13 @@
 #pragma once
-#include "CEngine.h"
-class MonsterFlipbook : public CEngine
-{
-public:
-	MonsterFlipbook();
-	~MonsterFlipbook();
-private:
 
+class CFlipbook;
+class MonsterFlipbook
+{
+	SINGLE(MonsterFlipbook);
+public:
+
+	void CreateFlipbook();
+private:
+	CFlipbook* mFlipBook;
 };
 

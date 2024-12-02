@@ -190,7 +190,9 @@
     <ClInclude Include="WanderingHusk.h">
       <Filter>Game\05. Object\Monster\Monsters</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterFlipbook.h" />
+    <ClInclude Include="MonsterFlipbook.h">
+      <Filter>Game\05. Object\Monster\Monsters\MonsterFlipBook</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -366,7 +368,9 @@
     <ClCompile Include="WanderingHusk.cpp">
       <Filter>Game\05. Object\Monster\Monsters</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterFlipbook.cpp" />
+    <ClCompile Include="MonsterFlipbook.cpp">
+      <Filter>Game\05. Object\Monster\Monsters\MonsterFlipBook</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -509,6 +513,9 @@
     </Filter>
     <Filter Include="Game\05. Object\Monster\Monsters">
       <UniqueIdentifier>{7b668100-2f0b-4a71-a113-6929d6561cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Monster\Monsters\MonsterFlipBook">
+      <UniqueIdentifier>{4df86fae-dfe2-4d35-aba3-2a7e9e4c0c8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

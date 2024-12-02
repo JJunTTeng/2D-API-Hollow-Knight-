@@ -75,9 +75,13 @@ void CLevel_Editor::Begin()
 	mPlayer = new CPlayer;
 	mPlayer->SetName(L"Player");
 	mPlayer->SetPos(Vec2(1954,1348));
-
-
 	AddObject(mPlayer, LAYER_TYPE::PLAYER);
+
+	// Monster 积己
+	CMonster* mMonster = new CMonster;
+	AddObject(mMonster, LAYER_TYPE::MONSTER);
+
+	mMonsters.push_back(mMonster);
 
 	// 基敲縼EMap 坷簛E?积己
 	m_MapObj = new CMap;
@@ -649,7 +653,7 @@ void CLevel_Editor::EnimeRenderer()
 	case EnimesName::Crawlid:
 	{
 		Crawlid* mMonstor = new Crawlid;
-		mMonstor->SetPos(CKeyMgr::GetInst()->GetMousePos());
+		mMonstor->SetPos(MouseRenderPos);
 		AddObject(mMonstor, LAYER_TYPE::MONSTER);
 		mMonsters.push_back(mMonstor);
 	}

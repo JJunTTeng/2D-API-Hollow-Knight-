@@ -46,7 +46,7 @@ struct KeyInfo
 	bool		bPrevPressed;	// 이전 프레임에 눌렸는지
 };
 
-
+class CCamera;
 class CKeyMgr
 {
 	SINGLE(CKeyMgr);
@@ -54,12 +54,14 @@ private:
 	vector<KeyInfo>		m_vecKeyInfo;
 	Vec2				m_MousePos;
 	Vec2				m_EditMousePos;
+	Vec2				m_Render;
 
 public:
 	KEY_STATE GetKeyState(KEY _key) { return m_vecKeyInfo[_key].State; }
-	bool GetNoneKey();
 	Vec2 GetMousePos() { return m_MousePos; }	
-	Vec2 GetEditMousePos() { return m_EditMousePos; }
+	Vec2 GetEditMousePos() { return m_EditMousePos;}
+
+	bool  GetNoneKey();
 
 	bool IsMouseOffScreen();
 

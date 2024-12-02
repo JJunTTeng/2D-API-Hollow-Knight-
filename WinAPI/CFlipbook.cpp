@@ -14,6 +14,58 @@ CFlipbook::~CFlipbook()
 {
 }
 
+void CFlipbook::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int _blank, int MaxFrame, bool IsRight)
+{
+    // Sprite 생성하기
+
+    for (int i = 0; i < MaxFrame; ++i)
+    {
+        CSprite* pSprite = new CSprite;
+
+        
+        if (IsRight == true)
+        {
+            pSprite->Create(_Atlas, Vec2(_LeftTop.x - (_blank *(i+1)) + (_Slice.x * (MaxFrame - (i + 1))), _LeftTop.y), _Slice);
+
+        }
+        else
+        {
+            pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_blank * (i + 1)) +  (_Slice.x * i), _LeftTop.y), _Slice);
+        }
+        wchar_t Key[50] = {};
+        swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);
+        CAssetMgr::GetInst()->AddSprite(Key, pSprite);
+        wstring strSavePath = L"Sprite\\";
+        strSavePath += pSprite->GetKey();
+        pSprite->Save(strSavePath);
+    }
+
+
+    for (int i = 0; i < MaxFrame; ++i)
+    {
+        wchar_t Key[50] = {};
+        swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);
+        wstring Path = L"Sprite\\";
+        Path += Key;
+        CAssetMgr::GetInst()->LoadSprite(Key, Path + L".sprite");
+    }
+
+
+    CFlipbook* mFlipbook = new CFlipbook;
+
+    for (int i = 0; i < MaxFrame; ++i)
+    {
+        wchar_t Key[50] = {};
+        swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);
+        mFlipbook->AddSprite(CAssetMgr::GetInst()->FindSprite(Key));
+    }
+
+
+    CAssetMgr::GetInst()->AddFlipbook(_FlipbookName, mFlipbook);
+    wstring Path = L"Flipbook\\";
+    mFlipbook->Save(Path + _FlipbookName);
+}
+
 int CFlipbook::Save(const wstring& _RelativePath)
 {
     wstring RelativePath = _RelativePath;

@@ -12,6 +12,8 @@
 #include "CIdleState.h"
 #include "CTraceState.h"
 
+#include "MonsterFlipbook.h"
+
 CMonster::CMonster()
 {
 	//m_Tex = CAssetMgr::GetInst()->LoadTexture(L"Character", L"Texture\\TX_GlowScene_2.png");
@@ -41,7 +43,7 @@ CMonster::~CMonster()
 
 void CMonster::Begin()
 {
-
+	MonsterFlipbook::GetInst()->CreateFlipbook();
 }
 
 void CMonster::Tick()
