@@ -16,6 +16,7 @@ public:
 
 	void CreatePattern(Vec2 _FMovePoint , Vec2 _EMovePoint, Vec2 _MoveSpeed, bool Chase);
 	void Tick();
+	void Render();
 
 
 private:

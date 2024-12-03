@@ -2,6 +2,7 @@
 #include "CMonsPattern.h"
 #include "CRigidBody.h"
 #include "CTimeMgr.h"
+#include "CEngine.h"
 
 CMonsPattern::CMonsPattern ()
 	:CComponent(COMPONENT_TYPE::PATTERN),
@@ -30,7 +31,12 @@ void CMonsPattern::Tick()
 {
 	Vec2 mPos = GetOwner()->GetPos();
 
-	if (GetOwner()->GetComponent<CRigidBody>() == nullptr)
+	if (nullptr == GetOwner()->GetComponent<CRigidBody>())
+	{
+
+	}
+
+	else
 	{
 		CRigidBody* mRigidbody = GetOwner()->GetComponent<CRigidBody>();
 		if (m_dir == Dir::LEFT)
@@ -51,3 +57,23 @@ void CMonsPattern::Tick()
 	}
 
 
+}
+
+void CMonsPattern::Render()
+{
+	HDC dc = CEngine::GetInst()->GetEditSecondDC();
+	Vec2 mPos = GetOwner()->GetPos();
+
+	if (m_dir == Dir::LEFT)
+	{
+		//SELECT_PEN(PEN_TYPE::RED)
+		MoveToEx(dc, mPos.x, mPos.y, nullptr);
+		LineTo(dc, m_FmovePoint.x, m_FmovePoint.y);
+	}
+
+	else
+	{
+		MoveToEx(dc, mPos.x, mPos.y, nullptr);
+		LineTo(dc, m_EmovePoint.x, m_EmovePoint.y);
+	}
+}

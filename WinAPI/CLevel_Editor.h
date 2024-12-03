@@ -7,6 +7,7 @@ enum class EditMode
      FilbookMode,
      ColliderMode,
      EnimesMode,
+     PatternMode,
      None
 };
 
@@ -59,6 +60,8 @@ public:
     void ColliderMode();
     void EnimeMode();
     void EnimeRenderer();
+
+    void EnimesPattern();
 public:
     CLevel_Editor();
     ~CLevel_Editor();
@@ -78,7 +81,8 @@ private:
 
     EditMode mEditMode;
 
-
     EnimesName mEnimeName;
+
+    CMonster* SelectMons;
 };
 

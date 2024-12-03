@@ -133,6 +133,8 @@ void CLevel_Editor::Tick()
 	case EditMode::EnimesMode:
 		EnimeMode();
 		break;
+	case EditMode::PatternMode:
+		EnimesPattern();
 	case EditMode::None:
 		break;
 	default:
@@ -258,6 +260,19 @@ void CLevel_Editor::Render()
 
 
 	}
+
+	if (mEditMode == EditMode::PatternMode && SelectMons)
+	{
+		HDC dc = CEngine::GetInst()->GetSecondDC();
+		Vec2 mPos = SelectMons->GetPos();
+		Vec2 mScale = SelectMons->GetScale();
+
+		SELECT_PEN(PEN_TYPE::GREEN);
+		SELECT_BRUSH(BRUSH_TYPE::HOLLOW);
+		Rectangle(dc, mPos.x - mScale.x / 2, mPos.y - mScale.y / 2, mPos.x + mScale.x / 2, mPos.y + mScale.y);
+	}
+
+
 	//wchar_t word1[50] = L"";
 	//swprintf_s(word1, 50, L"%f, %f", mPlayer->GetPos().x, mPlayer->GetPos().y);
 	//int len2 = wcsnlen_s(word1, 50);
@@ -603,22 +618,22 @@ void CLevel_Editor::ColliderMode()
 	if (KEY_RELEASED(KEY::LBTN))
 	{
 
-			Vec2 pos = mPlayer->GetPos();
+		Vec2 pos = mPlayer->GetPos();
 
-			ColEndPos = MouseRenderPos;
-			CObj* mColision = new Colision;
-			AddObject(mColision, LAYER_TYPE::COLLIDER);
-			CCollider* mCollider = new CCollider;
-			mColision->SetPos(ColBeginPos);
-			mCollider->SetScale(ColEndPos - ColBeginPos);
-			mCollider->SetOffset(mCollider->GetScale() / 2);
-			mCollider->SetName(L"Tile");
-			mCollider = (CCollider*)mColision->AddComponent(mCollider);
+		ColEndPos = MouseRenderPos;
+		CObj* mColision = new Colision;
+		AddObject(mColision, LAYER_TYPE::COLLIDER);
+		CCollider* mCollider = new CCollider;
+		mColision->SetPos(ColBeginPos);
+		mCollider->SetScale(ColEndPos - ColBeginPos);
+		mCollider->SetOffset(mCollider->GetScale() / 2);
+		mCollider->SetName(L"Tile");
+		mCollider = (CCollider*)mColision->AddComponent(mCollider);
 
 
-			ColBeginPos = Vec2(0, 0);
-			ColEndPos = Vec2(0, 0);
-		
+		ColBeginPos = Vec2(0, 0);
+		ColEndPos = Vec2(0, 0);
+
 
 	}
 
@@ -666,6 +681,22 @@ void CLevel_Editor::EnimeRenderer()
 	default:
 		break;
 	}
+
+}
+
+void CLevel_Editor::EnimesPattern()
+{
+	mEditMode = EditMode::PatternMode;
+
+
+	
+	for (CMonster* mMonstor : mMonsters)
+	{
+		if (MouseRenderPos >= (mMonstor->GetPos() - mMonstor->GetScale() / 2) && MouseRenderPos <= (mMonstor->GetPos() + mMonstor->GetScale() / 2))
+			if(KEY_TAP(LBTN))
+				SelectMons = mMonstor;
+	}
+
 
 }
 
@@ -903,6 +934,16 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		assert(pEditorLevel);
 
 		pEditorLevel->EnimeLoad();
+		return true;
+	}
+
+	case ID_ENIMES_PATTERN:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->EnimesPattern();
 		return true;
 	}
 	};
