@@ -69,6 +69,7 @@ enum class COMPONENT_TYPE
 	FLIPBOOKPLAYER,
 	FSM,
 	TILEMAP,
+	PATTERN
 };
 
 enum class ASSET_TYPE

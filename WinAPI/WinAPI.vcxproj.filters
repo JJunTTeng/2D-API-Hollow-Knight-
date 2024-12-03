@@ -193,6 +193,9 @@
     <ClInclude Include="MonsterFlipbook.h">
       <Filter>Game\05. Object\Monster\Monsters\MonsterFlipBook</Filter>
     </ClInclude>
+    <ClInclude Include="CMonsPattern.h">
+      <Filter>Game\06. Component\06. pattern</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -335,9 +338,6 @@
     <ClCompile Include="CBgMap.cpp">
       <Filter>Game\05. Object\Map</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Game\05. Object\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="Crawlid.cpp">
       <Filter>Game\05. Object\Monster\Monsters</Filter>
     </ClCompile>
@@ -356,9 +356,6 @@
     <ClCompile Include="LeapingHusk.cpp">
       <Filter>Game\05. Object\Monster\Monsters</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Game\05. Object\Monster\Monsters</Filter>
-    </ClCompile>
     <ClCompile Include="Tiktik.cpp">
       <Filter>Game\05. Object\Monster\Monsters</Filter>
     </ClCompile>
@@ -370,6 +367,13 @@
     </ClCompile>
     <ClCompile Include="MonsterFlipbook.cpp">
       <Filter>Game\05. Object\Monster\Monsters\MonsterFlipBook</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="CMonsPattern.cpp">
+      <Filter>Game\06. Component\06. pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Game\05. Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -516,6 +520,9 @@
     </Filter>
     <Filter Include="Game\05. Object\Monster\Monsters\MonsterFlipBook">
       <UniqueIdentifier>{4df86fae-dfe2-4d35-aba3-2a7e9e4c0c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\06. pattern">
+      <UniqueIdentifier>{1657fef5-79cb-4ce3-b688-28a00911a046}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

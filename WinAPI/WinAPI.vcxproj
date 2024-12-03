@@ -163,6 +163,7 @@
     <ClInclude Include="CLevel_Start.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMissile.h" />
+    <ClInclude Include="CMonsPattern.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CObj.h" />
     <ClInclude Include="Colision.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="CLevel_Start.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMissile.cpp" />
+    <ClCompile Include="CMonsPattern.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CObj.cpp" />
     <ClCompile Include="Colision.cpp" />

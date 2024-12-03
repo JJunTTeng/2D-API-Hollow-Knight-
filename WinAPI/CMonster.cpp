@@ -43,7 +43,7 @@ CMonster::~CMonster()
 
 void CMonster::Begin()
 {
-	MonsterFlipbook::GetInst()->CreateFlipbook();
+	//MonsterFlipbook::GetInst()->CreateFlipbook();
 }
 
 void CMonster::Tick()

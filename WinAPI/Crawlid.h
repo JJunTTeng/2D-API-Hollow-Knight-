@@ -1,13 +1,6 @@
 #pragma once
 #include "CMonster.h"
 
-enum class State
-{
-    Walk,
-    turn,
-    die
-};
-
 class CFlipbookPlayer;
 class Crawlid :
     public CMonster

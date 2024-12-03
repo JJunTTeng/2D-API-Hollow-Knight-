@@ -91,6 +91,9 @@ void CLevel_Editor::Begin()
 	AddObject(mBgMap, LAYER_TYPE::FrontBg);
 
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::COLLIDER);
+	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
+	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::COLLIDER, LAYER_TYPE::MONSTER);
+
 
 	wchar_t m_Path[255] = L"1-1";
 

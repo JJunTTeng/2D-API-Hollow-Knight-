@@ -29,6 +29,8 @@ void MonsterFlipbook::CreateFlipbook()
 		mFlipBook->CreateFlipbook(L"R_Crawlid_turn", mTexture, Vec2(380, 129), Vec2(96, 83), 3, 2);
 		mFlipBook->CreateFlipbook(L"R_Crawlid_death", mTexture, Vec2(359, 234), Vec2(117, 120), 3, 3);
 
+
+
 	}
 
 }
