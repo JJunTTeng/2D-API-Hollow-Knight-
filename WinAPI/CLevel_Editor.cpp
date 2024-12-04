@@ -34,6 +34,8 @@
 #include "CMonster.h"
 #include "Crawlid.h"
 
+#include "CMonsPattern.h"
+
 CLevel_Editor::CLevel_Editor()
 	: m_MapObj(nullptr)
 	, m_hMenu(nullptr)
@@ -266,10 +268,12 @@ void CLevel_Editor::Render()
 		HDC dc = CEngine::GetInst()->GetSecondDC();
 		Vec2 mPos = SelectMons->GetPos();
 		Vec2 mScale = SelectMons->GetScale();
+		mPos = CCamera::GetInst()->GetRenderPos(mPos);
+
 
 		SELECT_PEN(PEN_TYPE::GREEN);
 		SELECT_BRUSH(BRUSH_TYPE::HOLLOW);
-		Rectangle(dc, mPos.x - mScale.x / 2, mPos.y - mScale.y / 2, mPos.x + mScale.x / 2, mPos.y + mScale.y);
+		Rectangle(dc, mPos.x - mScale.x / 2, mPos.y - mScale.y / 2, mPos.x + mScale.x / 2, mPos.y + mScale.y / 2);
 	}
 
 
@@ -693,8 +697,29 @@ void CLevel_Editor::EnimesPattern()
 	for (CMonster* mMonstor : mMonsters)
 	{
 		if (MouseRenderPos >= (mMonstor->GetPos() - mMonstor->GetScale() / 2) && MouseRenderPos <= (mMonstor->GetPos() + mMonstor->GetScale() / 2))
-			if(KEY_TAP(LBTN))
+			if (KEY_TAP(LBTN) && SelectMons != mMonstor)
+			{
 				SelectMons = mMonstor;
+				return;
+			}
+	}
+
+	if (SelectMons != nullptr)
+	{
+		if (KEY_TAP(LBTN))
+			mMonsPtn->SetEmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
+
+		if (KEY_TAP(RBTN))
+			mMonsPtn->SetFmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
+
+		if (mMonsPtn->GetFmovePoint().x && mMonsPtn->GetEmovePoint().x)
+		{
+			CMonsPattern* mPattern = new CMonsPattern;
+			mPattern->SetEmovePoint(mMonsPtn->GetEmovePoint());
+			mPattern->SetFmovePoint(mMonsPtn->GetFmovePoint());
+
+			SelectMons->AddComponent(mPattern);
+		}
 	}
 
 

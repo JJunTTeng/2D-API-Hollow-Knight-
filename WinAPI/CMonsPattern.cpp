@@ -4,7 +4,7 @@
 #include "CTimeMgr.h"
 #include "CEngine.h"
 
-CMonsPattern::CMonsPattern ()
+CMonsPattern::CMonsPattern()
 	:CComponent(COMPONENT_TYPE::PATTERN),
 	m_EmovePoint(Vec2()),
 	m_FmovePoint(Vec2()),
@@ -18,16 +18,19 @@ CMonsPattern::~CMonsPattern()
 {
 }
 
-void CMonsPattern::CreatePattern(Vec2 _FMovePoint, Vec2 _EMovePoint, Vec2 _MoveSpeed, bool Chase)
+void CMonsPattern::Play(bool Chase)
 {
-	m_FmovePoint = _FMovePoint;
-	m_EmovePoint = _EMovePoint;
-	m_MoveSpeed = _MoveSpeed;
 	m_Point = GetOwner()->GetPos();
+	if (m_FmovePoint.x == NULL && m_FmovePoint.y == NULL)
+		m_FmovePoint = m_Point;
+
+	if (m_EmovePoint.x == NULL && m_EmovePoint.y == NULL)
+		m_EmovePoint = m_Point;
+
 	m_chase = Chase;
 }
 
-void CMonsPattern::Tick()
+void CMonsPattern::FinalTick()
 {
 	Vec2 mPos = GetOwner()->GetPos();
 

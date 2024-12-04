@@ -17,7 +17,7 @@ enum class EnimesName
     None
 };
 
-
+class CMonsPattern;
 class CPlayer;
 class Colision;
 class CTexture;
@@ -84,5 +84,6 @@ private:
     EnimesName mEnimeName;
 
     CMonster* SelectMons;
+    CMonsPattern* mMonsPtn;
 };
 

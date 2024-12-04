@@ -14,8 +14,18 @@ public:
 	CMonsPattern();
 	~CMonsPattern();
 
-	void CreatePattern(Vec2 _FMovePoint , Vec2 _EMovePoint, Vec2 _MoveSpeed, bool Chase);
-	void Tick();
+	Vec2 GetFmovePoint() { return m_FmovePoint; }
+	Vec2 GetEmovePoint() { return m_EmovePoint; }
+
+
+	void SetFmovePoint(Vec2 _Pos) { m_FmovePoint = _Pos; }
+	void SetEmovePoint(Vec2 _Pos) { m_FmovePoint = _Pos; }
+	void SetMoveSpeed(Vec2 _Speed) { m_MoveSpeed = _Speed; }
+
+
+
+	void Play(bool Chase = false);
+	virtual void FinalTick()override;
 	void Render();
 
 
