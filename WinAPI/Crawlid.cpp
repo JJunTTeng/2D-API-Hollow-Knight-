@@ -7,6 +7,7 @@
 #include "CCollider.h"
 #include "CCollisionMgr.h"
 #include "CMonsPattern.h"
+#include "CRigidBody.h"
 
 enum Crawlid_STATE
 {
@@ -26,10 +27,21 @@ Crawlid::Crawlid()
 	SetName(L"Crawlid");
 	SetScale(Vec2(100,100));
 	m_Flipbook->Play(WALK, 10, true);
+
 	CCollider* mCollider = new CCollider;
 	mCollider->SetScale(Vec2(30, 30));
 	AddComponent(mCollider);
-	//CMonsPattern 
+
+	CRigidBody* mRigidbody;
+	//mRigidbody->SetGround(true);
+	mRigidbody = (CRigidBody*)AddComponent(new CRigidBody);
+	mRigidbody->SetMode(RIGIDBODY_MODE::BELTSCROLL);
+	mRigidbody->SetInitialSpeed(100.f);
+	mRigidbody->SetMaxSpeed(500.f);
+	mRigidbody->SetMass(1.f);
+	mRigidbody->SetFriction(700.f);
+	mRigidbody->SetJumpVelocity(Vec2(0.f, -500.f));
+	mRigidbody->SetGravityAccel(Vec2(0, 500));
 	
 }
 

@@ -46,16 +46,16 @@ void CMonsPattern::FinalTick()
 		CRigidBody* mRigidbody = GetOwner()->GetComponent<CRigidBody>();
 		if (m_dir == Dir::LEFT)
 		{
-			if (mPos.x < m_Point.x - m_FmovePoint.x)
-				GetOwner()->SetPos(mPos - m_MoveSpeed * DT);
+			if (mPos.x > m_FmovePoint.x)
+				GetOwner()->SetPos(mPos + Vec2(-100.0f, 0.0f) * DT);
 			else
 				m_dir = Dir::RIGHT;
 		}
 
 		else
 		{
-			if (mPos.x > m_Point.x + m_FmovePoint.x)
-				GetOwner()->SetPos(mPos - m_MoveSpeed * DT);
+			if (mPos.x < m_EmovePoint.x)
+				GetOwner()->SetPos(mPos + Vec2(100.0f, 0.0f) * DT);
 			else
 				m_dir = Dir::LEFT;
 		}
@@ -68,17 +68,26 @@ void CMonsPattern::Render()
 {
 	HDC dc = CEngine::GetInst()->GetSecondDC();
 
-	Vec2 mPos = CCamera::GetInst()->GetRenderPos(GetOwner()->GetPos());
+	Vec2 mPos = CCamera::GetInst()->GetRenderPos(m_Point);
 
 
 	Vec2 mDePos = CCamera::GetInst()->GetRenderPos(m_FmovePoint);
 	Vec2 mDePos2 = CCamera::GetInst()->GetRenderPos(m_EmovePoint);
 
 
+	if (GetOwner()->GetComponent<CRigidBody>())
+	{
+		MoveToEx(dc, mPos.x, mPos.y, nullptr);
+		LineTo(dc, mDePos.x, mPos.y);
+
+		MoveToEx(dc, mPos.x, mPos.y, nullptr);
+		LineTo(dc, mDePos2.x, mPos.y);
+
+		return;
+	}
+
 	MoveToEx(dc, mPos.x, mPos.y, nullptr);
-	LineTo(dc, mDePos.y, mDePos.y);
-
-
+	LineTo(dc, mDePos.x, mDePos.y);
 
 	MoveToEx(dc, mPos.x, mPos.y, nullptr);
 	LineTo(dc, mDePos2.x, mDePos2.y);

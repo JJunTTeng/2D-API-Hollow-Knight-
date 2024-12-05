@@ -716,11 +716,12 @@ void CLevel_Editor::EnimesPattern()
 		{
 			CMonsPattern* mPattern = new CMonsPattern;
 			mMonsPtn = (CMonsPattern*)SelectMons->AddComponent(mPattern);
-		}
+		}		
 
 		else
-		{W
-
+		{
+			mMonsPtn = SelectMons->GetComponent<CMonsPattern>();
+			mMonsPtn->Play();
 		}
 
 		if (KEY_TAP(LBTN))
