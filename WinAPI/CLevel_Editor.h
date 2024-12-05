@@ -85,5 +85,7 @@ private:
 
     CMonster* SelectMons;
     CMonsPattern* mMonsPtn;
+
+    Vec2 mMonsPtnPos;
 };
 

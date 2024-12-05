@@ -44,6 +44,7 @@ CLevel_Editor::CLevel_Editor()
 	, MouseRenderPos(0, 0)
 	, mEditMode(EditMode::None)
 	, mEnimeName(EnimesName::None)
+	, mMonsPtnPos(Vec2())
 {
 }
 
@@ -274,6 +275,13 @@ void CLevel_Editor::Render()
 		SELECT_PEN(PEN_TYPE::GREEN);
 		SELECT_BRUSH(BRUSH_TYPE::HOLLOW);
 		Rectangle(dc, mPos.x - mScale.x / 2, mPos.y - mScale.y / 2, mPos.x + mScale.x / 2, mPos.y + mScale.y / 2);
+
+		for (CMonster* mMonstor : mMonsters)
+		{
+			if (mMonstor->GetComponent<CMonsPattern>())
+				mMonstor->GetComponent<CMonsPattern>()->Render();
+
+		}
 	}
 
 
@@ -691,8 +699,6 @@ void CLevel_Editor::EnimeRenderer()
 void CLevel_Editor::EnimesPattern()
 {
 	mEditMode = EditMode::PatternMode;
-
-
 	
 	for (CMonster* mMonstor : mMonsters)
 	{
@@ -706,20 +712,24 @@ void CLevel_Editor::EnimesPattern()
 
 	if (SelectMons != nullptr)
 	{
-		if (KEY_TAP(LBTN))
-			mMonsPtn->SetEmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
-
-		if (KEY_TAP(RBTN))
-			mMonsPtn->SetFmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
-
-		if (mMonsPtn->GetFmovePoint().x && mMonsPtn->GetEmovePoint().x)
+		if (!SelectMons->GetComponent<CMonsPattern>())
 		{
 			CMonsPattern* mPattern = new CMonsPattern;
-			mPattern->SetEmovePoint(mMonsPtn->GetEmovePoint());
-			mPattern->SetFmovePoint(mMonsPtn->GetFmovePoint());
-
-			SelectMons->AddComponent(mPattern);
+			mMonsPtn = (CMonsPattern*)SelectMons->AddComponent(mPattern);
 		}
+
+		else
+		{W
+
+		}
+
+		if (KEY_TAP(LBTN))
+			mMonsPtn->SetFmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
+
+		if (KEY_TAP(RBTN))
+			mMonsPtn->SetEmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
+
+		
 	}
 
 

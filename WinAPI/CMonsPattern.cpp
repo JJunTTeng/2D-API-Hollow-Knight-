@@ -3,6 +3,7 @@
 #include "CRigidBody.h"
 #include "CTimeMgr.h"
 #include "CEngine.h"
+#include "CCamera.h"
 
 CMonsPattern::CMonsPattern()
 	:CComponent(COMPONENT_TYPE::PATTERN),
@@ -21,6 +22,7 @@ CMonsPattern::~CMonsPattern()
 void CMonsPattern::Play(bool Chase)
 {
 	m_Point = GetOwner()->GetPos();
+
 	if (m_FmovePoint.x == NULL && m_FmovePoint.y == NULL)
 		m_FmovePoint = m_Point;
 
@@ -64,19 +66,20 @@ void CMonsPattern::FinalTick()
 
 void CMonsPattern::Render()
 {
-	HDC dc = CEngine::GetInst()->GetEditSecondDC();
-	Vec2 mPos = GetOwner()->GetPos();
+	HDC dc = CEngine::GetInst()->GetSecondDC();
 
-	if (m_dir == Dir::LEFT)
-	{
-		//SELECT_PEN(PEN_TYPE::RED)
-		MoveToEx(dc, mPos.x, mPos.y, nullptr);
-		LineTo(dc, m_FmovePoint.x, m_FmovePoint.y);
-	}
+	Vec2 mPos = CCamera::GetInst()->GetRenderPos(GetOwner()->GetPos());
 
-	else
-	{
-		MoveToEx(dc, mPos.x, mPos.y, nullptr);
-		LineTo(dc, m_EmovePoint.x, m_EmovePoint.y);
-	}
+
+	Vec2 mDePos = CCamera::GetInst()->GetRenderPos(m_FmovePoint);
+	Vec2 mDePos2 = CCamera::GetInst()->GetRenderPos(m_EmovePoint);
+
+
+	MoveToEx(dc, mPos.x, mPos.y, nullptr);
+	LineTo(dc, mDePos.y, mDePos.y);
+
+
+
+	MoveToEx(dc, mPos.x, mPos.y, nullptr);
+	LineTo(dc, mDePos2.x, mDePos2.y);
 }

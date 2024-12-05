@@ -19,7 +19,7 @@ public:
 
 
 	void SetFmovePoint(Vec2 _Pos) { m_FmovePoint = _Pos; }
-	void SetEmovePoint(Vec2 _Pos) { m_FmovePoint = _Pos; }
+	void SetEmovePoint(Vec2 _Pos) { m_EmovePoint = _Pos; }
 	void SetMoveSpeed(Vec2 _Speed) { m_MoveSpeed = _Speed; }
 
 
