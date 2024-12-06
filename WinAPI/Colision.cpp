@@ -56,6 +56,14 @@ void Colision::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 	{
 		_OtherObject->SetPos(Vec2(_OtherObject->GetPrevPos().x - 2, _OtherObject->GetPos().y));
 	}
+
+	if (_OtherObject->GetName() == L"Crawlid")
+	{
+		CRigidBody* pBody = _OtherObject->GetComponent<CRigidBody>();
+		pBody->SetGround(true);
+	}
+
+
 }
 
 void Colision::Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
