@@ -6,7 +6,6 @@
 #include "CFlipbookPlayer.h"
 #include "CCollider.h"
 #include "CCollisionMgr.h"
-#include "CMonsPattern.h"
 
 enum Crawlid_STATE
 {

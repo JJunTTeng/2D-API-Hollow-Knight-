@@ -14,7 +14,12 @@
 
 #include "MonsterFlipbook.h"
 
+#include "CRigidBody.h"
+#include "CCamera.h"
+
 CMonster::CMonster()
+	:m_Loop(false),
+	m_Dir(dir::LEFT)
 {
 	//m_Tex = CAssetMgr::GetInst()->LoadTexture(L"Character", L"Texture\\TX_GlowScene_2.png");
 
@@ -41,6 +46,11 @@ CMonster::~CMonster()
 {
 }
 
+void CMonster::LoopPlay()
+{
+	m_Loop = true;
+}
+
 void CMonster::Begin()
 {
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
@@ -48,14 +58,59 @@ void CMonster::Begin()
 
 void CMonster::Tick()
 {
+	m_prevDir = m_Dir;
+
+	if (GetComponent< CRigidBody>())
+	{
+
+	}
+
+	else
+	{
+		if (!m_Loop)
+			return;
+
+		if (m_Dir == dir::LEFT)
+		{
+			if (FrnLpMove <= GetPos())
+				m_Dir = dir::RIGHT;
+
+			else
+				SetPos(GetPos() + Vec2(-10.0f, 0.0f) * DT);
+		}
+
+		else
+		{
+			if (m_Dir == dir::RIGHT)
+			{
+				if (FrnLpMove >= GetPos())
+					m_Dir = dir::LEFT;
+
+				else
+					SetPos(GetPos() + Vec2(10.0f, 0.0f) * DT);
+			}
+		}
+
+	}
 
 }
 
 void CMonster::Render()
 {
 
+	//if (!m_Loop)
+	//	return;
+
+	HDC dc = CEngine::GetInst()->GetSecondDC();
+	Vec2 mPos = CCamera::GetInst()->GetRenderPos(GetPos());
+
+	MoveToEx(dc, mPos.x, mPos.y, NULL);
+	LineTo(dc, CCamera::GetInst()->GetRenderPos(FrnLpMove).x, mPos.y);
+
+	MoveToEx(dc, GetPos().x, GetPos().y, NULL);
+	LineTo(dc, CCamera::GetInst()->GetRenderPos(EndLpMove).x, mPos.y);
 }
 
 void CMonster::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
-}
+} 

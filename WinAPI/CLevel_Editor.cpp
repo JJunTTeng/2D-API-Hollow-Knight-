@@ -34,7 +34,6 @@
 #include "CMonster.h"
 #include "Crawlid.h"
 
-#include "CMonsPattern.h"
 
 CLevel_Editor::CLevel_Editor()
 	: m_MapObj(nullptr)
@@ -276,12 +275,7 @@ void CLevel_Editor::Render()
 		SELECT_BRUSH(BRUSH_TYPE::HOLLOW);
 		Rectangle(dc, mPos.x - mScale.x / 2, mPos.y - mScale.y / 2, mPos.x + mScale.x / 2, mPos.y + mScale.y / 2);
 
-		for (CMonster* mMonstor : mMonsters)
-		{
-			if (mMonstor->GetComponent<CMonsPattern>())
-				mMonstor->GetComponent<CMonsPattern>()->Render();
-
-		}
+		
 	}
 
 
@@ -712,23 +706,14 @@ void CLevel_Editor::EnimesPattern()
 
 	if (SelectMons != nullptr)
 	{
-		if (!SelectMons->GetComponent<CMonsPattern>())
-		{
-			CMonsPattern* mPattern = new CMonsPattern;
-			mMonsPtn = (CMonsPattern*)SelectMons->AddComponent(mPattern);
-		}
+		SelectMons->LoopPlay();
 
-		else
-		{W
-
-		}
 
 		if (KEY_TAP(LBTN))
-			mMonsPtn->SetFmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
+			SelectMons->SetFrnLpMove(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
 
 		if (KEY_TAP(RBTN))
-			mMonsPtn->SetEmovePoint(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
-
+			SelectMons->SetEndLpMove(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
 		
 	}
 

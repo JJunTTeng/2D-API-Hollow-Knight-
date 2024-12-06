@@ -193,9 +193,6 @@
     <ClInclude Include="MonsterFlipbook.h">
       <Filter>Game\05. Object\Monster\Monsters\MonsterFlipBook</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsPattern.h">
-      <Filter>Game\06. Component\06. pattern</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -369,9 +366,6 @@
       <Filter>Game\05. Object\Monster\Monsters\MonsterFlipBook</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="CMonsPattern.cpp">
-      <Filter>Game\06. Component\06. pattern</Filter>
-    </ClCompile>
     <ClCompile Include="CMonster.cpp">
       <Filter>Game\05. Object\Monster</Filter>
     </ClCompile>
