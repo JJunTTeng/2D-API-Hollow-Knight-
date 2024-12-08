@@ -7,6 +7,7 @@ class CFlipbookPlayer;
 class CRigidBody;
 
 
+
 enum P_DIR
 {
     D_LEFT,
@@ -44,12 +45,15 @@ private:
 
     CCollider*          m_CAttack;
 
+    CCollider*          m_CAttackEft;
+
 
     CFlipbookPlayer*    m_FlipbookPlayer;
     CFlipbookPlayer*    m_FilpbookAttack;
     CRigidBody*         m_RigidBody;
 
-    
+
+
     P_DIR               m_Dir;
     P_UD                m_Ud;
 

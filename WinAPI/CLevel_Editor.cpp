@@ -34,6 +34,10 @@
 #include "CMonster.h"
 #include "Crawlid.h"
 
+#include "MonsterFlipbook.h"
+#include "CAttack_Eft.h"
+
+
 
 CLevel_Editor::CLevel_Editor()
 	: m_MapObj(nullptr)
@@ -71,7 +75,7 @@ void CLevel_Editor::Begin()
 	// 메뉴바가 추가되었콅E때문에, 윈도퓖E크기를 재조정한다.
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 
-	
+	MonsterFlipbook::GetInst()->CreateFlipbook();
 	
 	// Player 생성
 	mPlayer = new CPlayer;
@@ -79,11 +83,8 @@ void CLevel_Editor::Begin()
 	mPlayer->SetPos(Vec2(1954,1348));
 	AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	// Monster 생성
-	CMonster* mMonster = new CMonster;
-	AddObject(mMonster, LAYER_TYPE::MONSTER);
+	
 
-	mMonsters.push_back(mMonster);
 
 	// 샘플퓖EMap 오틒E㎷?생성
 	m_MapObj = new CMap;
@@ -676,7 +677,7 @@ void CLevel_Editor::EnimeRenderer()
 	{
 	case EnimesName::Crawlid:
 	{
-		Crawlid* mMonstor = new Crawlid;
+		CMonster* mMonstor = new Crawlid;
 		mMonstor->SetPos(MouseRenderPos);
 		AddObject(mMonstor, LAYER_TYPE::MONSTER);
 		mMonsters.push_back(mMonstor);
@@ -706,7 +707,7 @@ void CLevel_Editor::EnimesPattern()
 
 	if (SelectMons != nullptr)
 	{
-		SelectMons->LoopPlay();
+		SelectMons->LoopPlay(false);
 
 
 		if (KEY_TAP(LBTN))

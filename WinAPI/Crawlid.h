@@ -1,7 +1,21 @@
 #pragma once
 #include "CMonster.h"
 
+class CRigidBody;
 class CFlipbookPlayer;
+
+enum Crawlid_STATE
+{
+    WALK,
+    TURN,
+    DEATH,
+
+    R_WALK,
+    R_TURN,
+    R_DEATH
+};
+
+
 class Crawlid :
     public CMonster
 {
@@ -15,7 +29,6 @@ private:
     Vec2        m_InitPos;
     float       m_Dist;
 
-    bool        m_Dir;
 
     CFlipbookPlayer* m_Flipbook;
 
@@ -28,6 +41,10 @@ public:
     virtual void BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider) override;
 
     void LoadFlipbook();
+    CRigidBody* m_RigidBody;
 
+    Crawlid_STATE m_STATE;
+
+    tMonInfo Crawlid_Info;
 };
 

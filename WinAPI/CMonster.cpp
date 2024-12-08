@@ -18,7 +18,7 @@
 #include "CCamera.h"
 
 CMonster::CMonster()
-	:m_Loop(false),
+	:
 	m_Dir(dir::LEFT)
 {
 	//m_Tex = CAssetMgr::GetInst()->LoadTexture(L"Character", L"Texture\\TX_GlowScene_2.png");
@@ -46,9 +46,11 @@ CMonster::~CMonster()
 {
 }
 
-void CMonster::LoopPlay()
+void CMonster::LoopPlay(bool _Chase)
 {
+	m_Chase = _Chase;
 	m_Loop = true;
+	
 }
 
 void CMonster::Begin()
@@ -60,36 +62,40 @@ void CMonster::Tick()
 {
 	m_prevDir = m_Dir;
 
+	if (!m_Loop)
+		return;
+
 	if (GetComponent< CRigidBody>())
 	{
-
-	}
-
-	else
-	{
-		if (!m_Loop)
-			return;
-
 		if (m_Dir == dir::LEFT)
 		{
-			if (FrnLpMove <= GetPos())
-				m_Dir = dir::RIGHT;
+			if (FrnLpMove.x <= GetPos().x)
+				SetPos(GetPos() + Vec2(-100.0f, 0.0f) * DT);
 
 			else
-				SetPos(GetPos() + Vec2(-10.0f, 0.0f) * DT);
+				m_Dir = dir::RIGHT;
+
 		}
 
 		else
 		{
 			if (m_Dir == dir::RIGHT)
 			{
-				if (FrnLpMove >= GetPos())
-					m_Dir = dir::LEFT;
+				if (EndLpMove.x >= GetPos().x)
+					SetPos(GetPos() + Vec2(100.0f, 0.0f) * DT);
 
 				else
-					SetPos(GetPos() + Vec2(10.0f, 0.0f) * DT);
+					m_Dir = dir::LEFT;
+
 			}
 		}
+	}
+
+	else
+	{
+
+
+
 
 	}
 
@@ -107,7 +113,7 @@ void CMonster::Render()
 	MoveToEx(dc, mPos.x, mPos.y, NULL);
 	LineTo(dc, CCamera::GetInst()->GetRenderPos(FrnLpMove).x, mPos.y);
 
-	MoveToEx(dc, GetPos().x, GetPos().y, NULL);
+	MoveToEx(dc, mPos.x, mPos.y, NULL);
 	LineTo(dc, CCamera::GetInst()->GetRenderPos(EndLpMove).x, mPos.y);
 }
 

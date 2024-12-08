@@ -25,12 +25,12 @@ void CFlipbook::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, V
         
         if (IsRight == true)
         {
-            pSprite->Create(_Atlas, Vec2(_LeftTop.x - (_blank *i) + (_Slice.x * (MaxFrame - (i + 1))), _LeftTop.y), _Slice);
+            pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_blank * (MaxFrame - (i + 1))) + (_Slice.x * (MaxFrame - (i + 1))), _LeftTop.y), _Slice);
 
         }
         else
         {
-            pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_blank *i) +  (_Slice.x * i), _LeftTop.y), _Slice);
+            pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_blank * i) +  (_Slice.x * i), _LeftTop.y), _Slice);
         }
         wchar_t Key[50] = {};
         swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);

@@ -22,6 +22,8 @@
 #include "CFlipbook.h"
 #include "CSprite.h"
 #include "CRigidBody.h"
+#include "CAttack_Eft.h"
+
 
 enum PLAYER_ANIM_STATE
 {
@@ -126,10 +128,10 @@ CPlayer::CPlayer()
 	 //RigidBody 컴포넌트 추가
 	m_RigidBody = (CRigidBody*)AddComponent(new CRigidBody);
 	m_RigidBody->SetMode(RIGIDBODY_MODE::BELTSCROLL);
-	m_RigidBody->SetInitialSpeed(100.f);
-	m_RigidBody->SetMaxSpeed(500.f);
+	//m_RigidBody->SetInitialSpeed(500.f);
+	//m_RigidBody->SetMaxSpeed(500.f);
 	m_RigidBody->SetMass(1.f);
-	m_RigidBody->SetFriction(700.f);
+	//m_RigidBody->SetFriction(1000.f);
 	m_RigidBody->SetJumpVelocity(Vec2(0.f, -500.f));
 	m_RigidBody->SetGravityAccel(Vec2(0, 500));
 }
@@ -143,6 +145,8 @@ void CPlayer::Begin()
 	m_AccTime = 1.f / m_AttSpeed;
 
 	m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true );
+
+
 
 	CCamera::GetInst()->SetOffset(Vec2(0, -100));
 	CCamera::GetInst()->SetTarget(this);
@@ -336,6 +340,8 @@ void CPlayer::CreatePlayerFlipbook()
 		//m_FilpbookAttack->AddFlipbook(DOWNSLASH, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_SLASHALT", L"Flipbook\\R_SLASHALT.flip"));
 
 	}
+
+
 }
 
 void CPlayer::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int MaxFrame, bool IsRight)
@@ -408,12 +414,12 @@ void CPlayer::Move()
 		if (KEY_TAP(LEFT))
 		{
 			m_Dir = P_DIR::D_LEFT;
-			m_FlipbookPlayer->Play(MOVE_LEFT, 30.f, true);
+			m_FlipbookPlayer->Play(MOVE_LEFT, 15.f, true);
 		}
 		if (KEY_TAP(RIGHT))
 		{
 			m_Dir = P_DIR::D_RIGHT;
-			m_FlipbookPlayer->Play(MOVE_RIGHT, 30.f, true);
+			m_FlipbookPlayer->Play(MOVE_RIGHT, 15.f, true);
 		}
 
 		if (KEY_TAP(UP))
@@ -469,9 +475,12 @@ void CPlayer::Move()
 	//움직이는 속도
 	{
 		if (KEY_PRESSED(LEFT))
-			m_RigidBody->AddForce(Vec2(-1000.f, 0.f), true);
+			SetPos(GetPos().x - 500.0f * DT,GetPos().y);
+			//m_RigidBody->AddForce(Vec2(-1000.f, 0.f), true);
 		if (KEY_PRESSED(RIGHT))
-			m_RigidBody->AddForce(Vec2(1000.f, 0.f), true);
+			SetPos(GetPos().x + 500.0f * DT, GetPos().y);
+
+			//m_RigidBody->AddForce(Vec2(1000.f, 0.f), true);
 	}
 }
 
@@ -486,26 +495,30 @@ void CPlayer::Attack()
 			m_FlipbookPlayer->Play(LEFT_UPSLASH, 30.f, false);
 		}
 
-		else if(m_Dir == P_DIR::D_RIGHT && m_Ud == P_UD::D_UP)
+		else if (m_Dir == P_DIR::D_RIGHT && m_Ud == P_UD::D_UP)
+		{
 			m_FlipbookPlayer->Play(RIGHT_UPSLASH, 30.f, false);
+		}
 
-		
-		//컴퓨터는 Death를 알려주면 맨처음은 Death가 뭔데요?
-		//Death는 죽는거야 죽는게 뭐에요?
-		//게임에서 사라지는게 뭐야? 게임이뭐고 사라지는건 (안보이게만 한다) (아에 지운다)
-		else if (m_Dir == P_DIR::D_LEFT && m_Ud== P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		else if (m_Dir == P_DIR::D_LEFT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		{
 			m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 30.f, false);
 
-		else if (m_Dir == P_DIR::D_RIGHT && m_Ud== P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		}
+
+		else if (m_Dir == P_DIR::D_RIGHT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		{
 			m_FlipbookPlayer->Play(RIGHT_DOWNSLASH, 30.f, false);
+		}
 
 		else if (m_Dir == P_DIR::D_LEFT)
 		{
-			m_FlipbookPlayer->Play(LEFT_SLASH, 30.f, false);
+			m_FlipbookPlayer->Play(LEFT_SLASH, 20.f, false);
+			m_FilpbookAttack->Play(LEFT_SLASHEFFAT, 20.0f, false);
 		}
 
 		else if(m_Dir == P_DIR::D_RIGHT)
-			m_FlipbookPlayer->Play(RIGHT_SLASH, 30.f, false);
+			m_FlipbookPlayer->Play(RIGHT_SLASH, 20.f, false);
 	}
 }
 

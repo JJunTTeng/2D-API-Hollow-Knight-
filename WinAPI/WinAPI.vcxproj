@@ -142,6 +142,7 @@
     <ClInclude Include="AspidHunter.h" />
     <ClInclude Include="CAsset.h" />
     <ClInclude Include="CAssetMgr.h" />
+    <ClInclude Include="CAttack_Eft.h" />
     <ClInclude Include="CBase.h" />
     <ClInclude Include="CBgMap.h" />
     <ClInclude Include="CBtnUI.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="AspidHunter.cpp" />
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
+    <ClCompile Include="CAttack_Eft.cpp" />
     <ClCompile Include="CBase.cpp" />
     <ClCompile Include="CBgMap.cpp" />
     <ClCompile Include="CBtnUI.cpp" />

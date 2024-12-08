@@ -46,10 +46,11 @@ public:
     void SetFrnLpMove(Vec2 _pos) { FrnLpMove = _pos; }
     void SetEndLpMove(Vec2 _pos) { EndLpMove = _pos; }
 
-    void LoopPlay();
+    void LoopPlay(bool _Chase);
 
 
     const tMonInfo& GetMonInfo() { return m_Info; }
+    void SetMonsInfo(tMonInfo _monsInfo) { m_Info = _monsInfo; }
     
 
 public:

@@ -5,9 +5,9 @@ R_Crawlid_Walk_0
 Sprite\R_Crawlid_Walk_0.sprite
 
 [ATLAS_KEY]
-Crawlid
+R_Crawlid
 [ATLAS_PATH]
-Texture\Enime\Crawlid\Crawlid.png
+Texture\Enime\Crawlid\R_Crawlid.png
 
 [LEFT_TOP]
 360, 22

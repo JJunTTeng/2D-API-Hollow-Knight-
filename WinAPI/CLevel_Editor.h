@@ -17,6 +17,7 @@ enum class EnimesName
     None
 };
 
+class CAttack_Eft;
 class CMonsPattern;
 class CPlayer;
 class Colision;
@@ -86,6 +87,10 @@ private:
     CMonster* SelectMons;
     CMonsPattern* mMonsPtn;
 
+    CAttack_Eft* m_Play_Effact;
+
     Vec2 mMonsPtnPos;
+
+
 };
 

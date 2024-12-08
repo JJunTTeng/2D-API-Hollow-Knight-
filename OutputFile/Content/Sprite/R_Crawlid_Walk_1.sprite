@@ -5,12 +5,12 @@ R_Crawlid_Walk_1
 Sprite\R_Crawlid_Walk_1.sprite
 
 [ATLAS_KEY]
-Crawlid
+R_Crawlid
 [ATLAS_PATH]
-Texture\Enime\Crawlid\Crawlid.png
+Texture\Enime\Crawlid\R_Crawlid.png
 
 [LEFT_TOP]
-479, 22
+241, 22
 
 [SLICE]
 116, 85

@@ -30,3 +30,6 @@ scale :  117/ 120
 death2
 Left : 3 / 376
 sclae : 128 / 90
+
+Collider
+97 / 80
