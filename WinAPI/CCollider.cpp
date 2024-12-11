@@ -8,6 +8,7 @@
 CCollider::CCollider()
 	: CComponent(COMPONENT_TYPE::COLLIDER)
 	, m_OverlapCount(0)
+	, m_Active(true)
 {
 }
 
@@ -17,6 +18,9 @@ CCollider::~CCollider()
 
 void CCollider::FinalTick()
 {
+	if (m_Active == false)
+		return;
+
 	m_FinalPos = m_Offset + GetOwner()->GetPos();
 
 	// Collider 등록하기

@@ -10,6 +10,7 @@ CObj::CObj()
 	, m_Scale{}
 	, m_LayerType(LAYER_TYPE::END)
 	, m_Dead(false)
+	, m_Dir(Dir::NONE)
 {	
 }
 

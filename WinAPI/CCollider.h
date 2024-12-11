@@ -28,6 +28,8 @@ public:
     Vec2 GetLeftBottomPos() { return Vec2(m_FinalPos.x - (m_Scale.x / 2), m_FinalPos.y + (m_Scale.y / 2)); }
     Vec2 GetRightButtomPos() { return m_FinalPos  +(m_Scale / 2); }
 
+    void IsActive() { m_Active = !m_Active; }
+
 public:
     void BeginOverlap(CCollider* _Other);   // 다른 충돌체와 최초 충돌 시
     void Overlap(CCollider* _Other);        // 다른 충돌체와 BeginOverlap 이후에도 계속 겹쳐있을 경우
