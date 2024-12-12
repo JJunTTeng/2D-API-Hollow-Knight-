@@ -71,8 +71,8 @@ CPlayer::CPlayer()
 
 	, m_FlipbookPlayer(nullptr)
 	, m_RigidBody(nullptr)
-	, m_Dir(P_DIR::D_LEFT)
 	, m_Ud(P_UD::D_NONE)
+	
 {
 	// Collider 컴포넌트 추가
 	//몸전체 히트박스
@@ -134,6 +134,8 @@ CPlayer::CPlayer()
 	//m_RigidBody->SetFriction(1000.f);
 	m_RigidBody->SetJumpVelocity(Vec2(0.f, -500.f));
 	m_RigidBody->SetGravityAccel(Vec2(0, 500));
+
+	SetDir(Dir::LEFT);
 }
 
 CPlayer::~CPlayer()
@@ -402,7 +404,7 @@ void CPlayer::Move()
 	{	
 		if (CKeyMgr::GetInst()->GetNoneKey() == true)
 		{
-			if(m_Dir == P_DIR::D_LEFT)
+			if(GetDir() == Dir::LEFT)
 				m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
 
 			else
@@ -413,19 +415,19 @@ void CPlayer::Move()
 
 		if (KEY_TAP(LEFT))
 		{
-			m_Dir = P_DIR::D_LEFT;
+			SetDir(Dir::LEFT);
 			m_FlipbookPlayer->Play(MOVE_LEFT, 15.f, true);
 		}
 		if (KEY_TAP(RIGHT))
 		{
-			m_Dir = P_DIR::D_RIGHT;
+			SetDir(Dir::RIGHT);
 			m_FlipbookPlayer->Play(MOVE_RIGHT, 15.f, true);
 		}
 
 		if (KEY_TAP(UP))
 		{
 			m_Ud = P_UD::D_UP;
-			if (m_Dir == P_DIR::D_LEFT)
+			if (GetDir() == Dir::LEFT)
 				m_FlipbookPlayer->Play(LEFT_UP, 30.f, true);
 			else
 				m_FlipbookPlayer->Play(RIGHT_UP, 30.f, true);
@@ -437,7 +439,7 @@ void CPlayer::Move()
 		{
 			m_Ud = P_UD::D_DOWN;
 
-			if (m_Dir == P_DIR::D_LEFT)
+			if (GetDir() == Dir::LEFT)
 				m_FlipbookPlayer->Play(LEFT_DOWN, 30.f, true);
 
 			else
@@ -455,7 +457,7 @@ void CPlayer::Move()
 		}
 		if (KEY_RELEASED(UP))
 		{
-			if (m_Dir == P_DIR::D_LEFT)
+			if (GetDir() == Dir::LEFT)
 				m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
 
 			else
@@ -464,7 +466,7 @@ void CPlayer::Move()
 		}
 		if (KEY_RELEASED(DOWN))
 		{
-			if (m_Dir == P_DIR::D_LEFT)
+			if (GetDir() == Dir::LEFT)
 				m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
 
 			else
@@ -490,34 +492,34 @@ void CPlayer::Attack()
 	//이미지
 	if (KEY_TAP(X))
 	{
-		if (m_Dir == P_DIR::D_LEFT && m_Ud == P_UD::D_UP)
+		if (GetDir() == Dir::LEFT && m_Ud == P_UD::D_UP)
 		{
 			m_FlipbookPlayer->Play(LEFT_UPSLASH, 30.f, false);
 		}
 
-		else if (m_Dir == P_DIR::D_RIGHT && m_Ud == P_UD::D_UP)
+		else if (GetDir() == Dir::RIGHT && m_Ud == P_UD::D_UP)
 		{
 			m_FlipbookPlayer->Play(RIGHT_UPSLASH, 30.f, false);
 		}
 
-		else if (m_Dir == P_DIR::D_LEFT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		else if (GetDir() == Dir::LEFT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
 		{
 			m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 30.f, false);
 
 		}
 
-		else if (m_Dir == P_DIR::D_RIGHT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		else if (GetDir() == Dir::RIGHT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
 		{
 			m_FlipbookPlayer->Play(RIGHT_DOWNSLASH, 30.f, false);
 		}
 
-		else if (m_Dir == P_DIR::D_LEFT)
+		else if (GetDir() == Dir::LEFT)
 		{
 			m_FlipbookPlayer->Play(LEFT_SLASH, 20.f, false);
 			m_FilpbookAttack->Play(LEFT_SLASHEFFAT, 20.0f, false);
 		}
 
-		else if(m_Dir == P_DIR::D_RIGHT)
+		else if(GetDir() == Dir::RIGHT)
 			m_FlipbookPlayer->Play(RIGHT_SLASH, 20.f, false);
 	}
 }

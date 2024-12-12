@@ -52,9 +52,6 @@ private:
     CFlipbookPlayer*    m_FilpbookAttack;
     CRigidBody*         m_RigidBody;
 
-
-
-    P_DIR               m_Dir;
     P_UD                m_Ud;
 
 public:     
