@@ -22,6 +22,7 @@ class CObj :
     public CBase
 {
 private:
+
     UD                  m_ud;
     Dir                 m_Dir;
     Vec2                m_Pos;
