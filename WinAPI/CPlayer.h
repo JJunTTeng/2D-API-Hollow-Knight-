@@ -6,21 +6,6 @@ class CTexture;
 class CFlipbookPlayer;
 class CRigidBody;
 
-
-
-enum P_DIR
-{
-    D_LEFT,
-    D_RIGHT,
-};
-
-enum P_UD
-{
-    D_NONE,
-    D_UP,
-    D_DOWN
-};
-
 struct Flip
 {
     int Name;
@@ -36,13 +21,13 @@ private:
     float               m_Speed;
     float               m_AttSpeed; // 초당 발사 속도
     float               m_AccTime;  // 시간 누적
+    bool                m_AttackActive;
     
     CCollider*          m_CHitBox;
     CCollider*          m_CHead;
     CCollider*          m_CFloor;
     CCollider*          m_CLeft;
     CCollider*          m_CRight;
-
     CCollider*          m_CAttack;
 
     CCollider*          m_CAttackEft;
@@ -51,8 +36,6 @@ private:
     CFlipbookPlayer*    m_FlipbookPlayer;
     CFlipbookPlayer*    m_FilpbookAttack;
     CRigidBody*         m_RigidBody;
-
-    P_UD                m_Ud;
 
 public:     
     virtual void Begin() override;

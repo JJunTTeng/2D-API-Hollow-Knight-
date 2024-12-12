@@ -4,10 +4,17 @@
 class CComponent;
 class CCollider;
 
-enum Dir
+enum class Dir
 {
     LEFT,
     RIGHT,
+    NONE
+};
+
+enum class UD
+{
+    UP,
+    DOWN,
     NONE
 };
 
@@ -15,7 +22,8 @@ class CObj :
     public CBase
 {
 private:
-    Dir                 m_dir;
+    UD                  m_ud;
+    Dir                 m_Dir;
     Vec2                m_Pos;
     Vec2                m_PrevPos;
     Vec2                m_Scale;
@@ -36,7 +44,8 @@ public:
 
 
 public:
-    void SetDir(Dir _dir) { m_dir = _dir; }
+    void SetUd(UD _ud) { m_ud = _ud; }
+    void SetDir(Dir _dir) { m_Dir = _dir; }
     void SetPos(Vec2 _Pos) { m_Pos = _Pos; }
     void SetPos(float _x, float _y) { m_Pos = Vec2(_x, _y); }
     void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
@@ -44,7 +53,8 @@ public:
     void SetPrevPos(Vec2 _Pos) { m_PrevPos = _Pos; }
     void SetDead() { m_Dead = true; }
 
-    Dir GetDir() { return m_dir; }
+    UD GetUD() { return m_ud; }
+    Dir GetDir() { return m_Dir; }
     Vec2 GetPos() { return m_Pos; }
     Vec2 GetRenderPos();
     Vec2 GetScale() { return m_Scale; }

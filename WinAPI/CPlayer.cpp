@@ -71,9 +71,12 @@ CPlayer::CPlayer()
 
 	, m_FlipbookPlayer(nullptr)
 	, m_RigidBody(nullptr)
-	, m_Ud(P_UD::D_NONE)
-	
+	, m_AttackActive(false)
 {
+
+	SetDir(Dir::RIGHT);
+	SetUd(UD::NONE);
+
 	// Collider 컴포넌트 추가
 	//몸전체 히트박스
 	m_CHitBox = new CCollider;
@@ -111,6 +114,10 @@ CPlayer::CPlayer()
 	m_CRight->SetOffset(Vec2(30.5f, 0.0f));
 	AddComponent(m_CRight);
 
+	m_CAttackEft = new CCollider;
+	m_CAttackEft->SetName(L"Attack_Effact");
+	AddComponent(m_CAttackEft);
+
 
 	// Collider 컴포넌트 추가
 	//m_CAttack = new CCollider;
@@ -134,8 +141,6 @@ CPlayer::CPlayer()
 	//m_RigidBody->SetFriction(1000.f);
 	m_RigidBody->SetJumpVelocity(Vec2(0.f, -500.f));
 	m_RigidBody->SetGravityAccel(Vec2(0, 500));
-
-	SetDir(Dir::LEFT);
 }
 
 CPlayer::~CPlayer()
@@ -158,31 +163,39 @@ void CPlayer::Begin()
 
 void CPlayer::Tick()
 {
-	SetPrevPos(GetPos());
-	Vec2 mPpos = GetPrevPos();
-	Move();
-	Jump();
-	Attack();
 
 	if (KEY_PRESSED(KEY::UP))
 	{
-		m_Ud = P_UD::D_UP;
+		SetUd(UD::UP);
 	}
 
 	if (KEY_PRESSED(KEY::DOWN))
 	{
-		m_Ud = P_UD::D_DOWN;
+		SetUd(UD::DOWN);
 	}
 
 	if (KEY_RELEASED(KEY::UP))
 	{
-		m_Ud = P_UD::D_NONE;
+		SetUd(UD::NONE);
 	}
 
 	if (KEY_RELEASED(KEY::DOWN))
 	{
-		m_Ud = P_UD::D_NONE;
+		SetUd(UD::NONE);
 	}
+
+
+	if (m_FlipbookPlayer->IsFinish() == false && m_AttackActive == true)
+		return;
+		
+	m_AttackActive = false;
+		
+
+	SetPrevPos(GetPos());
+	Move();
+	Jump();
+
+
 	//if (KEY_PRESSED(KEY::A))
 	//{
 	//	Vec2 mPos = GetPos();
@@ -222,6 +235,9 @@ void CPlayer::Tick()
 	//	//CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0f, 2.0f));
 
 	//}
+
+	Attack();
+
 }
 
 void CPlayer::Render()
@@ -426,35 +442,25 @@ void CPlayer::Move()
 
 		if (KEY_TAP(UP))
 		{
-			m_Ud = P_UD::D_UP;
 			if (GetDir() == Dir::LEFT)
-				m_FlipbookPlayer->Play(LEFT_UP, 30.f, true);
+				m_FlipbookPlayer->Play(LEFT_UP, 3.f, true);
 			else
-				m_FlipbookPlayer->Play(RIGHT_UP, 30.f, true);
+				m_FlipbookPlayer->Play(RIGHT_UP, 3.f, true);
 
 		 
 		}
 
 		if (KEY_TAP(DOWN))
 		{
-			m_Ud = P_UD::D_DOWN;
 
 			if (GetDir() == Dir::LEFT)
-				m_FlipbookPlayer->Play(LEFT_DOWN, 30.f, true);
+				m_FlipbookPlayer->Play(LEFT_DOWN, 3.f, true);
 
 			else
-				m_FlipbookPlayer->Play(RIGHT_DOWN, 30.f, true);
+				m_FlipbookPlayer->Play(RIGHT_DOWN, 3.f, true);
 		}
 		
 
-		if (KEY_RELEASED(LEFT))
-		{
-			m_Ud = P_UD::D_NONE;
-		}
-		if (KEY_RELEASED(RIGHT))
-		{
-			m_Ud = P_UD::D_NONE;
-		}
 		if (KEY_RELEASED(UP))
 		{
 			if (GetDir() == Dir::LEFT)
@@ -489,43 +495,56 @@ void CPlayer::Move()
 void CPlayer::Attack()
 {
 	
+
 	//이미지
 	if (KEY_TAP(X))
 	{
-		if (GetDir() == Dir::LEFT && m_Ud == P_UD::D_UP)
+		if (m_AttackActive == true)
+			return;
+
+		m_AttackActive = true;
+
+		if (GetDir() == Dir::LEFT && GetUD() == UD::UP)
 		{
-			m_FlipbookPlayer->Play(LEFT_UPSLASH, 30.f, false);
+			m_FlipbookPlayer->Play(LEFT_UPSLASH, 50.f, false);
 		}
 
-		else if (GetDir() == Dir::RIGHT && m_Ud == P_UD::D_UP)
+		else if (GetDir() == Dir::RIGHT && GetUD() == UD::UP)
 		{
-			m_FlipbookPlayer->Play(RIGHT_UPSLASH, 30.f, false);
+			m_FlipbookPlayer->Play(RIGHT_UPSLASH, 50.f, false);
 		}
 
-		else if (GetDir() == Dir::LEFT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		else if (GetDir() == Dir::LEFT && GetUD() == UD::DOWN && m_RigidBody->IsGround() == false)
 		{
-			m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 30.f, false);
+			m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 50.f, false);
 
 		}
 
-		else if (GetDir() == Dir::RIGHT && m_Ud == P_UD::D_DOWN && m_RigidBody->IsGround() == false)
+		else if (GetDir() == Dir::RIGHT && GetUD() == UD::DOWN && m_RigidBody->IsGround() == false)
 		{
-			m_FlipbookPlayer->Play(RIGHT_DOWNSLASH, 30.f, false);
+			m_FlipbookPlayer->Play(RIGHT_DOWNSLASH, 50.f, false);
 		}
 
 		else if (GetDir() == Dir::LEFT)
 		{
-			m_FlipbookPlayer->Play(LEFT_SLASH, 20.f, false);
-			m_FilpbookAttack->Play(LEFT_SLASHEFFAT, 20.0f, false);
+			m_FlipbookPlayer->Play(LEFT_SLASH, 50.f, false);
+			m_FilpbookAttack->Play(LEFT_SLASHEFFAT, 50.0f, false);
 		}
 
 		else if(GetDir() == Dir::RIGHT)
-			m_FlipbookPlayer->Play(RIGHT_SLASH, 20.f, false);
+			m_FlipbookPlayer->Play(RIGHT_SLASH, 50.f, false);
 	}
+
 }
 
 void CPlayer::Attack_Effact()
 {
+
+	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Attack_Effact", L"Texture\\Knight\\007.SlashEffect\\Attack_Effact.png");
+	CFlipbook* mFlipbook = new CFlipbook;
+	mFlipbook->CreateFlipbook(L"Attac_Effact", mTexture, Vec2(0, 0), Vec2(157, 114), 0, 6);
+	m_FilpbookAttack->AddFlipbook(LEFT_SLASHEFFAT, mFlipbook);
+
 }
 
 void CPlayer::Jump()
