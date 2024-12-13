@@ -1,0 +1,20 @@
+[KEY]
+Down_SlashEffect_2
+
+[PATH]
+Sprite\Down_SlashEffect_2.sprite
+
+[ATLAS_KEY]
+Down_SlashEffect
+[ATLAS_PATH]
+Texture\Knight\016.DownSlashEffect\DownSlashEffect.png
+
+[LEFT_TOP]
+340, 0
+
+[SLICE]
+170, 189
+
+[OFFSET]
+0, 0
+
