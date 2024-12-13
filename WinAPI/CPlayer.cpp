@@ -507,6 +507,7 @@ void CPlayer::Attack()
 		if (GetDir() == Dir::LEFT && GetUD() == UD::UP)
 		{
 			m_FlipbookPlayer->Play(LEFT_UPSLASH, 50.f, false);
+			m_FilpbookAttack->Play(LEFT_SLASHEFFAT, 50.0f, false);
 		}
 
 		else if (GetDir() == Dir::RIGHT && GetUD() == UD::UP)
