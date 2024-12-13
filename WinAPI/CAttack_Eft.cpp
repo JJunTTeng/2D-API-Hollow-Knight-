@@ -12,25 +12,22 @@ CAttack_Eft::CAttack_Eft()
 {
 }
 
-CAttack_Eft::~CAttack_Eft()
-{
-}
-
-
-void CAttack_Eft::Begin()
-{
-	FlipbookLoad();
-}
-
 void CAttack_Eft::Tick()
 {
+	SetPos(mPlayer->GetPos());
+
+	if (KEY_TAP(Z) && mPlayer->GetDir() == Dir::LEFT)
+	{
+		m_ImagePlayer->Play(Dir::LEFT, 10, false);
+	}
 }
 
 void CAttack_Eft::Render()
 {
+	m_ImagePlayer->Render();
 }
 
-void CAttack_Eft::FlipbookLoad()
+CAttack_Eft::CAttack_Eft()
 {
 	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Attack", L"Texture\\Knight\007.SlashEffect\\Attack_Effact.png");
 	mFlipbookPlay = new CFlipbookPlayer;
@@ -43,3 +40,6 @@ void CAttack_Eft::FlipbookLoad()
 
 }
 
+CAttack_Eft::~CAttack_Eft()
+{
+}
