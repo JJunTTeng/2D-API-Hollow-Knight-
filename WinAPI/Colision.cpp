@@ -40,9 +40,6 @@ void Colision::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 	if (_OtherObject->GetName() == L"Player" && _OtherCollider->GetName() == L"HeadBox")
 	{
 		CRigidBody* mRigidBody = _OtherObject->GetComponent<CRigidBody>();
-		Vec2 JumpSeepd = mRigidBody->GetJumpVelocity();
-
-		mRigidBody->SetVelocity(Vec2(mRigidBody->GetJumpVelocity().x, 3000.0f));
 
 
 	}

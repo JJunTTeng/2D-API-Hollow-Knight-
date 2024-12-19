@@ -50,24 +50,17 @@ enum PLAYER_ANIM_STATE
 	RIGHT_DOWNSLASH
 };
 
-enum PLAYER_ETTACK_STATE
-{
-	LEFT_SLASHEFFAT,
-	RIGHT_SLASHEFFAT,
-	UPSLASHEFFAT,
-	DOWNSLASHEFFAT
-};
 
 
 CPlayer::CPlayer()
 	: m_Speed(200.f)
 	, m_AttSpeed(10.f)
 	, m_AccTime(0.f)
+	, m_AttackTime(0.0f)
 
 	, m_CHitBox(nullptr)
 	, m_CHead(nullptr)
 	, m_CFloor(nullptr)
-	, m_CAttack(nullptr)
 
 	, m_FlipbookPlayer(nullptr)
 	, m_RigidBody(nullptr)
@@ -142,9 +135,6 @@ CPlayer::CPlayer()
 	//m_RigidBody->SetInitialSpeed(500.f);
 	//m_RigidBody->SetMaxSpeed(500.f);
 	m_RigidBody->SetMass(1.f);
-	//m_RigidBody->SetFriction(1000.f);
-	m_RigidBody->SetJumpVelocity(Vec2(0.f, -500.f));
-	m_RigidBody->SetGravityAccel(Vec2(0, 500));
 }
 
 CPlayer::~CPlayer()
@@ -167,6 +157,19 @@ void CPlayer::Begin()
 
 void CPlayer::Tick()
 {
+	SetPrevPos(GetPos());
+
+	if (m_AttackTime >= 0.7f && m_AttackActive == true)
+	{
+		m_FlipbookPlayer->Play(m_prevAni, 50.f, true);
+		m_AttackActive = false;
+		m_AttackTime = 0.0f;
+	}
+	else
+	{
+		m_AttackTime += DT; 
+	}
+	
 
 	if (KEY_PRESSED(KEY::UP))
 	{
@@ -189,18 +192,11 @@ void CPlayer::Tick()
 	}
 
 
-	if (m_FlipbookPlayer->IsFinish() == false && m_AttackActive == true)
-		return;
 
-		
-
-	m_AttackActive = false;
 	m_CAttackEft->IsActive(false);
 	
-	SetPrevPos(GetPos());
 	Move();
 	Jump();
-
 	Attack();
 
 }
@@ -208,7 +204,6 @@ void CPlayer::Tick()
 void CPlayer::Render()
 {
 	m_FlipbookPlayer->Render();
-	m_FilpbookAttack->Render();
 }
 
 void CPlayer::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
@@ -287,7 +282,6 @@ void CPlayer::CreatePlayerFlipbook()
 	}
 
 	m_FlipbookPlayer = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
-	m_FilpbookAttack = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
 
 	{
 		//LEFT
@@ -315,14 +309,6 @@ void CPlayer::CreatePlayerFlipbook()
 	}
 
 
-	{
-		//AttackEffact
-		m_FilpbookAttack->AddFlipbook(LEFT_SLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"SlashEffectAlt", L"Flipbook\\SlashEffectAlt.flip"));
-		m_FilpbookAttack->AddFlipbook(UPSLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"UpSlashEffect", L"Flipbook\\UpSlashEffect.flip"));
-		m_FilpbookAttack->AddFlipbook(DOWNSLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"DownSlashEffect", L"Flipbook\\DownSlashEffect.flip"));
-		//m_FilpbookAttack->AddFlipbook(DOWNSLASH, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_SLASHALT", L"Flipbook\\R_SLASHALT.flip"));
-
-	}
 
 
 }
@@ -463,49 +449,45 @@ void CPlayer::Attack()
 	//¿ÃπÃ¡ˆ
 	if (KEY_TAP(X))
 	{
-		if (m_AttackActive == true)
+		if (m_AttackTime < 1.0f && m_AttackActive == true)
+		{
 			return;
+		}
 
-		m_CAttackEft->IsActive(true);
+		m_AttackActive = true;
 
+		m_prevAni = m_FlipbookPlayer->GetFlipNum();
 
 		if (GetDir() == Dir::LEFT && GetUD() == UD::UP)
 		{
 			m_FlipbookPlayer->Play(LEFT_UPSLASH, 50.f, false);
-			m_FilpbookAttack->Play(UPSLASHEFFAT, 50.0f, false);
 		}
 
 		else if (GetDir() == Dir::RIGHT && GetUD() == UD::UP)
 		{
 			m_FlipbookPlayer->Play(RIGHT_UPSLASH, 50.f, false);
-			m_FilpbookAttack->Play(UPSLASHEFFAT, 50.0f, false);
 
 		}
 
 		else if (GetDir() == Dir::LEFT && GetUD() == UD::DOWN && m_RigidBody->IsGround() == false)
 		{
 			m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 50.f, false);
-			m_FilpbookAttack->Play(DOWNSLASHEFFAT, 50.0f, false);
 
 		}
 
 		else if (GetDir() == Dir::RIGHT && GetUD() == UD::DOWN && m_RigidBody->IsGround() == false)
 		{
 			m_FlipbookPlayer->Play(RIGHT_DOWNSLASH, 50.f, false);
-			m_FilpbookAttack->Play(DOWNSLASHEFFAT, 10.0f, false);
 		}
 
 		else if (GetDir() == Dir::LEFT)
 		{
 			m_FlipbookPlayer->Play(LEFT_SLASH, 50.f, false);
-			m_FilpbookAttack->Play(LEFT_SLASHEFFAT, 30.0f, false);
 		}
 
 		else if (GetDir() == Dir::RIGHT)
 		{
 			m_FlipbookPlayer->Play(RIGHT_SLASH, 50.f, false);
-			m_FilpbookAttack->Play(RIGHT_SLASHEFFAT, 30.0f, false);
-
 		}
 	}
 
@@ -514,24 +496,6 @@ void CPlayer::Attack()
 void CPlayer::Attack_Effact()
 {
 
-	CFlipbook* mFlipbook = new CFlipbook;
-	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Attack_Effact", L"Texture\\Knight\\007.SlashEffect\\Attack_Effact.png");
-	mFlipbook->CreateFlipbook(L"Attac_Effact", mTexture, Vec2(0, 0), Vec2(157, 114), 0, 6);
- 	m_FilpbookAttack->AddFlipbook(LEFT_SLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Attac_Effact",L"Flipbook\\Attac_Effact"));
-
-	mTexture = CAssetMgr::GetInst()->LoadTexture(L"R_Attack_Effact", L"Texture\\Knight\\007.SlashEffect\\R_Attack_Effact.png");
-	mFlipbook->CreateFlipbook(L"R_Attac_Effact", mTexture, Vec2(0, 0), Vec2(157, 114), 0, 6,true);
-	m_FilpbookAttack->AddFlipbook(RIGHT_SLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"R_Attac_Effact", L"Flipbook\\R_Attac_Effact"));
-
-	mTexture = CAssetMgr::GetInst()->LoadTexture(L"Up_SlashEffect", L"Texture\\Knight\\015.UpSlashEffect\\UpSlashEffect.png");
-	mFlipbook->CreateFlipbook(L"Up_SlashEffect", mTexture, Vec2(0, 0), Vec2(170, 189), 0, 6);
-	m_FilpbookAttack->AddFlipbook(UPSLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Up_SlashEffect", L"Flipbook\\Up_SlashEffect"));
-
-	mTexture = CAssetMgr::GetInst()->LoadTexture(L"Down_SlashEffect", L"Texture\\Knight\\016.DownSlashEffect\\DownSlashEffect.png");
-	mFlipbook->CreateFlipbook(L"Down_SlashEffect", mTexture, Vec2(0, 0), Vec2(170, 189), 0, 6);
-	m_FilpbookAttack->AddFlipbook(DOWNSLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Down_SlashEffect", L"Flipbook\\Down_SlashEffect"));
-
-
 
 }
 
@@ -539,8 +503,7 @@ void CPlayer::Jump()
 {
 	if (KEY_TAP(Z))
 	{
-		CCamera::GetInst()->PostProcessEffect(HEART, 0.2f);
-		m_RigidBody->Jump();
+		m_RigidBody->Jump(-1000);
 		//DrawDebugRect(PEN_TYPE::GREEN, GetPos(), GetScale() * 2.f, 3.f);
 		//DrawDebugCircle(PEN_TYPE::GREEN, GetPos(), GetScale() * 2.f, 3.f);
 		//DrawDebugLine(PEN_TYPE::GREEN, GetPos(), GetPos() + GetScale(), 3.f);

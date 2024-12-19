@@ -74,8 +74,8 @@ void CFlipbookPlayer::FinalTick()
 
 		// 한퉩E재생이 끝났컖Em_Finish), 반복 재생모드가 아니라툈E
 		// 마지막 프레임을 유지하도록 한다.
-		else
-			Play(m_BeFlipNum, m_BeFPS, true);
+		//else
+			//Play(m_BeFlipNum, m_BeFPS, true);
 	}	
 
 	// FPS 에 따른 시간체크
@@ -117,6 +117,9 @@ void CFlipbookPlayer::Render()
 	if (nullptr == m_CurFlipbook)
 		return;
 
+	if (m_Finish == true)
+		return;
+
 	CSprite* Sprite = m_CurFlipbook->GetSprite(m_SpriteIdx);
 	// Sprite 를 화면에 그린다.
 	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
@@ -133,6 +136,7 @@ void CFlipbookPlayer::Render()
 	blend.BlendFlags = 0;
 	blend.SourceConstantAlpha = 255;
 	blend.AlphaFormat = AC_SRC_ALPHA;
+
 
 
 	AlphaBlend(dc

@@ -1,6 +1,8 @@
 #pragma once
 #include "CObj.h"
 
+class CFlipbook;
+class CCollider;
 class CFlipbookPlayer;
 class CAttack_Eft : public CObj
 {
@@ -16,7 +18,11 @@ public:
     CAttack_Eft();
     ~CAttack_Eft();
 private:
+    CFlipbook* mFlipbook;
     CObj* m_Player;
-    CFlipbookPlayer* mFlipbookPlay;
+    CFlipbookPlayer* m_FilpbookAttack;
+    CCollider* m_CAttack;
+    bool       m_AttackActive;
+    float      m_AttackTime;
 };
 

@@ -26,6 +26,8 @@ private:
 
 
 public:
+
+
     void AddFlipbook(CFlipbook* _Flipbook) { m_vecFlipbook.push_back(_Flipbook); }
     void AddFlipbook(int _idx, CFlipbook* _Flipbook)
     {
@@ -43,6 +45,8 @@ public:
     bool IsFinish() { return m_Finish; }
 
     void Reset();
+
+    int GetFlipNum() { return m_FlipNum; }
 
 public:
     virtual void FinalTick() override;

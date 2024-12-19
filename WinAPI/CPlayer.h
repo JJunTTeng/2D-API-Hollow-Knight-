@@ -18,35 +18,35 @@ class CPlayer :
     public CObj
 {
 private:
+    float               m_AttackTime;
     float               m_Speed;
     float               m_AttSpeed; // 초당 발사 속도
     float               m_AccTime;  // 시간 누적
     bool                m_AttackActive;
     
+
     CCollider*          m_CHitBox;
     CCollider*          m_CHead;
     CCollider*          m_CFloor;
     CCollider*          m_CLeft;
     CCollider*          m_CRight;
-    CCollider*          m_CAttack;
 
     CCollider*          m_CAttackEft;
 
-
     CFlipbookPlayer*    m_FlipbookPlayer;
-    CFlipbookPlayer*    m_FilpbookAttack;
     CRigidBody*         m_RigidBody;
 
-public:     
+    UINT                m_prevAni;
+
+public:
     virtual void Begin() override;
-    virtual void Tick() override;    
+    virtual void Tick() override;
     virtual void Render() override;
 
     virtual void BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
 
-    
 
 private:
     void CreatePlayerFlipbook();

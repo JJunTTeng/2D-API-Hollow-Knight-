@@ -194,7 +194,7 @@
       <Filter>Game\05. Object\Monster\Monsters\MonsterFlipBook</Filter>
     </ClInclude>
     <ClInclude Include="CAttack_Eft.h">
-      <Filter>Game\05. Object\Attack_Effact</Filter>
+      <Filter>Game\05. Object\Player\Attack_Effact</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -373,7 +373,7 @@
       <Filter>Game\05. Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CAttack_Eft.cpp">
-      <Filter>Game\05. Object\Attack_Effact</Filter>
+      <Filter>Game\05. Object\Player\Attack_Effact</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,7 +524,7 @@
     <Filter Include="Game\06. Component\06. pattern">
       <UniqueIdentifier>{1657fef5-79cb-4ce3-b688-28a00911a046}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\Attack_Effact">
+    <Filter Include="Game\05. Object\Player\Attack_Effact">
       <UniqueIdentifier>{300ba6db-c693-4e9d-91bc-64015706043c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

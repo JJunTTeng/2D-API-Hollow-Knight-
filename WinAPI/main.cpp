@@ -57,7 +57,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance   // 프로세스 주소(ID)
     RegisterClassExW(&wcex2);
 
     // Engine 초기화
-    if (FAILED(CEngine::GetInst()->Init(g_hInst, POINT{ 1280, 768 })))
+    if (FAILED(CEngine::GetInst()->Init(g_hInst, POINT{ 1600, 900 })))
         return FALSE;
 
     if (FAILED(CEngine::GetInst()->EditWindow(g_hInst, POINT{ 500, 500 })))

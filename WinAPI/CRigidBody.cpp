@@ -12,10 +12,12 @@ CRigidBody::CRigidBody()
 	, m_Friction(100.f)
 	, m_bPrevMove(false)
 	, m_bMove(false)
-	, m_GravityAccel(Vec2(0.f, 580.f))
+	, m_GravityAccel(Vec2(0.f, 1200.f))
 	, m_Mode(RIGIDBODY_MODE::TOPVIEW)
 	, m_JumpStack(1)
 	, m_MaxJumpStack(3)
+	, m_MaxGravitySpeed(1200.0f)
+	, m_JumpVelocity(Vec2(0,0))
 {
 
 }
@@ -26,7 +28,7 @@ CRigidBody::~CRigidBody()
 }
 
 void CRigidBody::FinalTick()
-{
+{ 
 	if (RIGIDBODY_MODE::TOPVIEW == m_Mode)
 		FinalTick_TopView();
 	else
@@ -96,12 +98,23 @@ void CRigidBody::FinalTick_BeltScroll()
 	// 중력 가속도 계산	
 	if(false == m_bGround) // 공중에 있을 경우
 		m_VelocityY += m_GravityAccel * DT;
+
 	else if(0.f < m_VelocityY.y )
 	{
 		m_VelocityY.y = 0.f;
+		m_JumpVelocity.y = 0.f;
 	}
+	
+	
+	if (m_JumpVelocity.y >= 1.f)
+		m_JumpVelocity.y += 8 * DT;
+
+	if (m_VelocityY.y > m_MaxGravitySpeed)
+		m_VelocityY.y = m_MaxGravitySpeed;
 
 	// 분해된 속도를 합쳐서 최종 속도를 계산한다.
+
+	m_VelocityY += m_JumpVelocity;
 	m_Velocity = m_VelocityX + m_VelocityY;
 
 	// 속도에 따른 이동
@@ -199,13 +212,12 @@ void CRigidBody::CalcMaxSpeed_BeltScroll()
 	}
 }
 
-void CRigidBody::Jump()
+void CRigidBody::Jump(float JumpSpeed)
 {
 	if (RIGIDBODY_MODE::TOPVIEW == m_Mode || m_JumpStack <= 0)
 		return;
 
-	m_VelocityY = m_JumpVelocity;
+	m_VelocityY.y = JumpSpeed;
+	m_JumpVelocity.y = 1.f;
 	m_bGround = false;
-
-	--m_JumpStack;
 }

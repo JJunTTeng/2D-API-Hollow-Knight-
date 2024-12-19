@@ -83,7 +83,10 @@ void CLevel_Editor::Begin()
 	mPlayer->SetPos(Vec2(1954,1348));
 	AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	
+	m_Play_Effact = new CAttack_Eft;
+	m_Play_Effact->SetName(L"Attac_Effact");
+	m_Play_Effact->LoadPlayer(mPlayer);
+	AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
 
 
 	// 샘플퓖EMap 오틒E㎷?생성
@@ -93,9 +96,13 @@ void CLevel_Editor::Begin()
 	CBgMap* mBgMap = new CBgMap;
 	AddObject(mBgMap, LAYER_TYPE::FrontBg);
 
+
+
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::COLLIDER);
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::COLLIDER, LAYER_TYPE::MONSTER);
+	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);
+
 
 
 	wchar_t m_Path[255] = L"1-1";

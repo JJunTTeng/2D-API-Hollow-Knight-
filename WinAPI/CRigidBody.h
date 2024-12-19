@@ -67,10 +67,7 @@ public:
         }
     }
 
-    Vec2 GetJumpVelocity() {return  m_JumpVelocity; }
-    void SetJumpVelocity(Vec2 _Veloticy) { m_JumpVelocity = _Veloticy; }
-
-    void Jump();
+    void Jump(float JumpSpeed);
 
     RIGIDBODY_MODE GetMode() { return m_Mode; }
     void SetMode(RIGIDBODY_MODE _Mode) { m_Mode = _Mode; }
