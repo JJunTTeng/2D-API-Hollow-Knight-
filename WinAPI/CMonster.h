@@ -20,7 +20,7 @@ private:
     dir         m_Dir;
     dir         m_prevDir;
 
-    float       m_Speed;
+    Vec2        m_Speed;
     Vec2        m_InitPos;
     float       m_Dist;
 
@@ -33,6 +33,8 @@ private:
 
     bool        m_Chase;
     bool        m_Loop;
+
+    CObj*       m_Player;
 public:
     dir GetDir() { return m_Dir; }
     dir GetprevDir() {return m_prevDir;}
@@ -47,7 +49,8 @@ public:
     void SetEndLpMove(Vec2 _pos) { EndLpMove = _pos; }
 
     void LoopPlay(bool _Chase);
-
+    void ChaseObject(CObj* _Player);
+    void Chase();
 
     const tMonInfo& GetMonInfo() { return m_Info; }
     void SetMonsInfo(tMonInfo _monsInfo) { m_Info = _monsInfo; }

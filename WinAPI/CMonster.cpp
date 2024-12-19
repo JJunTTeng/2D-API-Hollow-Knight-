@@ -53,6 +53,34 @@ void CMonster::LoopPlay(bool _Chase)
 	
 }
 
+void CMonster::ChaseObject(CObj* _Player)
+{
+	m_Player = _Player;
+}
+
+void CMonster::Chase()
+{
+	if (GetComponent<CCollider>())
+	{
+		if (GetPos().x == FrnLpMove.x || GetPos().x == EndLpMove.x)
+		{
+			m_Chase = false;
+			return;
+		}
+
+		if (GetPos().x >= m_Player->GetPos().x && FrnLpMove.x <= GetPos().x)
+		{
+			SetPos(Vec2(GetPos().x - m_Speed.x * DT, GetPos().y));
+		}
+
+		else if (GetPos().x <= m_Player->GetPos().x && EndLpMove.x >= GetPos().x)
+		{
+			SetPos(Vec2(GetPos().x + m_Speed.x * DT, GetPos().y));
+		}
+	}
+
+}
+
 void CMonster::Begin()
 {
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
@@ -98,6 +126,11 @@ void CMonster::Tick()
 
 
 	}
+
+
+	if (fabs(m_Player->GetPos().x + m_Player->GetPos().y - (GetPos().x + GetPos().y)) <= 100)
+		m_Chase = true;
+
 
 }
 
