@@ -32,6 +32,7 @@ private:
 
     int             m_JumpStack;
     int             m_MaxJumpStack;
+    float			m_JumpTime;
 
     RIGIDBODY_MODE  m_Mode;         // 동작 모드
 
@@ -50,9 +51,14 @@ public:
 
     float GetInitialSpeed() { return m_InitialSpeed; }
     void SetInitialSpeed(float _Init) { m_InitialSpeed = _Init; }
-
+    
+	Vec2 GetVelocity() { return m_Velocity; }
     void SetVelocity(Vec2 _Velocity) { m_Velocity = _Velocity; }
     void AddVelocity(Vec2 _Velocity) { m_Velocity += _Velocity; }
+
+    void AddVelocityX(float _VelocityX) { m_VelocityX += _VelocityX; }
+    void AddVelocityY(float _VelocityY) { m_VelocityY += _VelocityY; }
+
 
     void SetGravityAccel(Vec2 _GravityAccel) { m_GravityAccel = _GravityAccel; }
     Vec2 GetGravityAccel() { return m_GravityAccel; }

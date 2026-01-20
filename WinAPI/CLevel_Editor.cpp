@@ -75,7 +75,7 @@ void CLevel_Editor::Begin()
 	// 메뉴바가 추가되었콅E때문에, 윈도퓖E크기를 재조정한다.
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 
-	MonsterFlipbook::GetInst()->CreateFlipbook();
+	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	
 	// Player 생성
 	mPlayer = new CPlayer;

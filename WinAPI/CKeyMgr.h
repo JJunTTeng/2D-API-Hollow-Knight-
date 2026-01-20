@@ -40,6 +40,13 @@ enum KEY
 	KEY_END,
 };
 
+enum LeftOrRight
+{
+	LR_LEFT,
+	LR_RIGHT,
+	LR_NONE
+};;
+
 struct KeyInfo
 {	
 	KEY_STATE	State;			// 현재 상태
@@ -55,15 +62,23 @@ private:
 	Vec2				m_MousePos;
 	Vec2				m_EditMousePos;
 	Vec2				m_Render;
+	
+	float				m_LeftKeyTime;
+	float				m_RightKeyTime;
+
+	LeftOrRight			m_LeftOrRight;
 
 public:
 	KEY_STATE GetKeyState(KEY _key) { return m_vecKeyInfo[_key].State; }
 	Vec2 GetMousePos() { return m_MousePos; }	
 	Vec2 GetEditMousePos() { return m_EditMousePos;}
+	LeftOrRight GetLeftOrRight() { return m_LeftOrRight; }
 
 	bool  GetNoneKey();
 
 	bool IsMouseOffScreen();
+
+	void LeftORRightKey();
 
 public:
 	void Init();

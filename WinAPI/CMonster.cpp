@@ -70,12 +70,12 @@ void CMonster::Chase()
 
 		if (GetPos().x >= m_Player->GetPos().x && FrnLpMove.x <= GetPos().x)
 		{
-			SetPos(Vec2(GetPos().x - m_Speed.x * DT, GetPos().y));
+			SetPos(Vec2(GetPos().x - m_Speed * DT, GetPos().y));
 		}
 
 		else if (GetPos().x <= m_Player->GetPos().x && EndLpMove.x >= GetPos().x)
 		{
-			SetPos(Vec2(GetPos().x + m_Speed.x * DT, GetPos().y));
+			SetPos(Vec2(GetPos().x + m_Speed * DT, GetPos().y));
 		}
 	}
 

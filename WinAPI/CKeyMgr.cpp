@@ -2,6 +2,7 @@
 #include "CKeyMgr.h"
 
 #include "CEngine.h"
+#include "CTimeMgr.h"
 
 UINT KeyValue[KEY::KEY_END] =
 {
@@ -51,6 +52,9 @@ void CKeyMgr::Init()
 	for (size_t i = 0; i < KEY_END; ++i)
 	{
 		m_vecKeyInfo.push_back(KeyInfo{ KEY_STATE::NONE, false});
+		m_LeftKeyTime = 0.f;
+		m_RightKeyTime = 0.f;
+		m_LeftOrRight = LeftOrRight::LR_NONE;
 	}	
 }
 
@@ -64,10 +68,22 @@ void CKeyMgr::Tick()
 			// 현재 해당 키가 눌려있다.
 			if (GetAsyncKeyState(KeyValue[i]) & 0x8001)
 			{
+				if (KeyValue[i] == KeyValue[KEY::LEFT])
+				{
+					m_LeftKeyTime += DT;
+				}
+
+				if (KeyValue[i] == KeyValue[KEY::RIGHT])
+				{
+					m_RightKeyTime += DT;
+
+				}
+
 				// 이전에도 눌려있었다.
 				if (m_vecKeyInfo[i].bPrevPressed)
 				{
 					m_vecKeyInfo[i].State = KEY_STATE::PRESSED;
+
 				}
 
 				// 이전에 눌려있지 않았다.
@@ -93,6 +109,16 @@ void CKeyMgr::Tick()
 					m_vecKeyInfo[i].State = KEY_STATE::NONE;
 				}
 
+				if (KeyValue[i] == KeyValue[KEY::LEFT])
+				{
+					m_LeftKeyTime = 0.f;
+				}
+
+				if (KeyValue[i] == KeyValue[KEY::RIGHT])
+				{
+					m_RightKeyTime = 0.f;
+				}
+
 				m_vecKeyInfo[i].bPrevPressed = false;
 			}
 		}
@@ -108,7 +134,7 @@ void CKeyMgr::Tick()
 		ScreenToClient(CEngine::GetInst()->GetEditWndHwnd(), &ptPos);
 
 		m_EditMousePos = ptPos;
-
+		LeftORRightKey();
 	}
 
 	// 게임 윈도우가 비활성화 되어 있을 때
@@ -163,4 +189,16 @@ bool CKeyMgr::IsMouseOffScreen()
 	{
 		return false;
 	}	
+}
+
+void CKeyMgr::LeftORRightKey()
+{
+	if (m_LeftKeyTime == 0.0f || m_RightKeyTime == 0.0f)
+		m_LeftOrRight = LR_NONE;
+
+	else if (m_LeftKeyTime < m_RightKeyTime)
+		m_LeftOrRight = LeftOrRight::LR_LEFT;
+
+	else
+		m_LeftOrRight = LeftOrRight::LR_RIGHT;
 }

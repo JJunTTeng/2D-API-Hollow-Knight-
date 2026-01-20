@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActionState.h" />
     <ClInclude Include="AspidHunter.h" />
     <ClInclude Include="CAsset.h" />
     <ClInclude Include="CAssetMgr.h" />
@@ -196,7 +197,11 @@
     <ClInclude Include="HuskHornhead.h" />
     <ClInclude Include="LeapingHusk.h" />
     <ClInclude Include="MonsterFlipbook.h" />
+    <ClInclude Include="MoveState.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="P_Idle.h" />
+    <ClInclude Include="P_Move.h" />
+    <ClInclude Include="P_Run.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
@@ -206,6 +211,7 @@
     <ClInclude Include="WinAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionState.cpp" />
     <ClCompile Include="AspidHunter.cpp" />
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
@@ -259,10 +265,14 @@
     <ClCompile Include="LeapingHusk.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MonsterFlipbook.cpp" />
+    <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="P_Idle.cpp" />
+    <ClCompile Include="P_Move.cpp" />
+    <ClCompile Include="P_Run.cpp" />
     <ClCompile Include="Tiktik.cpp" />
     <ClCompile Include="Vengefly.cpp" />
     <ClCompile Include="WanderingHusk.cpp" />

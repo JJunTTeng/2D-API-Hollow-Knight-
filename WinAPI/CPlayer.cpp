@@ -25,32 +25,8 @@
 #include "CAttack_Eft.h"
 
 
-enum PLAYER_ANIM_STATE
-{
-	IDLE,
-	IDLE_LEFT,
-	IDLE_RIGHT,
-
-	LEFT_UP,
-	LEFT_DOWN,
-	RIGHT_UP,
-	RIGHT_DOWN,
-
-	MOVE_UP,
-	MOVE_DOWN,
-	MOVE_LEFT,
-	MOVE_RIGHT,
-
-	LEFT_SLASH,
-	LEFT_UPSLASH,
-	LEFT_DOWNSLASH,
-
-	RIGHT_SLASH,
-	RIGHT_UPSLASH,
-	RIGHT_DOWNSLASH
-};
-
-
+#include "CFSM.h"
+#include "P_Idle.h"
 
 CPlayer::CPlayer()
 	: m_Speed(200.f)
@@ -132,9 +108,15 @@ CPlayer::CPlayer()
 	 //RigidBody 컴포넌트 추가
 	m_RigidBody = (CRigidBody*)AddComponent(new CRigidBody);
 	m_RigidBody->SetMode(RIGIDBODY_MODE::BELTSCROLL);
-	//m_RigidBody->SetInitialSpeed(500.f);
-	//m_RigidBody->SetMaxSpeed(500.f);
+	m_RigidBody->SetInitialSpeed(400.f);
+	m_RigidBody->SetMaxSpeed(400.f);
+	m_RigidBody->SetFriction(0.0f);
 	m_RigidBody->SetMass(1.f);
+
+
+	m_FSM = (CFSM*)AddComponent(new CFSM);
+	m_FSM->AddState(L"Idle", new P_Idle);
+	m_FSM->ChangeState(L"Idle");
 }
 
 CPlayer::~CPlayer()
@@ -170,6 +152,31 @@ void CPlayer::Tick()
 		m_AttackTime += DT; 
 	}
 	
+	
+
+	if(CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_NONE)
+	{
+		if (KEY_PRESSED(KEY::LEFT))
+		{
+			SetPos(GetPos() - Vec2(m_Speed * DT, 0.f));
+		}
+
+		if (KEY_PRESSED(KEY::RIGHT))
+		{
+			SetPos(GetPos() + Vec2(m_Speed * DT, 0.f));
+
+		}
+	}
+
+	else if (CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_LEFT)
+	{
+		SetPos(GetPos() - Vec2(m_Speed * DT, 0.f));
+	}
+	else if (CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_RIGHT)
+	{
+		SetPos(GetPos() + Vec2(m_Speed * DT, 0.f));
+	}
+
 
 	if (KEY_PRESSED(KEY::UP))
 	{
@@ -191,13 +198,16 @@ void CPlayer::Tick()
 		SetUd(UD::NONE);
 	}
 
-
+	if (KEY_PRESSED(KEY::X))
+	{
+		m_RigidBody->Jump(-600.0f);
+	}
 
 	m_CAttackEft->IsActive(false);
 	
-	Move();
-	Jump();
-	Attack();
+	//Move();
+	//Jump();
+	//Attack();
 
 }
 

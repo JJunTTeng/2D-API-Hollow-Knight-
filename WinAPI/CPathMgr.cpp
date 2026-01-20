@@ -22,6 +22,6 @@ void CPathMgr::Init()
 		}
 	}
 
-	wcscat_s(szBuff, 255, L"\\Content\\");
+	wcscat_s(szBuff, 255, L"\\OutputFile\\Content\\");
 	wcscpy_s(g_ContentPath, 255, szBuff);
 }

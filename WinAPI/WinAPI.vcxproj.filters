@@ -196,6 +196,21 @@
     <ClInclude Include="CAttack_Eft.h">
       <Filter>Game\05. Object\Player\Attack_Effact</Filter>
     </ClInclude>
+    <ClInclude Include="ActionState.h">
+      <Filter>Game\05. Object\Player\State_Action</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Idle.h">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Move.h">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Run.h">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -375,6 +390,21 @@
     <ClCompile Include="CAttack_Eft.cpp">
       <Filter>Game\05. Object\Player\Attack_Effact</Filter>
     </ClCompile>
+    <ClCompile Include="ActionState.cpp">
+      <Filter>Game\05. Object\Player\State_Action</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveState.cpp">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Idle.cpp">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Move.cpp">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Run.cpp">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -526,6 +556,12 @@
     </Filter>
     <Filter Include="Game\05. Object\Player\Attack_Effact">
       <UniqueIdentifier>{300ba6db-c693-4e9d-91bc-64015706043c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Player\State_Action">
+      <UniqueIdentifier>{6cd3f551-2e22-4ea2-8643-7d689c0ff433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Player\State_Move">
+      <UniqueIdentifier>{bc7c74e1-8417-40d1-85ff-fe7eb00bea0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

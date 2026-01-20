@@ -5,6 +5,32 @@ class CCollider;
 class CTexture;
 class CFlipbookPlayer;
 class CRigidBody;
+class CFSM;
+
+enum PLAYER_ANIM_STATE
+{
+    IDLE,
+    IDLE_LEFT,
+    IDLE_RIGHT,
+
+    LEFT_UP,
+    LEFT_DOWN,
+    RIGHT_UP,
+    RIGHT_DOWN,
+
+    MOVE_UP,
+    MOVE_DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+
+    LEFT_SLASH,
+    LEFT_UPSLASH,
+    LEFT_DOWNSLASH,
+
+    RIGHT_SLASH,
+    RIGHT_UPSLASH,
+    RIGHT_DOWNSLASH
+};
 
 struct Flip
 {
@@ -36,6 +62,8 @@ private:
     CFlipbookPlayer*    m_FlipbookPlayer;
     CRigidBody*         m_RigidBody;
 
+	CFSM*               m_FSM;        
+
     UINT                m_prevAni;
 
 public:
@@ -47,6 +75,8 @@ public:
     virtual void Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
 
+
+	CFlipbookPlayer* GetFlipbookPlayer() { return m_FlipbookPlayer; }
 
 private:
     void CreatePlayerFlipbook();

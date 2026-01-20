@@ -103,6 +103,7 @@ void CRigidBody::FinalTick_BeltScroll()
 	{
 		m_VelocityY.y = 0.f;
 		m_JumpVelocity.y = 0.f;
+		m_JumpTime = 0.f;
 	}
 	
 	
@@ -214,9 +215,10 @@ void CRigidBody::CalcMaxSpeed_BeltScroll()
 
 void CRigidBody::Jump(float JumpSpeed)
 {
-	if (RIGIDBODY_MODE::TOPVIEW == m_Mode || m_JumpStack <= 0)
+	if (RIGIDBODY_MODE::TOPVIEW == m_Mode || m_JumpStack <= 0 || m_JumpTime > 0.75f)
 		return;
 
+	m_JumpTime += DT;
 	m_VelocityY.y = JumpSpeed;
 	m_JumpVelocity.y = 1.f;
 	m_bGround = false;

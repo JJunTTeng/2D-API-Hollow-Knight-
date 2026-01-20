@@ -20,7 +20,7 @@ private:
     dir         m_Dir;
     dir         m_prevDir;
 
-    Vec2        m_Speed;
+    float        m_Speed;
     Vec2        m_InitPos;
     float       m_Dist;
 
