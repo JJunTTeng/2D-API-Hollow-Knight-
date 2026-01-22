@@ -27,6 +27,8 @@
 
 #include "CFSM.h"
 #include "P_Idle.h"
+#include "p_JUMP.h"
+#include "P_Run.h"
 
 CPlayer::CPlayer()
 	: m_Speed(200.f)
@@ -113,10 +115,12 @@ CPlayer::CPlayer()
 	m_RigidBody->SetFriction(0.0f);
 	m_RigidBody->SetMass(1.f);
 
-
+	// FSMµî·Ï
 	m_FSM = (CFSM*)AddComponent(new CFSM);
-	m_FSM->AddState(L"Idle", new P_Idle);
-	m_FSM->ChangeState(L"Idle");
+	m_FSM->AddState(L"IDLE", new P_Idle);
+	m_FSM->AddState(L"RUN", new p_Run);
+	m_FSM->AddState(L"JUMP", new p_JUMP);
+	m_FSM->ChangeState(L"IDLE");
 }
 
 CPlayer::~CPlayer()
@@ -139,6 +143,7 @@ void CPlayer::Begin()
 
 void CPlayer::Tick()
 {
+	Dir m_prevDir = GetDir();
 	SetPrevPos(GetPos());
 
 	if (m_AttackTime >= 0.7f && m_AttackActive == true)
@@ -158,11 +163,13 @@ void CPlayer::Tick()
 	{
 		if (KEY_PRESSED(KEY::LEFT))
 		{
+			SetDir(Dir::LEFT);
 			SetPos(GetPos() - Vec2(m_Speed * DT, 0.f));
 		}
 
 		if (KEY_PRESSED(KEY::RIGHT))
 		{
+			SetDir(Dir::RIGHT);
 			SetPos(GetPos() + Vec2(m_Speed * DT, 0.f));
 
 		}
@@ -170,11 +177,18 @@ void CPlayer::Tick()
 
 	else if (CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_LEFT)
 	{
+		SetDir(Dir::LEFT);
 		SetPos(GetPos() - Vec2(m_Speed * DT, 0.f));
 	}
 	else if (CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_RIGHT)
 	{
+		SetDir(Dir::RIGHT);
 		SetPos(GetPos() + Vec2(m_Speed * DT, 0.f));
+	}
+
+	if (m_prevDir != GetDir())
+	{
+		m_FSM->ChangeState(L"IDLE");
 	}
 
 
@@ -291,6 +305,16 @@ void CPlayer::CreatePlayerFlipbook()
 
 	}
 
+
+	//JUMP
+	{
+		pAtlas = CAssetMgr::GetInst()->LoadTexture(L"PlayJump", L"Texture\\Knight\\003.Airborne\\Airborne.png");
+		CreateFlipbook(L"PLAY_JUMP", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 12.0f, pAtlas->GetHeight()), 12);
+
+		pAtlas = CAssetMgr::GetInst()->LoadTexture(L"R_PlayJump", L"Texture\\Knight\\003.Airborne\\R_Airborne.png");
+		CreateFlipbook(L"R_PLAY_JUMP", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 12.0f, pAtlas->GetHeight()), 12, true);
+	}
+
 	m_FlipbookPlayer = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
 
 	{
@@ -304,6 +328,8 @@ void CPlayer::CreatePlayerFlipbook()
 		m_FlipbookPlayer->AddFlipbook(LEFT_UPSLASH, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_UPSLASH", L"Flipbook\\UPSLASH.flip"));
 		m_FlipbookPlayer->AddFlipbook(LEFT_DOWNSLASH, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_DOWNSLASH", L"Flipbook\\DOWNSLASH.flip"));
 
+		m_FlipbookPlayer->AddFlipbook(LEFT_JUMP, CAssetMgr::GetInst()->LoadFlipbook(L"PLAY_JUMP", L"Flipbook\\JUMP.flip"));
+
 	}
 
 	{
@@ -316,6 +342,8 @@ void CPlayer::CreatePlayerFlipbook()
 		m_FlipbookPlayer->AddFlipbook(RIGHT_SLASH, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_SLASHALT", L"Flipbook\\R_SLASHALT.flip"));
 		m_FlipbookPlayer->AddFlipbook(RIGHT_UPSLASH, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_UPSLASH", L"Flipbook\\R_UPSLASH.flip"));
 		m_FlipbookPlayer->AddFlipbook(RIGHT_DOWNSLASH, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_DOWNSLASH", L"Flipbook\\R_DOWNSLASH.flip"));
+
+		m_FlipbookPlayer->AddFlipbook(RIGHT_JUMP, CAssetMgr::GetInst()->LoadFlipbook(L"R_PLAY_JUMP", L"Flipbook\\R_JUMP.flip"));
 	}
 
 

@@ -29,7 +29,12 @@ enum PLAYER_ANIM_STATE
 
     RIGHT_SLASH,
     RIGHT_UPSLASH,
-    RIGHT_DOWNSLASH
+    RIGHT_DOWNSLASH,
+
+    LEFT_JUMP,
+    RIGHT_JUMP,
+
+    END
 };
 
 struct Flip

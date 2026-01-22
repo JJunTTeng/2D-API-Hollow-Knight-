@@ -2,12 +2,12 @@
 #include "CState.h"
 
 class CPlayer;
-class p_Run :
+class p_JUMP :
     public CState
 {
 public:
-    p_Run();
-    ~p_Run();
+    p_JUMP();
+    ~p_JUMP();
 
 public:
     virtual void Enter()override;

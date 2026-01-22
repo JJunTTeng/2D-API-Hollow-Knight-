@@ -211,6 +211,9 @@
     <ClInclude Include="P_Run.h">
       <Filter>Game\05. Object\Player\State_Move</Filter>
     </ClInclude>
+    <ClInclude Include="p_JUMP.h">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -403,6 +406,9 @@
       <Filter>Game\05. Object\Player\State_Move</Filter>
     </ClCompile>
     <ClCompile Include="P_Run.cpp">
+      <Filter>Game\05. Object\Player\State_Move</Filter>
+    </ClCompile>
+    <ClCompile Include="p_JUMP.cpp">
       <Filter>Game\05. Object\Player\State_Move</Filter>
     </ClCompile>
   </ItemGroup>

@@ -200,6 +200,7 @@
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="P_Idle.h" />
+    <ClInclude Include="p_JUMP.h" />
     <ClInclude Include="P_Move.h" />
     <ClInclude Include="P_Run.h" />
     <ClInclude Include="Resource.h" />
@@ -271,6 +272,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="P_Idle.cpp" />
+    <ClCompile Include="p_JUMP.cpp" />
     <ClCompile Include="P_Move.cpp" />
     <ClCompile Include="P_Run.cpp" />
     <ClCompile Include="Tiktik.cpp" />
