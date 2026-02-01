@@ -7,13 +7,13 @@ Sprite\R_PLAY_JUMP_6.sprite
 [ATLAS_KEY]
 R_PlayJump
 [ATLAS_PATH]
-Texture\Knight\003.Airborne\R_Airborne.png
+Texture\Knight\003.Airborne\R_Jump.png
 
 [LEFT_TOP]
-515, 0
+246, 0
 
 [SLICE]
-103, 146
+123, 165
 
 [OFFSET]
 0, 0

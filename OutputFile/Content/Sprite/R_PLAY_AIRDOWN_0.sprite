@@ -1,0 +1,20 @@
+[KEY]
+R_PLAY_AIRDOWN_0
+
+[PATH]
+Sprite\R_PLAY_AIRDOWN_0.sprite
+
+[ATLAS_KEY]
+R_Play_AirDown
+[ATLAS_PATH]
+Texture\Knight\003.Airborne\R_Down.png
+
+[LEFT_TOP]
+369, 0
+
+[SLICE]
+123, 166
+
+[OFFSET]
+0, 0
+

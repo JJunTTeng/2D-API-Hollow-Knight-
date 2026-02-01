@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "p_JUMP.h"
+#include "p_Down.h"
 
 #include "CPlayer.h"
 #include "CFlipbookPlayer.h"
@@ -8,39 +8,42 @@
 
 #include "CRigidBody.h"
 
-p_JUMP::p_JUMP()
+p_Down::p_Down()
 {
 }
 
-p_JUMP::~p_JUMP()
+p_Down::~p_Down()
 {
 }
 
-void p_JUMP::Enter()
+void p_Down::Enter()
 {
+
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
 	if (pPlayer->GetDir() == Dir::LEFT)
 	{
-		pPlayer->GetFlipbookPlayer()->Play(LEFT_JUMP, 15.f, false);
+		pPlayer->GetFlipbookPlayer()->Play(LEFT_AIRDOWN, 15.f, true);
 	}
 	else
 	{
-		pPlayer->GetFlipbookPlayer()->Play(RIGHT_JUMP, 15.f, false);
+		pPlayer->GetFlipbookPlayer()->Play(RIGHT_AIRDOWN, 15.f, true);
 	}
+
 }
 
-void p_JUMP::FinalTick()
+void p_Down::FinalTick()
 {
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
 
 	CRigidBody* mRigidBody = pPlayer->GetComponent<CRigidBody>();
 
-	if (mRigidBody->GetVelocity().y > 0)
+	if (mRigidBody->IsGround() == true)
 	{
-		pPlayer->GetComponent<CFSM>()->ChangeState(L"AIRDOWN");
+		pPlayer->GetComponent<CFSM>()->ChangeState(L"IDLE");
 	}
+
 }
 
-void p_JUMP::Exit()
+void p_Down::Exit()
 {
 }

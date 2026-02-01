@@ -202,17 +202,20 @@
     <ClInclude Include="MoveState.h">
       <Filter>Game\05. Object\Player\State_Move</Filter>
     </ClInclude>
-    <ClInclude Include="P_Idle.h">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
-    </ClInclude>
-    <ClInclude Include="P_Move.h">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
-    </ClInclude>
-    <ClInclude Include="P_Run.h">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
+    <ClInclude Include="p_Down.h">
+      <Filter>Game\05. Object\Player\State_Move\Jump</Filter>
     </ClInclude>
     <ClInclude Include="p_JUMP.h">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
+      <Filter>Game\05. Object\Player\State_Move\Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Idle.h">
+      <Filter>Game\05. Object\Player\State_Move\IDLE</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Move.h">
+      <Filter>Game\05. Object\Player\State_Move\RUN</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Run.h">
+      <Filter>Game\05. Object\Player\State_Move\RUN</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -399,17 +402,20 @@
     <ClCompile Include="MoveState.cpp">
       <Filter>Game\05. Object\Player\State_Move</Filter>
     </ClCompile>
-    <ClCompile Include="P_Idle.cpp">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
-    </ClCompile>
-    <ClCompile Include="P_Move.cpp">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
-    </ClCompile>
-    <ClCompile Include="P_Run.cpp">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
+    <ClCompile Include="p_Down.cpp">
+      <Filter>Game\05. Object\Player\State_Move\Jump</Filter>
     </ClCompile>
     <ClCompile Include="p_JUMP.cpp">
-      <Filter>Game\05. Object\Player\State_Move</Filter>
+      <Filter>Game\05. Object\Player\State_Move\Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Idle.cpp">
+      <Filter>Game\05. Object\Player\State_Move\IDLE</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Move.cpp">
+      <Filter>Game\05. Object\Player\State_Move\RUN</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Run.cpp">
+      <Filter>Game\05. Object\Player\State_Move\RUN</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +574,15 @@
     </Filter>
     <Filter Include="Game\05. Object\Player\State_Move">
       <UniqueIdentifier>{bc7c74e1-8417-40d1-85ff-fe7eb00bea0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Player\State_Move\Jump">
+      <UniqueIdentifier>{f3c305e8-d842-4f2f-a766-d891d01e7e0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Player\State_Move\IDLE">
+      <UniqueIdentifier>{6e4f0ff9-f37c-410c-be60-e96579932996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Player\State_Move\RUN">
+      <UniqueIdentifier>{6ba58636-5253-43ab-81c9-8c6741ff24fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

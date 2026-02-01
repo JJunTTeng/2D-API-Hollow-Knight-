@@ -15,7 +15,7 @@ CRigidBody::CRigidBody()
 	, m_GravityAccel(Vec2(0.f, 1200.f))
 	, m_Mode(RIGIDBODY_MODE::TOPVIEW)
 	, m_JumpStack(1)
-	, m_MaxJumpStack(3)
+	, m_MaxJumpStack(1)
 	, m_MaxGravitySpeed(1200.0f)
 	, m_JumpVelocity(Vec2(0,0))
 {

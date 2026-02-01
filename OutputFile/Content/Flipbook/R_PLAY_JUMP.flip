@@ -4,7 +4,7 @@ R_PLAY_JUMP
 Flipbook\R_PLAY_JUMP.flip
 
 [SPRITE_COUNT]
-12
+9
 [INDEX]
 0
 [KEY]
@@ -67,25 +67,4 @@ Sprite\R_PLAY_JUMP_7.sprite
 R_PLAY_JUMP_8
 [PATH]
 Sprite\R_PLAY_JUMP_8.sprite
-
-[INDEX]
-9
-[KEY]
-R_PLAY_JUMP_9
-[PATH]
-Sprite\R_PLAY_JUMP_9.sprite
-
-[INDEX]
-10
-[KEY]
-R_PLAY_JUMP_10
-[PATH]
-Sprite\R_PLAY_JUMP_10.sprite
-
-[INDEX]
-11
-[KEY]
-R_PLAY_JUMP_11
-[PATH]
-Sprite\R_PLAY_JUMP_11.sprite
 

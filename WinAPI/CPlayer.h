@@ -34,6 +34,9 @@ enum PLAYER_ANIM_STATE
     LEFT_JUMP,
     RIGHT_JUMP,
 
+    LEFT_AIRDOWN,
+    RIGHT_AIRDOWN,
+
     END
 };
 

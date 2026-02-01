@@ -187,6 +187,7 @@
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIMgr.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="p_Down.h" />
     <ClInclude Include="enum.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="func.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIMgr.cpp" />
+    <ClCompile Include="p_Down.cpp" />
     <ClCompile Include="func.cpp" />
     <ClCompile Include="Gruzzer.cpp" />
     <ClCompile Include="HuskGuard.cpp" />

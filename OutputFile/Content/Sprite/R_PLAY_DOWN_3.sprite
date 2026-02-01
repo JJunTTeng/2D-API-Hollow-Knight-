@@ -1,8 +1,8 @@
 [KEY]
-R_PLAY_JUMP_2
+R_PLAY_DOWN_3
 
 [PATH]
-Sprite\R_PLAY_JUMP_2.sprite
+Sprite\R_PLAY_DOWN_3.sprite
 
 [ATLAS_KEY]
 R_PlayJump
@@ -10,10 +10,10 @@ R_PlayJump
 Texture\Knight\003.Airborne\R_Jump.png
 
 [LEFT_TOP]
-738, 0
+276, 0
 
 [SLICE]
-123, 165
+276, 165
 
 [OFFSET]
 0, 0
