@@ -1,12 +1,12 @@
 #pragma once
-#include "MoveState.h"
+#include "ActionState.h"
 
-class P_Idle : public MoveState
+class P_Attack : public ActionState
 
 {
 public:
-	P_Idle();
-	~P_Idle();
+	P_Attack();
+	~P_Attack();
 
 	virtual void Enter() override;
 	virtual void FinalTick() override;

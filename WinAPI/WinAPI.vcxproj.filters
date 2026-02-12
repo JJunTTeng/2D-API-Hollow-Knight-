@@ -217,6 +217,9 @@
     <ClInclude Include="P_Run.h">
       <Filter>Game\05. Object\Player\State_Move\RUN</Filter>
     </ClInclude>
+    <ClInclude Include="P_Attack.h">
+      <Filter>Game\05. Object\Player\State_Action\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -417,6 +420,9 @@
     <ClCompile Include="P_Run.cpp">
       <Filter>Game\05. Object\Player\State_Move\RUN</Filter>
     </ClCompile>
+    <ClCompile Include="P_Attack.cpp">
+      <Filter>Game\05. Object\Player\State_Action\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -583,6 +589,9 @@
     </Filter>
     <Filter Include="Game\05. Object\Player\State_Move\RUN">
       <UniqueIdentifier>{6ba58636-5253-43ab-81c9-8c6741ff24fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Player\State_Action\Attack">
+      <UniqueIdentifier>{f1f9b37f-4dfa-4934-bae0-b0d8fbd3ba8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

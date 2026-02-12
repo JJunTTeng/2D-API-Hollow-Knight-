@@ -1,9 +1,9 @@
 #pragma once
-#include "CState.h"
+#include "MoveState.h"
 
 class CPlayer;
 class p_JUMP :
-    public CState
+    public MoveState
 {
 public:
     p_JUMP();

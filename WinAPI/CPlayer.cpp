@@ -24,12 +24,14 @@
 #include "CRigidBody.h"
 #include "CAttack_Eft.h"
 
-
 #include "CFSM.h"
+#include "MoveState.h"
 #include "P_Idle.h"
 #include "p_JUMP.h"
 #include "P_Run.h"
 #include "p_Down.h"
+
+#include "ActionState.h"
 
 CPlayer::CPlayer()
 	: m_Speed(200.f)
@@ -122,7 +124,14 @@ CPlayer::CPlayer()
 	m_FSM->AddState(L"RUN", new p_Run);
 	m_FSM->AddState(L"JUMP", new p_JUMP);
 	m_FSM->AddState(L"AIRDOWN", new p_Down);
-	m_FSM->ChangeState(L"IDLE");
+
+	m_FSM->AddState(L"MOVE_STATE", new MoveState);
+
+	m_FSM->AddState(L"ATTACK", new p_Run);
+
+	m_FSM->AddState(L"ACTION_STATE", new ActionState);
+
+	m_FSM->ChangeState(L"MOVE_STATE");
 }
 
 CPlayer::~CPlayer()

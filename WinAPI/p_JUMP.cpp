@@ -31,12 +31,16 @@ void p_JUMP::Enter()
 
 void p_JUMP::FinalTick()
 {
+
+	MoveState::FinalTick();
+
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
 
 	CRigidBody* mRigidBody = pPlayer->GetComponent<CRigidBody>();
 
 	if (mRigidBody->GetVelocity().y > 0)
 	{
+		//p_Down
 		pPlayer->GetComponent<CFSM>()->ChangeState(L"AIRDOWN");
 	}
 }

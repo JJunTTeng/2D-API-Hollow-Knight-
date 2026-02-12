@@ -10,8 +10,6 @@
 #include "CKeyMgr.h"
 
 P_Idle::P_Idle()
-	: m_Player(nullptr)
-	, m_FlipbookPlayer(nullptr)
 {
 }
 
@@ -34,6 +32,7 @@ void P_Idle::Enter()
 
 void P_Idle::FinalTick()
 {
+	MoveState::FinalTick();
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
 
 	CRigidBody* mRigidBody = pPlayer->GetComponent<CRigidBody>();

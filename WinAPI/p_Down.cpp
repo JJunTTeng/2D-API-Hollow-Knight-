@@ -33,6 +33,8 @@ void p_Down::Enter()
 
 void p_Down::FinalTick()
 {
+	MoveState::FinalTick();
+
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
 
 	CRigidBody* mRigidBody = pPlayer->GetComponent<CRigidBody>();

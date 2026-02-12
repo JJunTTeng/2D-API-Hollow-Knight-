@@ -1,17 +1,19 @@
 #pragma once
+#include "CState.h"
 
-class CPlayer;
-class CCollider;
-class MoveState
+class MoveState :
+    public CState
 {
 public:
-    virtual void Begin(CObj* obj) =0;
-    virtual void Tick() =0;
-    virtual void Render() =0;
+    MoveState();
+    ~MoveState();
 
-    virtual void BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)=0;
-    virtual void Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)=0;
-    virtual void EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)=0;
+public:
+    virtual void Enter()override;
+    virtual void FinalTick()override;
+    virtual void Exit() override;
+
+protected:
 
 };
 
