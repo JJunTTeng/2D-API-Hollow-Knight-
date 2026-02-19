@@ -133,8 +133,8 @@ CPlayer::CPlayer()
 	m_MoveFSM->ChangeState(L"MOVE_STATE");
 
 	m_ActionFSM = (CFSM*)AddComponent(new CFSM);
-	m_ActionFSM->AddState(L"ACTION_STATE", new ActionState);
 	m_ActionFSM->AddState(L"ATTACK", new P_Attack);
+	m_ActionFSM->AddState(L"ACTION_STATE", new ActionState);
 	m_ActionFSM->ChangeState(L"ACTION_STATE");
 }
 
@@ -229,7 +229,7 @@ void CPlayer::Tick()
 		SetUd(UD::NONE);
 	}
 
-	if (KEY_PRESSED(KEY::X))
+	if (KEY_PRESSED(KEY::Z))
 	{
 		m_RigidBody->Jump(-600.0f);
 	}
@@ -487,6 +487,47 @@ void CPlayer::UpdateAnimation()
 			GetFlipbookPlayer()->Play(RIGHT_AIRDOWN, 15.f, true);
 		}
 	}
+
+	//공격 애니메이션
+	if (m_pAction == P_Action::ATTACK)
+	{
+		if (KEY_PRESSED(UP))
+		{
+			if (GetDir() == Dir::LEFT)
+			{
+				m_FlipbookPlayer->Play(LEFT_UPSLASH, 80.f, false);
+			}
+			else
+			{
+				GetFlipbookPlayer()->Play(RIGHT_UPSLASH, 80.f, false);
+			}
+		}
+
+		else if (KEY_PRESSED(DOWN))
+		{
+			if (GetDir() == Dir::LEFT)
+			{
+				m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 80.f, false);
+			}
+			else
+			{
+				GetFlipbookPlayer()->Play(RIGHT_DOWNSLASH, 80.f, false);
+			}
+		}
+
+		else
+		{
+			if (GetDir() == Dir::LEFT)
+			{
+				m_FlipbookPlayer->Play(LEFT_SLASH, 80.f, false);
+			}
+			else
+			{
+				m_FlipbookPlayer->Play(RIGHT_SLASH, 80.f, false);
+			}
+		}
+	}
+
 }
 
 void CPlayer::Move()
@@ -606,7 +647,7 @@ void CPlayer::Attack()
 
 		else if (GetDir() == Dir::LEFT)
 		{
-			m_FlipbookPlayer->Play(LEFT_SLASH, 50.f, false);
+			
 		}
 
 		else if (GetDir() == Dir::RIGHT)

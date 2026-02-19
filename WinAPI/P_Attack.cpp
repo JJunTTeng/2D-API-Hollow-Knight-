@@ -3,6 +3,8 @@
 
 #include "CPlayer.h"
 
+#include "CFlipbookPlayer.h"
+
 P_Attack::P_Attack()
 {
 }
@@ -20,8 +22,10 @@ void P_Attack::Enter()
 
 void P_Attack::FinalTick()
 {
+	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
 
-	if()
+	if(pPlayer->GetComponent<CFlipbookPlayer>()->IsFinish() == true)
+		pPlayer->GetActionFSM()->ChangeState(L"ACTION_STATE");
 }
 
 void P_Attack::Exit()

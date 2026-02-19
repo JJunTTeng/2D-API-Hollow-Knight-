@@ -32,12 +32,12 @@ void P_Idle::FinalTick()
 	CRigidBody* mRigidBody = pPlayer->GetComponent<CRigidBody>();
 	if (mRigidBody->IsGround() == false)
 	{
-		pPlayer->GetComponent<CFSM>()->ChangeState(L"JUMP");
+		pPlayer->GetMoveFSM()->ChangeState(L"JUMP");
 	}
 
 	else if (KEY_PRESSED(LEFT) || KEY_PRESSED(RIGHT))
 	{
-		pPlayer->GetComponent<CFSM>()->ChangeState(L"RUN");
+		pPlayer->GetMoveFSM()->ChangeState(L"RUN");
 	}
 }
 

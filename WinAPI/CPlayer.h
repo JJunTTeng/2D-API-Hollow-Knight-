@@ -114,6 +114,10 @@ public:
     void SetPMove(P_Move pMove) { m_pMove = pMove; }
     void SetPAction(P_Action pAction) { m_pAction = pAction; }
 
+	CFSM* GetMoveFSM() { return m_MoveFSM; }
+    CFSM* GetActionFSM() { return m_ActionFSM; }
+
+
 private:
     void CreatePlayerFlipbook();
     void CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int MaxFrame, bool IsRight = false);

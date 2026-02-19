@@ -26,7 +26,7 @@ void ActionState::FinalTick()
 
 	if (KEY_TAP(X))
 	{
-		pPlayer->GetComponent<CFSM>()->ChangeState(L"ATTACK");
+		pPlayer->GetActionFSM()->ChangeState(L"ATTACK");
 	}
 
 }

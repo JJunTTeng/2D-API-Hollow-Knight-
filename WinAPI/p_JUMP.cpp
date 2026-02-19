@@ -37,7 +37,7 @@ void p_JUMP::FinalTick()
 	if (mRigidBody->GetVelocity().y > 0)
 	{
 		//p_Down
-		pPlayer->GetComponent<CFSM>()->ChangeState(L"AIRDOWN");
+		pPlayer->GetMoveFSM()->ChangeState(L"AIRDOWN");
 	}
 }
 
