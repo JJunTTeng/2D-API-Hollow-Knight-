@@ -20,15 +20,8 @@ void p_Down::Enter()
 {
 
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
-	if (pPlayer->GetDir() == Dir::LEFT)
-	{
-		pPlayer->GetFlipbookPlayer()->Play(LEFT_AIRDOWN, 15.f, true);
-	}
-	else
-	{
-		pPlayer->GetFlipbookPlayer()->Play(RIGHT_AIRDOWN, 15.f, true);
-	}
 
+	pPlayer->SetPMove(P_Move::AIRBON);
 }
 
 void p_Down::FinalTick()

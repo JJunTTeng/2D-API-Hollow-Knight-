@@ -19,14 +19,10 @@ p_Run::~p_Run()
 void p_Run::Enter()
 {
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
-	if (pPlayer->GetDir() == Dir::LEFT)
-	{
-		pPlayer->GetFlipbookPlayer()->Play(MOVE_LEFT, 10.f, true);
-	}
-	else
-	{
-		pPlayer->GetFlipbookPlayer()->Play(MOVE_RIGHT, 10.f, true);
-	}
+
+	pPlayer->SetPMove(P_Move::MOVE);
+
+
 }
 
 void p_Run::FinalTick()

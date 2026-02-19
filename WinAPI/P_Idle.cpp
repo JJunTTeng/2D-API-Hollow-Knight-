@@ -13,21 +13,15 @@ P_Idle::P_Idle()
 {
 }
 
-P_Idle::~P_Idle()
+P_Idle::~P_Idle() 
 {
 }
 
 void P_Idle::Enter()
 {
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
-	if (pPlayer->GetDir() == Dir::LEFT)
-	{
-		pPlayer->GetFlipbookPlayer()->Play(IDLE_LEFT, 2.f, true);
-	}
-	else
-	{
-		pPlayer->GetFlipbookPlayer()->Play(IDLE_RIGHT, 2.f, true);
-	}
+
+	pPlayer->SetPMove(P_Move::IDLE);
 }
 
 void P_Idle::FinalTick()

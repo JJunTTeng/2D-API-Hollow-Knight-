@@ -40,6 +40,23 @@ enum PLAYER_ANIM_STATE
     END
 };
 
+enum class P_Move
+{
+    IDLE,
+    MOVE,
+    JUMP,
+    AIRBON,
+
+    NONE
+};
+
+enum class P_Action
+{
+    ATTACK,
+
+    NONE
+};
+
 struct Flip
 {
     int Name;
@@ -70,9 +87,17 @@ private:
     CFlipbookPlayer*    m_FlipbookPlayer;
     CRigidBody*         m_RigidBody;
 
-	CFSM*               m_FSM;        
+	CFSM*               m_MoveFSM; 
+    CFSM*               m_ActionFSM;
+
 
     UINT                m_prevAni;
+
+    P_Move              m_prevpMove;
+    P_Move              m_pMove;
+
+    P_Action            m_prevpAction;
+    P_Action            m_pAction;
 
 public:
     virtual void Begin() override;
@@ -86,9 +111,14 @@ public:
 
 	CFlipbookPlayer* GetFlipbookPlayer() { return m_FlipbookPlayer; }
 
+    void SetPMove(P_Move pMove) { m_pMove = pMove; }
+    void SetPAction(P_Action pAction) { m_pAction = pAction; }
+
 private:
     void CreatePlayerFlipbook();
     void CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int MaxFrame, bool IsRight = false);
+
+    void UpdateAnimation();
 
     void Move();
     void Attack();
@@ -96,10 +126,6 @@ private:
     void Jump();
 
     
-
-private:
-
-
 
 public:
     CPlayer();

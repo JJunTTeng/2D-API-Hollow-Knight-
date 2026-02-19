@@ -19,14 +19,10 @@ p_JUMP::~p_JUMP()
 void p_JUMP::Enter()
 {
 	CPlayer* pPlayer = (CPlayer*)GetOwnerObj();
-	if (pPlayer->GetDir() == Dir::LEFT)
-	{
-		pPlayer->GetFlipbookPlayer()->Play(LEFT_JUMP, 15.f, false);
-	}
-	else
-	{
-		pPlayer->GetFlipbookPlayer()->Play(RIGHT_JUMP, 15.f, false);
-	}
+
+	pPlayer->SetPMove(P_Move::JUMP);
+
+
 }
 
 void p_JUMP::FinalTick()

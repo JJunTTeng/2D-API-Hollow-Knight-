@@ -32,6 +32,8 @@
 #include "p_Down.h"
 
 #include "ActionState.h"
+#include "P_Attack.h"
+
 
 CPlayer::CPlayer()
 	: m_Speed(200.f)
@@ -46,6 +48,9 @@ CPlayer::CPlayer()
 	, m_FlipbookPlayer(nullptr)
 	, m_RigidBody(nullptr)
 	, m_AttackActive(false)
+
+	, m_pMove(P_Move::NONE)
+	, m_pAction(P_Action::NONE)
 {
 
 	SetDir(Dir::RIGHT);
@@ -118,20 +123,19 @@ CPlayer::CPlayer()
 	m_RigidBody->SetFriction(0.0f);
 	m_RigidBody->SetMass(1.f);
 
-	// FSM등록
-	m_FSM = (CFSM*)AddComponent(new CFSM);
-	m_FSM->AddState(L"IDLE", new P_Idle);
-	m_FSM->AddState(L"RUN", new p_Run);
-	m_FSM->AddState(L"JUMP", new p_JUMP);
-	m_FSM->AddState(L"AIRDOWN", new p_Down);
+	// MoveFSM등록
+	m_MoveFSM = (CFSM*)AddComponent(new CFSM);
+	m_MoveFSM->AddState(L"IDLE", new P_Idle);
+	m_MoveFSM->AddState(L"RUN", new p_Run);
+	m_MoveFSM->AddState(L"JUMP", new p_JUMP);
+	m_MoveFSM->AddState(L"AIRDOWN", new p_Down);
+	m_MoveFSM->AddState(L"MOVE_STATE", new MoveState);
+	m_MoveFSM->ChangeState(L"MOVE_STATE");
 
-	m_FSM->AddState(L"MOVE_STATE", new MoveState);
-
-	m_FSM->AddState(L"ATTACK", new p_Run);
-
-	m_FSM->AddState(L"ACTION_STATE", new ActionState);
-
-	m_FSM->ChangeState(L"MOVE_STATE");
+	m_ActionFSM = (CFSM*)AddComponent(new CFSM);
+	m_ActionFSM->AddState(L"ACTION_STATE", new ActionState);
+	m_ActionFSM->AddState(L"ATTACK", new P_Attack);
+	m_ActionFSM->ChangeState(L"ACTION_STATE");
 }
 
 CPlayer::~CPlayer()
@@ -155,6 +159,8 @@ void CPlayer::Begin()
 void CPlayer::Tick()
 {
 	Dir m_prevDir = GetDir();
+
+
 	SetPrevPos(GetPos());
 
 	if (m_AttackTime >= 0.7f && m_AttackActive == true)
@@ -199,7 +205,7 @@ void CPlayer::Tick()
 
 	if (m_prevDir != GetDir())
 	{
-		m_FSM->ChangeState(L"IDLE");
+		m_MoveFSM->ChangeState(L"IDLE");
 	}
 
 
@@ -230,10 +236,13 @@ void CPlayer::Tick()
 
 	m_CAttackEft->IsActive(false);
 	
+	UpdateAnimation();
+
+	m_prevpMove = m_pMove;
+	m_prevpAction = m_pAction;
 	//Move();
 	//Jump();
 	//Attack();
-
 }
 
 void CPlayer::Render()
@@ -422,6 +431,62 @@ void CPlayer::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec
 	CAssetMgr::GetInst()->AddFlipbook(_FlipbookName, pFlipbook);
 	wstring Path = L"Flipbook\\";
 	pFlipbook->Save(Path + _FlipbookName);
+}
+
+void CPlayer::UpdateAnimation()
+{
+	if (m_prevpMove == m_pMove && m_prevpAction == m_pAction)
+		return;
+
+
+	if (m_pMove == P_Move::IDLE && m_pAction == P_Action::NONE)
+	{
+		if (GetDir() == Dir::LEFT)
+		{
+			GetFlipbookPlayer()->Play(IDLE_LEFT, 2.f, true);
+		}
+		else
+		{
+			GetFlipbookPlayer()->Play(IDLE_RIGHT, 2.f, true);
+		}
+	}
+
+	if (m_pMove == P_Move::MOVE && m_pAction == P_Action::NONE)
+	{
+		if (GetDir() == Dir::LEFT)
+		{
+			GetFlipbookPlayer()->Play(MOVE_LEFT, 10.f, true);
+		}
+		else
+		{
+			GetFlipbookPlayer()->Play(MOVE_RIGHT, 10.f, true);
+		}
+	}
+
+	if (m_pMove == P_Move::JUMP && m_pAction == P_Action::NONE)
+	{
+		if (GetDir() == Dir::LEFT)
+		{
+			GetFlipbookPlayer()->Play(LEFT_JUMP, 15.f, false);
+		}
+
+		else
+		{
+			GetFlipbookPlayer()->Play(RIGHT_JUMP, 15.f, false);
+		}
+	}
+
+	if (m_pMove == P_Move::AIRBON && m_pAction == P_Action::NONE)
+	{
+		if (GetDir() == Dir::LEFT)
+		{
+			GetFlipbookPlayer()->Play(LEFT_AIRDOWN, 15.f, true);
+		}
+		else
+		{
+			GetFlipbookPlayer()->Play(RIGHT_AIRDOWN, 15.f, true);
+		}
+	}
 }
 
 void CPlayer::Move()

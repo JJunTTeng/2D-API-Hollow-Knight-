@@ -214,7 +214,9 @@
     <ClInclude Include="WinAPI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActionState.cpp" />
+    <ClCompile Include="ActionState.cpp">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
+    </ClCompile>
     <ClCompile Include="AspidHunter.cpp" />
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
@@ -261,7 +263,9 @@
     <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIMgr.cpp" />
-    <ClCompile Include="P_Attack.cpp" />
+    <ClCompile Include="P_Attack.cpp">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
+    </ClCompile>
     <ClCompile Include="p_Down.cpp" />
     <ClCompile Include="func.cpp" />
     <ClCompile Include="Gruzzer.cpp" />

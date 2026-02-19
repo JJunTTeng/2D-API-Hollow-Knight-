@@ -2,7 +2,7 @@
 #include "CState.h"
 
 class CPlayer;
-class ActionState :
+class ActionState: 
     public CState
 {
 public:

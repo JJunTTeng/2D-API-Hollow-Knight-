@@ -19,7 +19,6 @@ public:
     CState* FindState(const wstring& _Key);
     void ChangeState(const wstring& _NextState);
 
-
 public:
     virtual void FinalTick() override;
 
