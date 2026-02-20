@@ -7,6 +7,8 @@ class CFlipbookPlayer;
 class CRigidBody;
 class CFSM;
 
+
+
 enum PLAYER_ANIM_STATE
 {
     IDLE,
@@ -85,6 +87,8 @@ private:
     CCollider*          m_CAttackEft;
 
     CFlipbookPlayer*    m_FlipbookPlayer;
+    CFlipbookPlayer*    m_AtkPlayer;
+
     CRigidBody*         m_RigidBody;
 
 	CFSM*               m_MoveFSM; 
@@ -125,9 +129,7 @@ private:
     void UpdateAnimation();
 
     void Move();
-    void Attack();
-    void Attack_Effact();
-    void Jump();
+
 
     
 

@@ -6,6 +6,7 @@
 #include "CFlipbookPlayer.h"
 #include "CFlipbook.h"
 #include "CKeyMgr.h"
+#include "CTimeMgr.h"
 
 enum PLAYER_ETTACK_STATE
 {
@@ -31,14 +32,13 @@ CAttack_Eft::~CAttack_Eft()
 
 void CAttack_Eft::Begin()
 {
-	m_FilpbookAttack = new CFlipbookPlayer;
-	AddComponent(m_FilpbookAttack);
-	FlipbookLoad();
-
 	m_CAttack = new CCollider;
 	m_CAttack->SetScale(Vec2(100, 50));
 	m_CAttack->IsActive(false);
 	AddComponent(m_CAttack);
+
+	m_FilpbookAttack = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
+	FlipbookLoad();
 
 }
 
@@ -47,7 +47,7 @@ void CAttack_Eft::Tick()
 	Dir pl_Dir = m_Player->GetDir();
 	UD pl_UD = m_Player->GetUD();
 
-	if (pl_UD == UD::UP) 
+	if (pl_UD == UD::UP)
 		SetPos(Vec2(m_Player->GetPos().x, m_Player->GetPos().y - 70));
 
 	else if (pl_UD == UD::DOWN)
@@ -59,18 +59,19 @@ void CAttack_Eft::Tick()
 	else if (pl_Dir == Dir::RIGHT)
 		SetPos(Vec2(m_Player->GetPos().x + 70, m_Player->GetPos().y));
 
-	if (m_FilpbookAttack->IsFinish() == true && m_AttackTime >= 1.5f)
+	if (m_AttackActive == true && m_AttackTime < 0.5f)
 	{
-		m_AttackActive = false;
-		m_CAttack->IsActive(false);
+		m_AttackTime += DT;
+		return;
 	}
 
 	if (KEY_TAP(X))
 	{
-		
-		if (m_AttackActive == true && m_AttackTime < 1.5f)
+		if (m_AttackTime >= 1.5f)
 		{
-			return;
+			m_AttackTime = 0.0f;
+			m_AttackActive = false;
+			m_CAttack->IsActive(false);
 		}
 
 		m_CAttack->IsActive(true);
@@ -102,12 +103,13 @@ void CAttack_Eft::Tick()
 			m_FilpbookAttack->Play(RIGHT_SLASHEFFAT, 30.0f, false);
 			return;
 		}
-
 	}
-
-
-
 }
+	
+
+
+
+
 
 void CAttack_Eft::Render()
 {

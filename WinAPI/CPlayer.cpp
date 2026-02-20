@@ -114,7 +114,7 @@ CPlayer::CPlayer()
 
 	// Flipbook 생성 및 등록
 	CreatePlayerFlipbook();
-	Attack_Effact();
+
 	 //RigidBody 컴포넌트 추가
 	m_RigidBody = (CRigidBody*)AddComponent(new CRigidBody);
 	m_RigidBody->SetMode(RIGIDBODY_MODE::BELTSCROLL);
@@ -341,6 +341,9 @@ void CPlayer::CreatePlayerFlipbook()
 		CreateFlipbook(L"R_PLAY_AIRDOWN", pAtlas, Vec2(0.f, 0.f), Vec2(pAtlas->GetWidth() / 4.0f, pAtlas->GetHeight()), 4, true);
 	}
 
+
+
+
 	m_FlipbookPlayer = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
 
 	{
@@ -505,13 +508,16 @@ void CPlayer::UpdateAnimation()
 
 		else if (KEY_PRESSED(DOWN))
 		{
-			if (GetDir() == Dir::LEFT)
+			if (m_pMove == P_Move::AIRBON || m_pMove == P_Move::JUMP)
 			{
-				m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 80.f, false);
-			}
-			else
-			{
-				GetFlipbookPlayer()->Play(RIGHT_DOWNSLASH, 80.f, false);
+				if (GetDir() == Dir::LEFT)
+				{
+					m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 80.f, false);
+				}
+				else
+				{
+					GetFlipbookPlayer()->Play(RIGHT_DOWNSLASH, 80.f, false);
+				}
 			}
 		}
 
@@ -605,73 +611,6 @@ void CPlayer::Move()
 			SetPos(GetPos().x + 500.0f * DT, GetPos().y);
 
 			//m_RigidBody->AddForce(Vec2(1000.f, 0.f), true);
-	}
-}
-
-void CPlayer::Attack()
-{
-	
-	//이미지
-	if (KEY_TAP(X))
-	{
-		if (m_AttackTime < 1.0f && m_AttackActive == true)
-		{
-			return;
-		}
-
-		m_AttackActive = true;
-
-		m_prevAni = m_FlipbookPlayer->GetFlipNum();
-
-		if (GetDir() == Dir::LEFT && GetUD() == UD::UP)
-		{
-			m_FlipbookPlayer->Play(LEFT_UPSLASH, 50.f, false);
-		}
-
-		else if (GetDir() == Dir::RIGHT && GetUD() == UD::UP)
-		{
-			m_FlipbookPlayer->Play(RIGHT_UPSLASH, 50.f, false);
-
-		}
-
-		else if (GetDir() == Dir::LEFT && GetUD() == UD::DOWN && m_RigidBody->IsGround() == false)
-		{
-			m_FlipbookPlayer->Play(LEFT_DOWNSLASH, 50.f, false);
-
-		}
-
-		else if (GetDir() == Dir::RIGHT && GetUD() == UD::DOWN && m_RigidBody->IsGround() == false)
-		{
-			m_FlipbookPlayer->Play(RIGHT_DOWNSLASH, 50.f, false);
-		}
-
-		else if (GetDir() == Dir::LEFT)
-		{
-			
-		}
-
-		else if (GetDir() == Dir::RIGHT)
-		{
-			m_FlipbookPlayer->Play(RIGHT_SLASH, 50.f, false);
-		}
-	}
-
-}
-
-void CPlayer::Attack_Effact()
-{
-
-
-}
-
-void CPlayer::Jump()
-{
-	if (KEY_TAP(Z))
-	{
-		m_RigidBody->Jump(-1000);
-		//DrawDebugRect(PEN_TYPE::GREEN, GetPos(), GetScale() * 2.f, 3.f);
-		//DrawDebugCircle(PEN_TYPE::GREEN, GetPos(), GetScale() * 2.f, 3.f);
-		//DrawDebugLine(PEN_TYPE::GREEN, GetPos(), GetPos() + GetScale(), 3.f);
 	}
 }
 
