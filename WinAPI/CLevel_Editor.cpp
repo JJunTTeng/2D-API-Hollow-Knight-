@@ -41,8 +41,8 @@
 CLevel_Editor::CLevel_Editor()
 	: m_MapObj(nullptr)
 	, m_hMenu(nullptr)
-	, ColBeginPos(0, 0)
-	, ColEndPos(0, 0)
+	, ColBeginPos(-1, -1)
+	, ColEndPos(-1, -1)
 	, MouseRenderPos(0, 0)
 	, mEditMode(EditMode::None)
 	, mEnimeName(EnimesName::None)
@@ -77,15 +77,15 @@ void CLevel_Editor::Begin()
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	
 	// Player 생성
-	mPlayer = new CPlayer;
-	mPlayer->SetName(L"Player");
-	mPlayer->SetPos(Vec2(1954,1348));
-	AddObject(mPlayer, LAYER_TYPE::PLAYER);
+	//mPlayer = new CPlayer;
+	//mPlayer->SetName(L"Player");
+	//mPlayer->SetPos(Vec2(1954,1348));
+	//AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	m_Play_Effact = new CAttack_Eft;
-	m_Play_Effact->SetName(L"Attac_Effact");
-	m_Play_Effact->LoadPlayer(mPlayer);
-	AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
+	//m_Play_Effact = new CAttack_Eft;
+	//m_Play_Effact->SetName(L"Attac_Effact");
+	//m_Play_Effact->LoadPlayer(mPlayer);
+	//AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
 
 
 	// 샘플퓖EMap 오틒E㎷?생성
@@ -104,9 +104,9 @@ void CLevel_Editor::Begin()
 
 
 
-	wchar_t m_Path[255] = L"1-1";
+	//wchar_t m_Path[255] = L"1-1";
 
-	LoadColider(m_Path);
+	//LoadColider(m_Path);
 
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
 	CLevel::Begin();
@@ -130,6 +130,31 @@ void CLevel_Editor::Tick()
 
 	MouseRenderPos = CCamera::GetInst()->GetDiff() + CKeyMgr::GetInst()->GetMousePos();
 	EditRenderPos = CKeyMgr::GetInst()->GetEditMousePos();
+
+	if (CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_NONE)
+	{
+		if (KEY_PRESSED(KEY::LEFT))
+		{
+			CCamera::GetInst()->SetPlusCameraPos(Vec2(-10.0f, 0.0f));
+		}
+
+		if (KEY_PRESSED(KEY::RIGHT))
+		{
+			CCamera::GetInst()->SetPlusCameraPos(Vec2(10.0f, 0.0f));
+		}
+
+		if (KEY_PRESSED(KEY::UP))
+		{
+			CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0, -10.0f));
+		}
+
+		if (KEY_PRESSED(KEY::DOWN))
+		{
+			CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0f, 10.0f));
+
+
+		}
+	}
 
 
 	switch (mEditMode)
@@ -605,11 +630,22 @@ void CLevel_Editor::EnimeLoad()
 void CLevel_Editor::ColliderMode()
 {
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+	Vec2 vRenMousePos = CKeyMgr::GetInst()->GetEditMousePos();
 
 	if (KEY_TAP(KEY::LBTN))
 	{
+		if (ColBeginPos != Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+		ColEndPos = MouseRenderPos;
+	}
+
+	if (KEY_TAP(KEY::LBTN))
+	{
+		if (ColEndPos != Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+			return;
+
 		ColBeginPos = MouseRenderPos;
 	}
+
 
 	if (KEY_TAP(KEY::RBTN))
 	{
@@ -628,12 +664,12 @@ void CLevel_Editor::ColliderMode()
 		}
 	}
 
-	if (KEY_RELEASED(KEY::LBTN))
+	if (ColEndPos != Vec2(-1,-1))
 	{
 
-		Vec2 pos = mPlayer->GetPos();
+		//Vec2 pos = mPlayer->GetPos();
 
-		ColEndPos = MouseRenderPos;
+		//ColEndPos = MouseRenderPos;
 		CObj* mColision = new Colision;
 		AddObject(mColision, LAYER_TYPE::COLLIDER);
 		CCollider* mCollider = new CCollider;
@@ -644,8 +680,8 @@ void CLevel_Editor::ColliderMode()
 		mCollider = (CCollider*)mColision->AddComponent(mCollider);
 
 
-		ColBeginPos = Vec2(0, 0);
-		ColEndPos = Vec2(0, 0);
+		ColBeginPos = Vec2(-1, -1);
+		ColEndPos = Vec2(-1, -1);
 
 
 	}

@@ -52,6 +52,8 @@ public:
 	bool operator == (Vec2 _Other) { if (x == _Other.x && y == _Other.y) return true; return false; }
 	bool operator >= (Vec2 _Other) { if (x >= _Other.x && y >= _Other.y) return true; return false; }
 	bool operator <= (Vec2 _Other) { if (x <= _Other.x && y <= _Other.y) return true; return false; }
+	bool operator != (Vec2 _Other) { if (x != _Other.x && y != _Other.y) return false; return true; }
+
 
 public:
 	Vec2()
