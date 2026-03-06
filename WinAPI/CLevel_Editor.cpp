@@ -632,15 +632,15 @@ void CLevel_Editor::ColliderMode()
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
 	Vec2 vRenMousePos = CKeyMgr::GetInst()->GetEditMousePos();
 
-	if (KEY_TAP(KEY::LBTN))
+	if (KEY_RELEASED(KEY::LBTN))
 	{
-		if (ColBeginPos != Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+		if (ColBeginPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
 		ColEndPos = MouseRenderPos;
 	}
 
-	if (KEY_TAP(KEY::LBTN))
+	if (KEY_RELEASED(KEY::LBTN))
 	{
-		if (ColEndPos != Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+		if (ColEndPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
 			return;
 
 		ColBeginPos = MouseRenderPos;
@@ -670,15 +670,16 @@ void CLevel_Editor::ColliderMode()
 		//Vec2 pos = mPlayer->GetPos();
 
 		//ColEndPos = MouseRenderPos;
-		CObj* mColision = new Colision;
+		Colision* mColision = new Colision;
 		AddObject(mColision, LAYER_TYPE::COLLIDER);
 		CCollider* mCollider = new CCollider;
 		mColision->SetPos(ColBeginPos);
 		mCollider->SetScale(ColEndPos - ColBeginPos);
 		mCollider->SetOffset(mCollider->GetScale() / 2);
 		mCollider->SetName(L"Tile");
-		mCollider = (CCollider*)mColision->AddComponent(mCollider);
+		(CCollider*)mColision->AddComponent(mCollider);
 
+		mDrawCol.push_back(mColision);
 
 		ColBeginPos = Vec2(-1, -1);
 		ColEndPos = Vec2(-1, -1);
