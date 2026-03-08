@@ -104,9 +104,9 @@ void CLevel_Editor::Begin()
 
 
 
-	//wchar_t m_Path[255] = L"1-1";
+	wchar_t m_Path[255] = L"King Load";
 
-	//LoadColider(m_Path);
+	LoadColider(m_Path);
 
 	// ｷｹｺｧ ｼﾒｼﾓ ｸ・ｿﾀｺ・ｧﾆ??Begin ﾀｻ ﾈ｣ﾃ篁ﾞﾀｻ ｼ・ﾀﾖｵｵｷﾏ ﾇﾑｴﾙ
 	CLevel::Begin();
@@ -606,12 +606,12 @@ void CLevel_Editor::EnimeSave()
 
 	for(CMonster* mMonstor : mMonsters)
 	{
-		//Coliderﾀﾇ ｽｺﾅﾗﾀﾌﾆｮ ｰｪ ﾀ惕・
+		//Monstorﾀﾇ ｽｺﾅﾗﾀﾌﾆｮ ｰｪ ﾀ惕・
 		fwprintf_s(File, L"[Name]\n");
 		fwprintf_s(File, L"%s\n\n", mMonstor->GetName().c_str());
 
 		fwprintf_s(File, L"[Position]\n");
-		fwprintf_s(File, L"%d, %d\n\n", (int)mMonstor->GetPos().x, (int)mMonstor->GetPos().y);
+		fwprintf_s(File, L"%d, %d, %d, %d \n\n", (int)mMonstor->GetFrnLpMove().x, (int)mMonstor->GetFrnLpMove().y, (int)mMonstor->GetEndLpMove().x, (int)mMonstor->GetEndLpMove().y);
 
 		fwprintf_s(File, L"[Scale]\n");
 		fwprintf_s(File, L"%d, %d\n\n", (int)mMonstor->GetScale().x, (int)mMonstor->GetScale().y);
@@ -623,8 +623,89 @@ void CLevel_Editor::EnimeSave()
 
 }
 
-void CLevel_Editor::EnimeLoad()
+void CLevel_Editor::EnimeLoad(wchar_t* Path = nullptr)
 {
+	wstring strContentPath = CPathMgr::GetContentPath();
+
+	strContentPath += L"Enimes\\";
+	strContentPath += Path;
+
+	// ﾆﾄﾀﾏ ｰ豺ﾎ ｹｮﾀﾚｿｭ
+	const wchar_t* m_Path = strContentPath.c_str();
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = Path;
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"Enime\0*.Enime\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, m_Path, L"r");
+
+	while (true)
+	{
+		wchar_t szBuff[255] = {};
+		int fx = 0, fy = 0;
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+		CMonster* mMonstor;
+		AddObject(mMonstor, LAYER_TYPE::MONSTER);
+
+		if (!wcscmp(szBuff, L"[Name]"))
+		{
+			fwscanf_s(File, L"%s", szBuff, 255);
+			mMonstor->SetName(szBuff);
+		}
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Position]"))
+		{
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mMonstor->SetPos(Vec2(fx, fy));
+		}
+
+		//ｿｩｱ箴ｭ ｺﾎﾅﾍ ｽﾃﾀﾛ
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Scale]"))
+		{
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mMonstor->SetScale(Vec2(fx, fy));
+		}
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[OFFset]"))
+		{
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mCollider->SetOffset(Vec2(fx, fy));
+		}
+
+
+		mCollider = (CCollider*)mColision->AddComponent(mCollider);
+		mDrawCol.push_back(mColision);
+	}
+	fclose(File);
+
 }
 
 void CLevel_Editor::ColliderMode()

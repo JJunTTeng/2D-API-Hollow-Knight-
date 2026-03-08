@@ -56,7 +56,7 @@ public:
 
     void Enime();
     void EnimeSave();
-    void EnimeLoad();
+    void EnimeLoad(wchar_t* Path = nullptr);
 
     void ColliderMode();
     void EnimeMode();

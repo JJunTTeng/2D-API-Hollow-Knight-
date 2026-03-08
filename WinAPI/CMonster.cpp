@@ -128,8 +128,8 @@ void CMonster::Tick()
 	}
 
 
-	if (fabs(m_Player->GetPos().x + m_Player->GetPos().y - (GetPos().x + GetPos().y)) <= 100)
-		m_Chase = true;
+	//if (fabs(m_Player->GetPos().x + m_Player->GetPos().y - (GetPos().x + GetPos().y)) <= 100)
+	//	m_Chase = true;
 
 
 }
