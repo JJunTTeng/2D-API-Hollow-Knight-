@@ -88,36 +88,9 @@ void CMonster::Begin()
 
 void CMonster::Tick()
 {
-	m_prevDir = m_Dir;
 
 	if (!m_Loop)
 		return;
-
-	if (GetComponent< CRigidBody>())
-	{
-		if (m_Dir == dir::LEFT)
-		{
-			if (FrnLpMove.x <= GetPos().x)
-				SetPos(GetPos() + Vec2(-100.0f, 0.0f) * DT);
-
-			else
-				m_Dir = dir::RIGHT;
-
-		}
-
-		else
-		{
-			if (m_Dir == dir::RIGHT)
-			{
-				if (EndLpMove.x >= GetPos().x)
-					SetPos(GetPos() + Vec2(100.0f, 0.0f) * DT);
-
-				else
-					m_Dir = dir::LEFT;
-
-			}
-		}
-	}
 
 	else
 	{

@@ -8,6 +8,7 @@
 #include "CCollisionMgr.h"
 #include "CRigidBody.h"
 #include "CMonster.h"
+#include "CTimeMgr.h"
 
 
 
@@ -52,14 +53,43 @@ void Crawlid::Tick()
 {
 	CMonster::Tick();
 
-	if (GetprevDir() != GetDir() && GetprevDir() == dir::LEFT)
+	Dir m_Dir = GetDir();
+
+	if (GetComponent<CRigidBody>())
+	{
+		if (m_Dir == Dir::LEFT)
+		{
+			if (GetFrnLpMove().x <= GetPos().x)
+				SetPos(GetPos() + Vec2(-100.0f, 0.0f) * DT);
+
+			else
+				m_Dir = Dir::RIGHT;
+
+		}
+
+		else
+		{
+			if (m_Dir == Dir::RIGHT)
+			{
+				if (GetEndLpMove().x >= GetPos().x)
+					SetPos(GetPos() + Vec2(100.0f, 0.0f) * DT);
+
+				else
+					m_Dir = Dir::LEFT;
+
+			}
+		}
+	}
+
+
+	if (GetprevDir() != GetDir() && GetprevDir() == Dir::LEFT)
 	{
 		m_STATE = TURN;
 		m_Flipbook->Play(m_STATE, 5, false);
 
 	}
 
-	if (GetprevDir() != GetDir() && GetprevDir() == dir::RIGHT)
+	if (GetprevDir() != GetDir() && GetprevDir() == Dir::RIGHT)
 	{
 		m_STATE = R_TURN;
 		m_Flipbook->Play(m_STATE, 5, false);

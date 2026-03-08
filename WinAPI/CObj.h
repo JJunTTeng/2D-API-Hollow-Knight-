@@ -25,6 +25,7 @@ private:
 
     UD                  m_ud;
     Dir                 m_Dir;
+    Dir                 m_prevDir;
     Vec2                m_Pos;
     Vec2                m_PrevPos;
     Vec2                m_Scale;
