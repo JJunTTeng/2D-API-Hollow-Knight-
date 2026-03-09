@@ -48,6 +48,7 @@ public:
 public:
     void SetUd(UD _ud) { m_ud = _ud; }
     void SetDir(Dir _dir) { m_Dir = _dir; }
+    void SetprevDir(Dir _dir) { m_prevDir = _dir; }
     void SetPos(Vec2 _Pos) { m_Pos = _Pos; }
     void SetPos(float _x, float _y) { m_Pos = Vec2(_x, _y); }
     void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
@@ -57,10 +58,12 @@ public:
 
     UD GetUD() { return m_ud; }
     Dir GetDir() { return m_Dir; }
+    Dir GetprevDir() { return m_prevDir; }
     Vec2 GetPos() { return m_Pos; }
     Vec2 GetRenderPos();
     Vec2 GetScale() { return m_Scale; }
     Vec2 GetPrevPos() { return m_PrevPos; }
+
 
     LAYER_TYPE GetLayerType() { return m_LayerType; }
 

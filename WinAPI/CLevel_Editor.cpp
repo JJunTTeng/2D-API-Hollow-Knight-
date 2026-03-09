@@ -108,6 +108,9 @@ void CLevel_Editor::Begin()
 
 	LoadColider(m_Path);
 
+	wchar_t m_Path2[255] = L"Enime";
+
+	EnimeLoad(m_Path2);
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
 	CLevel::Begin();
 }
@@ -612,9 +615,6 @@ void CLevel_Editor::EnimeSave()
 
 		fwprintf_s(File, L"[Position]\n");
 		fwprintf_s(File, L"%d, %d, %d, %d \n\n", (int)mMonstor->GetFrnLpMove().x, (int)mMonstor->GetFrnLpMove().y, (int)mMonstor->GetEndLpMove().x, (int)mMonstor->GetEndLpMove().y);
-
-		fwprintf_s(File, L"[Scale]\n");
-		fwprintf_s(File, L"%d, %d\n\n", (int)mMonstor->GetScale().x, (int)mMonstor->GetScale().y);
 	}
 	fclose(File);
 
@@ -622,86 +622,68 @@ void CLevel_Editor::EnimeSave()
 
 void CLevel_Editor::EnimeLoad(wchar_t* Path = nullptr)
 {
-	//wstring strContentPath = CPathMgr::GetContentPath();
+	wstring strContentPath = CPathMgr::GetContentPath();
 
-	//strContentPath += L"Enimes\\";
-	//strContentPath += Path;
+	strContentPath += L"Enimes\\";
+	strContentPath += Path;
 
-	// 파일 경로 문자열
-	//const wchar_t* m_Path = strContentPath.c_str();
-	//OPENFILENAME Desc = {};
+	 //파일 경로 문자열
+	const wchar_t* m_Path = strContentPath.c_str();
+	OPENFILENAME Desc = {};
 
-	//Desc.lStructSize = sizeof(OPENFILENAME);
-	//Desc.hwndOwner = nullptr;
-	//Desc.lpstrFile = Path;
-	//Desc.nMaxFile = 255;
-	//Desc.lpstrFilter = L"Enime\0*.Enime\0ALL\0*.*";
-	//Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-	//Desc.lpstrInitialDir = strContentPath.c_str();
-
-
-	//FILE* File = nullptr;
-
-	//_wfopen_s(&File, m_Path, L"r");
-
-	//while (true)
-	//{
-	//	wchar_t szBuff[255] = {};
-	//	int fx = 0, fy = 0 ,fx2 = 0, fy2 = 0;
-
-	//	if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
-	//	{
-	//		break;
-	//	}
-	//	CMonster* mMonstor;
-	//	AddObject(mMonstor, LAYER_TYPE::MONSTER);
-
-	//	if (!wcscmp(szBuff, L"[Name]"))
-	//	{
-	//		fwscanf_s(File, L"%s", szBuff, 255);
-	//		mMonstor->SetName(szBuff);
-	//	}
-
-	//	if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
-	//	{
-	//		break;
-	//	}
-
-	//	if (!wcscmp(szBuff, L"[Position]"))
-	//	{
-	//		fwscanf_s(File, L"%d, %d,%d, %d", &fx, &fy);
-	//		mMonstor->SetPos(Vec2(fx, fy));
-	//	}
-
-	//	여기서 부터 시작
-
-	//	if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
-	//	{
-	//		break;
-	//	}
-
-	//	if (!wcscmp(szBuff, L"[Scale]"))
-	//	{
-	//		fwscanf_s(File, L"%d, %d", &fx, &fy);
-	//		mMonstor->SetScale(Vec2(fx, fy));
-	//	}
-
-	//	if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
-	//	{
-	//		break;
-	//	}
-
-	//	if (!wcscmp(szBuff, L"[OFFset]"))
-	//	{
-	//		fwscanf_s(File, L"%d, %d", &fx, &fy);
-	//		mCollider->SetOffset(Vec2(fx, fy));
-	//	}
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = Path;
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"Enimes\0*.enimes\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
 
 
-	//	mCollider = (CCollider*)mColision->AddComponent(mCollider);
-	//	mDrawCol.push_back(mColision);
-	//}
-	//fclose(File);
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, m_Path, L"r");
+
+	while (true)
+	{
+		wchar_t szBuff[255] = {};
+		int fx = 0, fy = 0 ,fx2 = 0, fy2 = 0;
+
+		CMonster* mMonstor = nullptr;
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Name]"))
+		{
+			fwscanf_s(File, L"%s", szBuff, 255);
+
+			//몬스터 분리
+			if (wcscmp(szBuff, L"Crawlid") == 0)
+			{
+				mMonstor = new Crawlid;
+			}
+
+		}
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Position]"))
+		{
+			fwscanf_s(File, L"%d, %d,%d, %d", &fx, &fy, &fx2, &fy2);
+			mMonstor->SetPos(Vec2(fx, fy));
+			mMonstor->SetFrnLpMove(Vec2(fx, fy));
+			mMonstor->SetEndLpMove(Vec2(fx2, fy2));
+		}
+
+		AddObject(mMonstor, LAYER_TYPE::MONSTER);
+		mMonsters.push_back(mMonstor);
+	}
+	fclose(File);
 
 }
 

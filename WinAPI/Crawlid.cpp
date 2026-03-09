@@ -9,6 +9,7 @@
 #include "CRigidBody.h"
 #include "CMonster.h"
 #include "CTimeMgr.h"
+#include "CObj.h"
 
 
 

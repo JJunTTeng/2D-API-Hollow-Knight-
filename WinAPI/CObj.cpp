@@ -11,6 +11,7 @@ CObj::CObj()
 	, m_LayerType(LAYER_TYPE::END)
 	, m_Dead(false)
 	, m_Dir(Dir::NONE)
+	, m_prevDir(Dir::NONE)
 {	
 }
 

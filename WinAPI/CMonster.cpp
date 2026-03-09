@@ -18,8 +18,6 @@
 #include "CCamera.h"
 
 CMonster::CMonster()
-	:
-	m_Dir(dir::LEFT)
 {
 	//m_Tex = CAssetMgr::GetInst()->LoadTexture(L"Character", L"Texture\\TX_GlowScene_2.png");
 
