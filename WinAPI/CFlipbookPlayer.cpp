@@ -15,7 +15,7 @@ CFlipbookPlayer::CFlipbookPlayer()
 	, m_FPS(0.f)
 	, m_Time(0.f)
 	, m_Repeat(false)
-	, m_Finish(false)
+	, m_Finish(true)
 {
 }
 

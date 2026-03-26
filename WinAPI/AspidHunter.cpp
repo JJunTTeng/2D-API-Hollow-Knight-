@@ -29,10 +29,6 @@ void AspidHunter::Render()
 {
 }
 
-void AspidHunter::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
-{
-}
-
 void AspidHunter::LoadFlipbook()
 {
 }

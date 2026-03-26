@@ -22,6 +22,7 @@
 
 #include "Colision.h"
 #include "CCollider.h"
+#include "CCameraBound.h"
 
 #include "CSelectGDI.h"
 #include "CPlayer.h"
@@ -77,15 +78,14 @@ void CLevel_Editor::Begin()
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	
 	// Player 생성
-	//mPlayer = new CPlayer;
-	//mPlayer->SetName(L"Player");
-	//mPlayer->SetPos(Vec2(1954,1348));
-	//AddObject(mPlayer, LAYER_TYPE::PLAYER);
-
-	//m_Play_Effact = new CAttack_Eft;
-	//m_Play_Effact->SetName(L"Attac_Effact");
-	//m_Play_Effact->LoadPlayer(mPlayer);
-	//AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
+	mPlayer = new CPlayer;
+	mPlayer->SetName(L"Player");
+	mPlayer->SetPos(Vec2(1954,1348));
+	AddObject(mPlayer, LAYER_TYPE::PLAYER);
+	
+	m_Play_Effact = new CAttack_Eft;
+	m_Play_Effact->LoadPlayer(mPlayer);
+	AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
 
 
 	// 샘플퓖EMap 오틒E㎷?생성
@@ -97,20 +97,25 @@ void CLevel_Editor::Begin()
 
 
 
+
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::COLLIDER);
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::COLLIDER, LAYER_TYPE::MONSTER);
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);
+	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::CAMERABOUND);
+
 
 
 
 	wchar_t m_Path[255] = L"King Load";
-
 	LoadColider(m_Path);
 
-	wchar_t m_Path2[255] = L"Enime";
-
+	wchar_t m_Path2[255] = L"1-1";
 	EnimeLoad(m_Path2);
+
+	wchar_t m_Path3[255] = L"1-1";
+	CameraBoundLoad(m_Path3);
+
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
 	CLevel::Begin();
 }
@@ -172,8 +177,13 @@ void CLevel_Editor::Tick()
 		break;
 	case EditMode::PatternMode:
 		EnimesPattern();
+		break;
+	case EditMode::CameraMode:
+		CameraBound();
+		break;
 	case EditMode::None:
 		break;
+
 	default:
 		break;
 	}
@@ -192,25 +202,25 @@ void CLevel_Editor::Render()
 {
 	CLevel::Render();
 
-		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 10, L"Editor Level", wcslen(L"Editor Level"));
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 10, L"Editor Level", wcslen(L"Editor Level"));
 
-		wchar_t word[50] = L"";
-		swprintf_s(word, 50, L"%f, %f", CKeyMgr::GetInst()->GetMousePos().x, CKeyMgr::GetInst()->GetMousePos().y);
-		int len = wcsnlen_s(word, 50);
-		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, word, len);
+	wchar_t word[50] = L"";
+	swprintf_s(word, 50, L"%f, %f", CKeyMgr::GetInst()->GetMousePos().x, CKeyMgr::GetInst()->GetMousePos().y);
+	int len = wcsnlen_s(word, 50);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, word, len);
 
 
-		swprintf_s(word, 50, L"%f, %f", MouseRenderPos.x, MouseRenderPos.y);
-		int len1 = wcsnlen_s(word, 50);
-		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 50, word, len1);
+	swprintf_s(word, 50, L"%f, %f", MouseRenderPos.x, MouseRenderPos.y);
+	int len1 = wcsnlen_s(word, 50);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 50, word, len1);
 
-		swprintf_s(word, 50, L"%f, %f", EditRenderPos.x, EditRenderPos.y);
-		int len2 = wcsnlen_s(word, 50);
-		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 70, word, len2);
+	swprintf_s(word, 50, L"%f, %f", EditRenderPos.x, EditRenderPos.y);
+	int len2 = wcsnlen_s(word, 50);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 70, word, len2);
 
-		swprintf_s(word, 50, L"%f, %f", CCamera::GetInst()->GetDiff().x, CCamera::GetInst()->GetDiff().y);
-		int len3 = wcsnlen_s(word, 50);
-		TextOut(CEngine::GetInst()->GetSecondDC(), 10, 90, word, len3);
+	swprintf_s(word, 50, L"%f, %f", CCamera::GetInst()->GetDiff().x, CCamera::GetInst()->GetDiff().y);
+	int len3 = wcsnlen_s(word, 50);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 90, word, len3);
 		
 
 	if (mEditMode == EditMode::FilbookMode)
@@ -613,8 +623,8 @@ void CLevel_Editor::EnimeSave()
 		fwprintf_s(File, L"[Name]\n");
 		fwprintf_s(File, L"%s\n\n", mMonstor->GetName().c_str());
 
-		fwprintf_s(File, L"[Position]\n");
-		fwprintf_s(File, L"%d, %d, %d, %d \n\n", (int)mMonstor->GetFrnLpMove().x, (int)mMonstor->GetFrnLpMove().y, (int)mMonstor->GetEndLpMove().x, (int)mMonstor->GetEndLpMove().y);
+		fwprintf_s(File, L"[InitPosition]\n");
+		fwprintf_s(File, L"%d, %d \n\n", (int)mMonstor->GetInitPos().x, (int)mMonstor->GetInitPos().y);
 	}
 	fclose(File);
 
@@ -672,14 +682,14 @@ void CLevel_Editor::EnimeLoad(wchar_t* Path = nullptr)
 			break;
 		}
 
-		if (!wcscmp(szBuff, L"[Position]"))
+
+		if (!wcscmp(szBuff, L"[InitPosition]"))
 		{
-			fwscanf_s(File, L"%d, %d,%d, %d", &fx, &fy, &fx2, &fy2);
-			mMonstor->SetPos(Vec2(fx, fy));
-			mMonstor->SetFrnLpMove(Vec2(fx, fy));
-			mMonstor->SetEndLpMove(Vec2(fx2, fy2));
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mMonstor->SetInitPos(Vec2(fx, fy));
 		}
 
+		mMonstor->SetPos(mMonstor->GetInitPos());
 		AddObject(mMonstor, LAYER_TYPE::MONSTER);
 		mMonsters.push_back(mMonstor);
 	}
@@ -769,6 +779,7 @@ void CLevel_Editor::EnimeMode()
 
 	if (KEY_TAP(LBTN) && CKeyMgr::GetInst()->IsMouseOffScreen() == false)
 	{
+
 		EnimeRenderer();
 	}
 
@@ -781,6 +792,7 @@ void CLevel_Editor::EnimeRenderer()
 	case EnimesName::Crawlid:
 	{
 		CMonster* mMonstor = new Crawlid;
+		mMonstor->SetInitPos(MouseRenderPos);
 		mMonstor->SetPos(MouseRenderPos);
 		AddObject(mMonstor, LAYER_TYPE::MONSTER);
 		mMonsters.push_back(mMonstor);
@@ -820,8 +832,161 @@ void CLevel_Editor::EnimesPattern()
 			SelectMons->SetEndLpMove(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
 		
 	}
+	
 
 
+}
+
+void CLevel_Editor::CameraBound()
+{
+	mEditMode = EditMode::CameraMode;
+
+	if (KEY_RELEASED(KEY::LBTN))
+	{
+		if (ColBeginPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+			ColEndPos = MouseRenderPos;
+	}
+
+	if (KEY_RELEASED(KEY::LBTN))
+	{
+		if (ColEndPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+			return;
+
+		ColBeginPos = MouseRenderPos;
+	}
+
+
+	if (ColEndPos != Vec2(-1, -1))
+	{
+		CCameraBound* mCameraBound = new CCameraBound;
+		AddObject(mCameraBound, LAYER_TYPE::CAMERABOUND);
+		CCollider* mCollider = new CCollider;
+		mCameraBound->SetPos(ColBeginPos);
+		mCameraBound->SetScale(ColEndPos - ColBeginPos);
+		mCameraBound->SetName(L"CameraBound");
+		mCollider->SetScale(mCameraBound->GetScale());
+		mCollider->SetOffset(mCollider->GetScale() / 2);
+		mCameraBound->AddComponent(mCollider);
+
+		mCameraBounds.push_back(mCameraBound);
+
+		ColBeginPos = Vec2(-1, -1);
+		ColEndPos = Vec2(-1, -1);
+	}
+
+}
+
+void CLevel_Editor::CameraBoundSave()
+{
+	wstring strContentPath = CPathMgr::GetContentPath();
+	strContentPath += L"Bound\\";
+
+	// 파일 경로 문자열
+	wchar_t szFilePath[255] = {};
+
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = szFilePath;	// 최종적으로 과滔 경로를 받아낼 목적햨E
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"Bounds\0*.bounds\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+	if (false == GetSaveFileName(&Desc))
+		return;
+
+	FILE* File = nullptr;
+	_wfopen_s(&File, szFilePath, L"w");
+
+	for (CCameraBound* mCameraBound : mCameraBounds)
+	{
+		fwprintf_s(File, L"[Position]\n");
+		fwprintf_s(File, L"%d, %d \n\n", (int)mCameraBound->GetPos().x, (int)mCameraBound->GetPos().y);
+
+		fwprintf_s(File, L"[Scale]\n");
+		fwprintf_s(File, L"%d, %d \n\n", (int)mCameraBound->GetComponent<CCollider>()->GetScale().x, (int)mCameraBound->GetComponent<CCollider>()->GetScale().y);
+
+		fwprintf_s(File, L"[Offset]\n");
+		fwprintf_s(File, L"%d, %d \n\n", (int)mCameraBound->GetComponent<CCollider>()->GetOffset().x, (int)mCameraBound->GetComponent<CCollider>()->GetOffset().y);
+	}
+	fclose(File);
+
+
+}
+
+void CLevel_Editor::CameraBoundLoad(wchar_t* Path = nullptr)
+{
+
+	wstring strContentPath = CPathMgr::GetContentPath();
+
+	strContentPath += L"Bound\\";
+	strContentPath += Path;
+
+	//파일 경로 문자열
+	const wchar_t* m_Path = strContentPath.c_str();
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = Path;
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"Bounds\0*.bounds\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, m_Path, L"r");
+
+	while (true)
+	{
+		wchar_t szBuff[255] = {};
+		int fx = 0, fy = 0;
+
+		CCameraBound* mCameraBound = new CCameraBound;
+		CCollider* mCollider = new CCollider;
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Position]"))
+		{
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mCameraBound->SetPos(Vec2(fx, fy));
+		}
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Scale]"))
+		{
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mCollider->SetScale(Vec2(fx, fy));
+		}
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Offset]"))
+		{
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mCollider->SetOffset(Vec2(fx, fy));
+		}
+
+		mCameraBound->AddComponent(mCollider);
+		AddObject(mCameraBound, LAYER_TYPE::CAMERABOUND);
+		mCameraBounds.push_back(mCameraBound);
+	}
+	fclose(File);
 }
 
 
@@ -858,15 +1023,15 @@ void LoadTileMap()
 	pEditorLevel->LoadTileMap();
 }
 
-	void SaveColider()
-	{
-		CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pCurLevel);
-		if (nullptr == pEditorLevel)
-			return;
+void SaveColider()
+{
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pCurLevel);
+	if (nullptr == pEditorLevel)
+		return;
 
-		pEditorLevel->SaveColider();
-	}
+	pEditorLevel->SaveColider();
+}
 
 	void LoadColider()
 	{
@@ -949,8 +1114,6 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 	}
 	case ID_TILEMAP_LOAD:
 	{
-		// CLevel_Editor 에 있는 MapObject 의 타일맵 컴포넌트의 ?E렬을 설정해주엉雹 함
-		// 현픸E레벨을 알아낸다. 정황퍊E현픸E레벨은 반드시 CLevel_Editor 여야 한다.
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
 		assert(pEditorLevel);
@@ -1070,6 +1233,38 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		pEditorLevel->EnimesPattern();
 		return true;
 	}
+
+	case ID_CAMERA_BOUND:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->CameraBound();
+		return true;
+	}
+
+	case ID_CAMERA_SAVE:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->CameraBoundSave();
+		return true;
+	}
+
+	case ID_CAMERA_LOAD:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->CameraBoundLoad();
+		return true;
+	}
+
+
 	};
 
 

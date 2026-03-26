@@ -147,8 +147,7 @@ void CPlayer::Begin()
 	m_AccTime = 1.f / m_AttSpeed;
 
 	m_FlipbookPlayer->Play(IDLE_LEFT, 5.f, true );
-
-
+	
 
 	CCamera::GetInst()->SetOffset(Vec2(0, -100));
 	CCamera::GetInst()->SetTarget(this);

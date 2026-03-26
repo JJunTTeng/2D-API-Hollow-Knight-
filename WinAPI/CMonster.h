@@ -12,7 +12,7 @@ private:
     tMonInfo    m_Info;
 
     float       m_Speed;
-    Vec2        m_InitPos;
+    //첫 포지션
     float       m_Dist;
 
     CTexture*   m_Tex;
@@ -26,10 +26,16 @@ private:
     bool        m_Loop;
 
     CObj*       m_Player;
+
+protected:
+    Vec2        m_InitPos;
+    float       m_SponTime;
 public:
+    Vec2  GetInitPos() { return m_InitPos; }
     Vec2  GetFrnLpMove() { return FrnLpMove; }
     Vec2  GetEndLpMove() { return EndLpMove; }
 
+    void SetInitPos(Vec2 _Pos) {  m_InitPos = _Pos; }
     void SetSpeed(float _Speed) { m_Speed = _Speed; }
     void SetDistance(float _Dist) { m_Dist = _Dist; }
     void SetFrnLpMove(Vec2 _pos) { FrnLpMove = _pos; }

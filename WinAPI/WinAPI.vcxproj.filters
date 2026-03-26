@@ -220,6 +220,9 @@
     <ClInclude Include="P_Attack.h">
       <Filter>Game\05. Object\Player\State_Action\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="CCameraBound.h">
+      <Filter>Game\05. Object\CameraBound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -423,6 +426,9 @@
     <ClCompile Include="P_Attack.cpp">
       <Filter>Game\05. Object\Player\State_Action\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="CCameraBound.cpp">
+      <Filter>Game\05. Object\CameraBound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -592,6 +598,9 @@
     </Filter>
     <Filter Include="Game\05. Object\Player\State_Action\Attack\Attack_Effact">
       <UniqueIdentifier>{300ba6db-c693-4e9d-91bc-64015706043c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\CameraBound">
+      <UniqueIdentifier>{44efcde3-0f89-4fa8-918b-02a2c82a53ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

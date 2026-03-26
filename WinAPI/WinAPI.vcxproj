@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="ActionState.h" />
     <ClInclude Include="AspidHunter.h" />
+    <ClInclude Include="CCameraBound.h" />
     <ClInclude Include="CAsset.h" />
     <ClInclude Include="CAssetMgr.h" />
     <ClInclude Include="CAttack_Eft.h" />
@@ -218,6 +219,7 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
     </ClCompile>
     <ClCompile Include="AspidHunter.cpp" />
+    <ClCompile Include="CCameraBound.cpp" />
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
     <ClCompile Include="CAttack_Eft.cpp" />

@@ -8,6 +8,7 @@
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
 
+
 enum PLAYER_ETTACK_STATE
 {
 	LEFT_SLASHEFFAT,
@@ -32,6 +33,8 @@ CAttack_Eft::~CAttack_Eft()
 
 void CAttack_Eft::Begin()
 {
+	SetName(L"Attack_Eft");
+
 	m_CAttack = new CCollider;
 	m_CAttack->SetScale(Vec2(100, 50));
 	m_CAttack->IsActive(false);
@@ -44,6 +47,9 @@ void CAttack_Eft::Begin()
 
 void CAttack_Eft::Tick()
 {
+	if (m_FilpbookAttack->IsFinish() == false)
+		return;
+
 	Dir pl_Dir = m_Player->GetDir();
 	UD pl_UD = m_Player->GetUD();
 
@@ -54,10 +60,16 @@ void CAttack_Eft::Tick()
 		SetPos(Vec2(m_Player->GetPos().x, m_Player->GetPos().y + 70));
 
 	else if (pl_Dir == Dir::LEFT)
+	{
 		SetPos(Vec2(m_Player->GetPos().x - 70, m_Player->GetPos().y));
+		SetDir(Dir::LEFT);
+	}
 
 	else if (pl_Dir == Dir::RIGHT)
+	{
 		SetPos(Vec2(m_Player->GetPos().x + 70, m_Player->GetPos().y));
+		SetDir(Dir::RIGHT);
+	}
 
 	if (m_AttackActive == true && m_AttackTime < 0.5f)
 	{
@@ -79,6 +91,8 @@ void CAttack_Eft::Tick()
 
 		Dir pl_Dir = m_Player->GetDir();
 		UD pl_UD = m_Player->GetUD();
+
+
 
 		if (pl_UD == UD::UP)
 		{
@@ -106,11 +120,6 @@ void CAttack_Eft::Tick()
 	}
 }
 	
-
-
-
-
-
 void CAttack_Eft::Render()
 {
 	m_FilpbookAttack->Render();
@@ -143,3 +152,18 @@ void CAttack_Eft::FlipbookLoad()
 
 }
 
+void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
+{
+
+}
+
+
+void CAttack_Eft::Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
+{
+
+}
+
+void CAttack_Eft::EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
+{
+
+}

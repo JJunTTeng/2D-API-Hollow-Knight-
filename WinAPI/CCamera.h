@@ -28,6 +28,9 @@ private:
 
 	CObj*				m_Target;	// 카메라 타겟 오브젝트
 
+	CObj*				m_TargetX;	// 만약 이 타겟이 Null 값이 아니면 X,Y를 Object 2개로 한다.
+	CObj*				m_TargetY;	// 
+
 	float				m_Duration;    // 진동 유지시간
 	float				m_Amplitude;   // 진촉
 	float				m_Frequency;   // 초당 진동횟수
@@ -36,7 +39,7 @@ private:
 	bool				m_bOscillation;// 진동 On / Off
 
 	CTexture*			m_CamTex;
-	CTexture*			m_CamTex1;
+	CTexture*			m_CamTex1;		//서브윈도우
 
 	list<tCamEffect>	m_CamEffectList;
 	
@@ -58,9 +61,12 @@ public:
 	void SetPlusCameraPos(Vec2 pos) { m_LookAt += pos; }
 	Vec2 GetLookAt() { return m_LookAt; }
 
+	void SetLookAt(Vec2 m_lookAt) { m_LookAt = m_lookAt; }
+
 	Vec2 GetDiff() { return m_Diff; }
 
 	void SetTarget(CObj* _Target) { m_Target = _Target; }
+
 	void SetOffset(Vec2 _Pos) { m_Offset = _Pos; }
 	void Oscillation(float _Duration, float _Amplitude, float _Frequency)
 	{

@@ -8,6 +8,7 @@ enum class EditMode
      ColliderMode,
      EnimesMode,
      PatternMode,
+     CameraMode,
      None
 };
 
@@ -23,6 +24,8 @@ class CPlayer;
 class Colision;
 class CTexture;
 class CMonster;
+class CCameraBound;
+
 class CLevel_Editor :
     public CLevel
 {
@@ -63,6 +66,11 @@ public:
     void EnimeRenderer();
 
     void EnimesPattern();
+
+    void CameraBound();
+    void CameraBoundSave();
+    void CameraBoundLoad(wchar_t* Path);
+
 public:
     CLevel_Editor();
     ~CLevel_Editor();
@@ -70,6 +78,7 @@ public:
 private:
     std::list<Colision*> mDrawCol;
     std::list<CMonster*> mMonsters;
+    std::list<CCameraBound*> mCameraBounds;
 
     CPlayer* mPlayer;
     CTexture* mTexture;
@@ -90,6 +99,7 @@ private:
     CAttack_Eft* m_Play_Effact;
 
     Vec2 mMonsPtnPos;
+
 
 
 };

@@ -18,6 +18,7 @@
 #include "CCamera.h"
 
 CMonster::CMonster()
+	:m_SponTime(0.0f)
 {
 	//m_Tex = CAssetMgr::GetInst()->LoadTexture(L"Character", L"Texture\\TX_GlowScene_2.png");
 
@@ -86,7 +87,6 @@ void CMonster::Begin()
 
 void CMonster::Tick()
 {
-
 	if (!m_Loop)
 		return;
 
