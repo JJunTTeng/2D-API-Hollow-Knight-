@@ -163,9 +163,6 @@
     <ClInclude Include="CMonster.h">
       <Filter>Game\05. Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Crawlid.h">
-      <Filter>Game\05. Object\Monster\Monsters</Filter>
-    </ClInclude>
     <ClInclude Include="AspidHunter.h">
       <Filter>Game\05. Object\Monster\Monsters</Filter>
     </ClInclude>
@@ -222,6 +219,15 @@
     </ClInclude>
     <ClInclude Include="CCameraBound.h">
       <Filter>Game\05. Object\CameraBound</Filter>
+    </ClInclude>
+    <ClInclude Include="Crawlid.h">
+      <Filter>Game\05. Object\Monster\Monsters\Crawlid</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticles.h">
+      <Filter>Game\06. Component\07. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>Game\05. Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,9 +371,6 @@
     <ClCompile Include="CBgMap.cpp">
       <Filter>Game\05. Object\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Crawlid.cpp">
-      <Filter>Game\05. Object\Monster\Monsters</Filter>
-    </ClCompile>
     <ClCompile Include="AspidHunter.cpp">
       <Filter>Game\05. Object\Monster\Monsters</Filter>
     </ClCompile>
@@ -428,6 +431,15 @@
     </ClCompile>
     <ClCompile Include="CCameraBound.cpp">
       <Filter>Game\05. Object\CameraBound</Filter>
+    </ClCompile>
+    <ClCompile Include="Crawlid.cpp">
+      <Filter>Game\05. Object\Monster\Monsters\Crawlid</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticles.cpp">
+      <Filter>Game\06. Component\07. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>Game\05. Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -601,6 +613,15 @@
     </Filter>
     <Filter Include="Game\05. Object\CameraBound">
       <UniqueIdentifier>{44efcde3-0f89-4fa8-918b-02a2c82a53ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Monster\Monsters\Crawlid">
+      <UniqueIdentifier>{1ed1b4d8-5e1c-45fa-a7df-1ce5af898c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\07. Effect">
+      <UniqueIdentifier>{3be90440-de01-4850-ae73-dcfed1d1c8db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Effect">
+      <UniqueIdentifier>{66e8a760-594a-463e-bf11-9d3e91df90d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

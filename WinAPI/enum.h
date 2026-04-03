@@ -55,6 +55,7 @@ enum class LAYER_TYPE
 	MONSTER,
 	MONSTER_OBJECT,
 	FrontBg,
+	EFFECT,
 
 	// 7 ~ 30
 
@@ -70,7 +71,8 @@ enum class COMPONENT_TYPE
 	FLIPBOOKPLAYER,
 	FSM,
 	TILEMAP,
-	PATTERN
+	PATTERN,
+	PARTICLE
 };
 
 enum class ASSET_TYPE

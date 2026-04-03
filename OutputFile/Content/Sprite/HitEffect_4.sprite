@@ -1,0 +1,20 @@
+[KEY]
+HitEffect_4
+
+[PATH]
+Sprite\HitEffect_4.sprite
+
+[ATLAS_KEY]
+HitEffect
+[ATLAS_PATH]
+Texture\Knight\106.NA Charged Effect\HitEffect.png
+
+[LEFT_TOP]
+1268, 0
+
+[SLICE]
+317, 295
+
+[OFFSET]
+0, 0
+

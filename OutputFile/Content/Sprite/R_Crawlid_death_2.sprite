@@ -5,15 +5,15 @@ R_Crawlid_death_2
 Sprite\R_Crawlid_death_2.sprite
 
 [ATLAS_KEY]
-R_Crawlid
+R_Crawlid_death
 [ATLAS_PATH]
-Texture\Enime\Crawlid\R_Crawlid.png
+Texture\Enime\Crawlid\Crawlid.png
 
 [LEFT_TOP]
-119, 234
+0, 234
 
 [SLICE]
-117, 120
+120, 120
 
 [OFFSET]
 0, 0

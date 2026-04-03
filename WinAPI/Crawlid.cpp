@@ -18,6 +18,7 @@
 
 Crawlid::Crawlid()
 	:m_HITtime(0.0f)
+	, m_Hit(false)
 {
 	SetDir(Dir::LEFT);
 	LoadFlipbook();
@@ -27,9 +28,13 @@ Crawlid::Crawlid()
 	CCollider* mCollider = new CCollider;
 	mCollider->SetScale(Vec2(97, 80));
 	AddComponent(mCollider);
-	
+	tMonInfo m_Info = GetMonInfo();
 	m_Info.MaxHP = 3;
 	m_Info.CurHP = 3;
+	m_Info.damageCooldown = 0.0f;
+
+	SetMonsInfo(m_Info);
+
 
 	m_RigidBody = (CRigidBody*)AddComponent(new CRigidBody);
 	m_RigidBody->SetMode(RIGIDBODY_MODE::BELTSCROLL);
@@ -49,7 +54,6 @@ Crawlid::~Crawlid()
 
 void Crawlid::Begin()
 {
-	SetMonsInfo(m_Info);
 	m_STATE = Crawlid_STATE::WALK;
 
 	SetPos(GetInitPos());
@@ -57,52 +61,53 @@ void Crawlid::Begin()
 
 void Crawlid::Tick()
 {
+
+	SetprevDir(GetDir());
+	CMonster::Tick();
+
+	if (m_STATE == DEATH || m_STATE == R_DEATH)
+	{
+		if (m_Flipbook->IsFinish() == true)
+		{
+			if (m_STATE == DEATH)
+			{
+				SetPos(GetPos().x, GetPos().y + 20);
+				m_STATE = DEATHANI;
+				m_Flipbook->Play(m_STATE, 0.1, true);
+
+			}
+
+			else if (m_STATE == R_DEATH)
+			{
+				SetPos(GetPos().x, GetPos().y + 20);
+				m_STATE = R_DEATHANI;
+				m_Flipbook->Play(m_STATE, 0.1, true);
+			}
+
+		}
+	}
+
+	if (m_STATE == R_DEATHANI || m_STATE == DEATHANI)
+	{
+		return;
+	}
+		
+
+	tMonInfo m_Info = GetMonInfo();
+
+	if (m_Info.damageCooldown > 0.0f)
+	{
+		m_Info.damageCooldown -= DT;
+		SetMonsInfo(m_Info);
+	}
+
 	m_SponTime += DT;
 
-	if (m_SponTime <= 5.0f)
+	if (m_SponTime <= 1.0f)
 		return;
 
-	if (m_STATE == HIT)
-	{
-		m_HITtime += DT;
-
-		if (m_HITtime <= 0.5f)
-			return;
-
-		else
-		{
-			m_HITtime = 0.0f;
-			m_STATE = WALK;
-		}
-	}
-
-	if (m_STATE == R_HIT)
-	{
-		if (m_HITtime <= 0.5f)
-			return;
-
-		else
-		{
-			m_HITtime = 0.0f;
-			m_STATE = R_WALK;
-		}
-	}
-
-	if (m_STATE == DEATH)
-	{
-		m_Flipbook->Play(m_STATE, 20, false);
-		return;
-	}
-
-	else if (m_STATE == R_DEATH)
-	{
-		m_Flipbook->Play(m_STATE, 20, false);
-		return;
-	}
 
 
-	CMonster::Tick();
-	SetprevDir(GetDir());
 
 	if (GetComponent<CRigidBody>())
 	{
@@ -166,7 +171,10 @@ void Crawlid::Render()
 {
 	if (m_SponTime <= 5.0f)
 		return;
-	m_Flipbook->Render();
+
+	if (m_IsKnockback == false)
+		m_Flipbook->Render();
+
 	//CMonster().Render();
 	CMonster::Render();
 
@@ -174,39 +182,106 @@ void Crawlid::Render()
 
 void Crawlid::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
-	if (_OtherObject->GetName() == L"Attack_Eft" )
-	{
-		m_Info.CurHP -= 1;
+	CMonster::BeginOverlap(_Collider,_OtherObject,_OtherCollider);
 
-		if (m_Info.CurHP <= 0 && _OtherObject->GetDir() == Dir::RIGHT)
-			m_STATE = Crawlid_STATE::DEATH;
+	//if (_OtherObject->GetName() == L"Attack_Eft" )
+	//{
+	//	m_Info.CurHP -= 1;
 
-		else if (m_Info.CurHP <= 0 && _OtherObject->GetDir() == Dir::LEFT)
-			m_STATE = Crawlid_STATE::R_DEATH;
+	//	if (m_Info.CurHP <= 0 && _OtherObject->GetDir() == Dir::RIGHT)
+	//		m_STATE = Crawlid_STATE::DEATH;
 
-		if (_OtherObject->GetDir() == Dir::RIGHT)
-			m_STATE = Crawlid_STATE::HIT;
+	//	else if (m_Info.CurHP <= 0 && _OtherObject->GetDir() == Dir::LEFT)
+	//		m_STATE = Crawlid_STATE::R_DEATH;
 
-		else if (_OtherObject->GetDir() == Dir::LEFT)
-			m_STATE = Crawlid_STATE::R_HIT;
-	}
+	//	if (_OtherObject->GetDir() == Dir::RIGHT)
+	//		m_STATE = Crawlid_STATE::HIT;
+
+	//	else if (_OtherObject->GetDir() == Dir::LEFT)
+	//		m_STATE = Crawlid_STATE::R_HIT;
+	//}
 
 }
 
+void Crawlid::OnHit()
+{
+	tMonInfo m_Info = GetMonInfo();
+
+	if (m_Info.damageCooldown > 0.0f)
+		return;
+
+	if (m_Info.CurHP > 0)
+	{
+		m_Info.damageCooldown = 0.5f;
+	}
+
+	else
+	{
+		Death();
+	}
+
+	SetMonsInfo(m_Info);
+
+}
+
+void Crawlid::Death()
+{
+	if(GetDir() == Dir::LEFT) 
+		m_STATE = DEATH;
+
+	else if (GetDir() == Dir::RIGHT)
+		m_STATE = R_DEATH;
+
+
+
+	if (m_STATE == DEATH)
+	{
+		m_Flipbook->Play(m_STATE, 15, false);
+		return;
+	}
+
+	else if (m_STATE == R_DEATH)
+	{
+		m_Flipbook->Play(m_STATE, 15, false);
+		return;
+	}
+}
+
+void Crawlid::DeathAni()
+{
+}
+
+
+
 void Crawlid::LoadFlipbook()
 {
+	CFlipbook* mFlipbook = new CFlipbook;
 	m_Flipbook = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
+
+	//CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Crawlid_Death", L"Texture\\Enime\\Crawlid\\Crawlid.png");
+	//mFlipbook->CreateFlipbook(L"Crawlid_Death", mTexture, Vec2(0, 234), Vec2(120, 120), 0, 3);
+
+	//mTexture = CAssetMgr::GetInst()->LoadTexture(L"R_Crawlid_death", L"Texture\\Enime\\Crawlid\\Crawlid.png");
+	//mFlipbook->CreateFlipbook(L"R_Crawlid_death", mTexture, Vec2(0, 234), Vec2(120, 120), 0, 3,true);
+
+	//CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Crawlid_DeathLand", L"Texture\\Enime\\Crawlid\\Crawlid.png");
+	//mFlipbook->CreateFlipbook(L"Crawlid_DeathLand", mTexture, Vec2(0, 376), Vec2(131, 90), 0, 2);
+
+	//mTexture = CAssetMgr::GetInst()->LoadTexture(L"R_Crawlid_deathLand", L"Texture\\Enime\\Crawlid\\Crawlid.png");
+	//mFlipbook->CreateFlipbook(L"R_Crawlid_deathLand", mTexture, Vec2(0, 376), Vec2(131, 90), 0, 2,true);
+
 
 	m_Flipbook->AddFlipbook(WALK, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Walk", L"Flipbook\\Crawlid_Walk.flip"));
 	m_Flipbook->AddFlipbook(TURN, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Turn", L"Flipbook\\Crawlid_turn.flip"));
-
-
 	m_Flipbook->AddFlipbook(DEATH, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Death", L"Flipbook\\Crawlid_death.flip"));
+	m_Flipbook->AddFlipbook(DEATHANI, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_DeathLand", L"Flipbook\\Crawlid_deathLand.flip"));
 
 
 
 	//R
 	m_Flipbook->AddFlipbook(R_WALK, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_Walk", L"Flipbook\\R_Crawlid_Walk.flip"));
 	m_Flipbook->AddFlipbook(R_TURN, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_turn", L"Flipbook\\R_Crawlid_turn.flip"));
-	m_Flipbook->AddFlipbook(R_DEATH, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_death", L"Flipbook\\R_Crawlid_death.flip"));
+	m_Flipbook->AddFlipbook(R_DEATH, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_DeathLand", L"Flipbook\\R_Crawlid_death.flip"));
+	m_Flipbook->AddFlipbook(R_DEATHANI, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_deathLand", L"Flipbook\\R_Crawlid_deathLand.flip"));
+
 }

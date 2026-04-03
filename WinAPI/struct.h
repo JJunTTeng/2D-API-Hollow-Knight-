@@ -14,11 +14,13 @@ public:
 	}
 
 	// 정규화
-	void Normalize()
+	Vec2 Normalize()
 	{
 		float Len = Length();
 		x /= Len;
 		y /= Len;
+
+		return Vec2(x, y);
 	}
 
 	// 내적
@@ -28,6 +30,7 @@ public:
 	}
 
 
+	Vec2 operator = (Vec2 other) { return Vec2{ x = other.x, y = other.y }; }
 
 	Vec2 operator + (Vec2 _Other) { return Vec2(x + _Other.x, y + _Other.y); }
 	Vec2 operator + (float _f) { return Vec2(x + _f, y + _f); }
@@ -128,4 +131,5 @@ struct tMonInfo
 	float DetectRange;
 
 	float Speed;
+	float damageCooldown;
 };

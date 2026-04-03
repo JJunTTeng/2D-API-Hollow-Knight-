@@ -17,8 +17,14 @@
 #include "CRigidBody.h"
 #include "CCamera.h"
 
+#include "CPlayer.h"
+
 CMonster::CMonster()
 	:m_SponTime(0.0f)
+	, m_IsKnockback(false)
+	, m_KnockbackTime(0.0f)
+	, m_KnockbackDuration(0.2f)
+	, m_Velocity(0.0f,0.0f)
 {
 	//m_Tex = CAssetMgr::GetInst()->LoadTexture(L"Character", L"Texture\\TX_GlowScene_2.png");
 
@@ -45,39 +51,28 @@ CMonster::~CMonster()
 {
 }
 
-void CMonster::LoopPlay(bool _Chase)
+void CMonster::ApplyKnockback(Vec2 _dir, float power)
 {
-	m_Chase = _Chase;
-	m_Loop = true;
-	
+	m_IsKnockback = true;
+
+	//넉백 지속시간
+	m_KnockbackTime = m_KnockbackDuration;
+
+	m_Velocity = _dir.Normalize() * power;
 }
 
-void CMonster::ChaseObject(CObj* _Player)
+void CMonster::TakeDamage(float damage)
 {
-	m_Player = _Player;
+	if (m_Info.CurHP <= 0)
+		return;
+
+	m_Info.CurHP -= damage;
+
+	OnHit();
 }
 
-void CMonster::Chase()
+void CMonster::OnHit()
 {
-	if (GetComponent<CCollider>())
-	{
-		if (GetPos().x == FrnLpMove.x || GetPos().x == EndLpMove.x)
-		{
-			m_Chase = false;
-			return;
-		}
-
-		if (GetPos().x >= m_Player->GetPos().x && FrnLpMove.x <= GetPos().x)
-		{
-			SetPos(Vec2(GetPos().x - m_Speed * DT, GetPos().y));
-		}
-
-		else if (GetPos().x <= m_Player->GetPos().x && EndLpMove.x >= GetPos().x)
-		{
-			SetPos(Vec2(GetPos().x + m_Speed * DT, GetPos().y));
-		}
-	}
-
 }
 
 void CMonster::Begin()
@@ -87,6 +82,23 @@ void CMonster::Begin()
 
 void CMonster::Tick()
 {
+	if (m_IsKnockback)
+	{
+		m_KnockbackTime -= DT;
+
+		if (m_KnockbackTime <= 0.0f)
+		{
+			m_IsKnockback = false;
+			m_Velocity = Vec2(0.0f, 0.0f);
+		}
+
+		SetPlusPos(Vec2(m_Velocity.x,0.0f) * DT);
+
+	}
+
+
+
+
 	if (!m_Loop)
 		return;
 
@@ -108,19 +120,21 @@ void CMonster::Tick()
 void CMonster::Render()
 {
 
-	//if (!m_Loop)
-	//	return;
-
-	HDC dc = CEngine::GetInst()->GetSecondDC();
-	Vec2 mPos = CCamera::GetInst()->GetRenderPos(GetPos());
-
-	MoveToEx(dc, mPos.x, mPos.y, NULL);
-	LineTo(dc, CCamera::GetInst()->GetRenderPos(FrnLpMove).x, mPos.y);
-
-	MoveToEx(dc, mPos.x, mPos.y, NULL);
-	LineTo(dc, CCamera::GetInst()->GetRenderPos(EndLpMove).x, mPos.y);
 }
 
 void CMonster::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
+	if (CPlayer* mPlayer = dynamic_cast<CPlayer*>(_OtherObject))
+	{
+		tPlayInfo m_info = mPlayer->GetPlayInfo();
+		m_info.CurHP -= 1;
+
+		Vec2 dir = _OtherObject->GetPos() - GetPos();
+		dir = dir.Normalize();
+
+		mPlayer->PApplyKnockback(dir, 300.0f);
+	}
+
+	
+
 } 

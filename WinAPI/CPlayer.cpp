@@ -51,6 +51,20 @@ CPlayer::CPlayer()
 
 	, m_pMove(P_Move::NONE)
 	, m_pAction(P_Action::NONE)
+
+	, m_Velocity(0,0),
+	  m_IsKnockback(false),
+
+	  m_KnockbackTime(0.0f),
+	  m_KnockbackDuration(0.2f),
+
+	  m_PlayInfo
+	  { 
+		  m_PlayInfo.MaxHP = 10,
+		  m_PlayInfo.CurHP = 10,
+		  m_PlayInfo.damageCooldown = 0.0f,
+	  }
+
 {
 
 	SetDir(Dir::RIGHT);
@@ -159,6 +173,19 @@ void CPlayer::Tick()
 {
 	Dir m_prevDir = GetDir();
 
+	if (m_IsKnockback)
+	{
+		m_KnockbackTime -= DT;
+
+		if (m_KnockbackTime <= 0.0f)
+		{
+			m_IsKnockback = false;
+			m_Velocity = Vec2(0.0f, 0.0f);
+		}
+
+		SetPlusPos(Vec2(m_Velocity.x, 0.0f) * DT);
+
+	}
 
 	SetPrevPos(GetPos());
 
@@ -263,6 +290,16 @@ void CPlayer::Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _Othe
 
 void CPlayer::EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
+}
+
+void CPlayer::PApplyKnockback(Vec2 _dir, float power)
+{
+	m_IsKnockback = true;
+
+	//넉백 지속시간
+	m_KnockbackTime = m_KnockbackDuration;
+
+	m_Velocity = _dir.Normalize() * power;
 }
 
 void CPlayer::CreatePlayerFlipbook()

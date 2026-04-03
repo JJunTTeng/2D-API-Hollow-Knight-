@@ -37,6 +37,8 @@
 #include "MonsterFlipbook.h"
 #include "CAttack_Eft.h"
 
+#include "CEffect.h"
+
 
 
 CLevel_Editor::CLevel_Editor()
@@ -82,6 +84,7 @@ void CLevel_Editor::Begin()
 	mPlayer->SetName(L"Player");
 	mPlayer->SetPos(Vec2(1954,1348));
 	AddObject(mPlayer, LAYER_TYPE::PLAYER);
+
 	
 	m_Play_Effact = new CAttack_Eft;
 	m_Play_Effact->LoadPlayer(mPlayer);
@@ -95,6 +98,7 @@ void CLevel_Editor::Begin()
 	CBgMap* mBgMap = new CBgMap;
 	AddObject(mBgMap, LAYER_TYPE::FrontBg);
 
+	
 
 
 
@@ -181,6 +185,8 @@ void CLevel_Editor::Tick()
 	case EditMode::CameraMode:
 		CameraBound();
 		break;
+	case EditMode::TileMode:
+		InsertTile();
 	case EditMode::None:
 		break;
 
@@ -775,11 +781,8 @@ void CLevel_Editor::EnimeMode()
 	}
 	
 
-
-
 	if (KEY_TAP(LBTN) && CKeyMgr::GetInst()->IsMouseOffScreen() == false)
 	{
-
 		EnimeRenderer();
 	}
 
@@ -819,21 +822,6 @@ void CLevel_Editor::EnimesPattern()
 				return;
 			}
 	}
-
-	if (SelectMons != nullptr)
-	{
-		SelectMons->LoopPlay(false);
-
-
-		if (KEY_TAP(LBTN))
-			SelectMons->SetFrnLpMove(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
-
-		if (KEY_TAP(RBTN))
-			SelectMons->SetEndLpMove(CCamera::GetInst()->GetRealPos(CKeyMgr::GetInst()->GetMousePos()));
-		
-	}
-	
-
 
 }
 
@@ -987,6 +975,13 @@ void CLevel_Editor::CameraBoundLoad(wchar_t* Path = nullptr)
 		mCameraBounds.push_back(mCameraBound);
 	}
 	fclose(File);
+}
+
+void CLevel_Editor::InsertTile()
+{
+	mSubTexture = CAssetMgr::GetInst()->LoadTexture(L"EditTile", L"Texture\\Map\\Tile.png", CEngine::GetInst()->GetEditDC());
+
+	mEditMode = EditMode::TileMode;
 }
 
 
@@ -1264,6 +1259,15 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		return true;
 	}
 
+	case ID_TILE_INSERT:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->InsertTile();
+		return true;
+	}
 
 	};
 

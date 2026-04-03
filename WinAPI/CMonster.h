@@ -29,7 +29,16 @@ private:
 
 protected:
     Vec2        m_InitPos;
+
     float       m_SponTime;
+    
+    Vec2        m_Velocity;
+    bool        m_IsKnockback;
+
+    float       m_KnockbackTime;
+    float       m_KnockbackDuration;
+
+
 public:
     Vec2  GetInitPos() { return m_InitPos; }
     Vec2  GetFrnLpMove() { return FrnLpMove; }
@@ -38,12 +47,17 @@ public:
     void SetInitPos(Vec2 _Pos) {  m_InitPos = _Pos; }
     void SetSpeed(float _Speed) { m_Speed = _Speed; }
     void SetDistance(float _Dist) { m_Dist = _Dist; }
-    void SetFrnLpMove(Vec2 _pos) { FrnLpMove = _pos; }
-    void SetEndLpMove(Vec2 _pos) { EndLpMove = _pos; }
 
-    void LoopPlay(bool _Chase);
-    void ChaseObject(CObj* _Player);
-    void Chase();
+    void ApplyKnockback(Vec2 _dir, float power);
+
+    //void LoopPlay(bool _Chase);
+    //void ChaseObject(CObj* _Player);
+    //void Chase();
+
+    virtual void TakeDamage(float damage);
+    virtual void OnHit();
+
+    
 
     const tMonInfo& GetMonInfo() { return m_Info; }
     void SetMonsInfo(tMonInfo _monsInfo) { m_Info = _monsInfo; }

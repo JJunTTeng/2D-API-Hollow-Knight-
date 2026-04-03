@@ -8,6 +8,25 @@ class CRigidBody;
 class CFSM;
 
 
+struct tPlayInfo
+{
+    float MaxHP;
+    float CurHP;
+
+    float MaxMP;
+    float CurMP;
+
+    float Att;
+    float Def;
+    float Dex;
+
+    float AttRange;
+    float DetectRange;
+
+    float Speed;
+    float damageCooldown;
+};
+
 
 enum PLAYER_ANIM_STATE
 {
@@ -103,6 +122,15 @@ private:
     P_Action            m_prevpAction;
     P_Action            m_pAction;
 
+
+    // ³Ë¹é
+    Vec2                m_Velocity;
+    bool                m_IsKnockback;
+
+    float               m_KnockbackTime;
+    float               m_KnockbackDuration;
+
+    tPlayInfo           m_PlayInfo;
 public:
     virtual void Begin() override;
     virtual void Tick() override;
@@ -120,6 +148,11 @@ public:
 
 	CFSM* GetMoveFSM() { return m_MoveFSM; }
     CFSM* GetActionFSM() { return m_ActionFSM; }
+
+    void PApplyKnockback(Vec2 _dir, float power);
+
+    void SetPlayInfo(tPlayInfo _Playinfo) { m_PlayInfo = _Playinfo; }
+    tPlayInfo GetPlayInfo() { return m_PlayInfo; }
 
 
 private:

@@ -57,6 +57,7 @@
 #define ID_CAMERA_BOUND                 32811
 #define ID_CAMERA_SAVE                  32812
 #define ID_CAMERA_LOAD                  32813
+#define ID_TILE_INSERT                  32814
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -65,7 +66,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        131
-#define _APS_NEXT_COMMAND_VALUE         32814
+#define _APS_NEXT_COMMAND_VALUE         32815
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

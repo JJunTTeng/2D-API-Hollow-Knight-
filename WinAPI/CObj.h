@@ -51,6 +51,7 @@ public:
     void SetprevDir(Dir _dir) { m_prevDir = _dir; }
     void SetPos(Vec2 _Pos) { m_Pos = _Pos; }
     void SetPos(float _x, float _y) { m_Pos = Vec2(_x, _y); }
+    void SetPlusPos(Vec2 _Pos) { m_Pos += _Pos; }
     void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
     void SetScale(float _x, float _y) { m_Scale = Vec2(_x, _y); }
     void SetPrevPos(Vec2 _Pos) { m_PrevPos = _Pos; }

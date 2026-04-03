@@ -10,11 +10,13 @@ enum Crawlid_STATE
     TURN,
     HIT,
     DEATH,
+    DEATHANI,
 
     R_WALK,
     R_TURN,
     R_HIT,
     R_DEATH,
+    R_DEATHANI
 
 };
 
@@ -26,13 +28,15 @@ public:
     Crawlid();
     ~Crawlid();
 private:
-    tMonInfo    m_Info;
 
     float       m_Speed;
     Vec2        m_InitPos;
     float       m_Dist;
 
     float       m_HITtime;
+    bool        m_Hit;
+
+
 
 
     CFlipbookPlayer* m_Flipbook;
@@ -44,6 +48,11 @@ public:
     virtual void Tick() override;
     virtual void Render() override;
     virtual void BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider) override;
+
+    virtual void OnHit()override;
+
+    void Death();
+    void DeathAni();
 
     void LoadFlipbook();
 

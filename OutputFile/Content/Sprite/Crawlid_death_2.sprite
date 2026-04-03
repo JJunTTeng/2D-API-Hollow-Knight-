@@ -1,19 +1,19 @@
 [KEY]
-Crawlid_death_2
+Crawlid_Death_2
 
 [PATH]
-Sprite\Crawlid_death_2.sprite
+Sprite\Crawlid_Death_2.sprite
 
 [ATLAS_KEY]
-Crawlid
+Crawlid_Death
 [ATLAS_PATH]
 Texture\Enime\Crawlid\Crawlid.png
 
 [LEFT_TOP]
-243, 234
+240, 234
 
 [SLICE]
-117, 120
+120, 120
 
 [OFFSET]
 0, 0

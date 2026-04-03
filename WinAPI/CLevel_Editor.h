@@ -9,6 +9,7 @@ enum class EditMode
      EnimesMode,
      PatternMode,
      CameraMode,
+     TileMode,
      None
 };
 
@@ -71,6 +72,8 @@ public:
     void CameraBoundSave();
     void CameraBoundLoad(wchar_t* Path);
 
+    void InsertTile();
+
 public:
     CLevel_Editor();
     ~CLevel_Editor();
@@ -81,6 +84,7 @@ private:
     std::list<CCameraBound*> mCameraBounds;
 
     CPlayer* mPlayer;
+
     CTexture* mTexture;
     CTexture* mSubTexture;
 
