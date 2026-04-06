@@ -73,7 +73,8 @@ public:
         }
     }
 
-    void Jump(float JumpSpeed);
+    void Jump();
+    void Jumping();
 
     RIGIDBODY_MODE GetMode() { return m_Mode; }
     void SetMode(RIGIDBODY_MODE _Mode) { m_Mode = _Mode; }

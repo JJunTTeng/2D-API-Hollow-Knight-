@@ -26,6 +26,7 @@ class Colision;
 class CTexture;
 class CMonster;
 class CCameraBound;
+class CTile;
 
 class CLevel_Editor :
     public CLevel
@@ -68,11 +69,13 @@ public:
 
     void EnimesPattern();
 
-    void CameraBound();
+    void CameraBound(wstring _name);
     void CameraBoundSave();
     void CameraBoundLoad(wchar_t* Path);
 
-    void InsertTile();
+    void InsertTile(wstring _name);
+    void TileSave();
+    void TileLoad(wchar_t* Path);
 
 public:
     CLevel_Editor();
@@ -82,11 +85,15 @@ private:
     std::list<Colision*> mDrawCol;
     std::list<CMonster*> mMonsters;
     std::list<CCameraBound*> mCameraBounds;
+    std::list<CTile*> mTiles;
+
+
 
     CPlayer* mPlayer;
 
     CTexture* mTexture;
     CTexture* mSubTexture;
+    CTexture* mMouseTextue;
 
     Vec2 ColBeginPos;
     Vec2 ColEndPos;
@@ -94,7 +101,6 @@ private:
     Vec2 EditRenderPos;
 
     EditMode mEditMode;
-
     EnimesName mEnimeName;
 
     CMonster* SelectMons;
@@ -104,7 +110,9 @@ private:
 
     Vec2 mMonsPtnPos;
 
-
+    wstring m_TileName;
+    wstring m_BoundName;
+    float _Size;
 
 };
 

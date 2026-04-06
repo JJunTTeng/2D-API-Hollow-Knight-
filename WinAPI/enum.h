@@ -47,6 +47,7 @@ enum class LAYER_TYPE
 {
 	BACKGROUND,
 	TILE,
+	ATTCK_TILE,
 	COLLIDER,
 	CAMERABOUND,	//카메라 위치전환용
 	DEFAULT,

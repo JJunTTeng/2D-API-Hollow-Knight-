@@ -7,8 +7,6 @@
 #include "CKeyMgr.h"
 #include "CMap.h"
 
-#include "CTileMap.h"
-
 #include "CLevelMgr.h"
 #include "CCamera.h"
 
@@ -20,24 +18,26 @@
 #include "CAssetMgr.h"
 #include "CSound.h"
 
-#include "Colision.h"
 #include "CCollider.h"
-#include "CCameraBound.h"
-
 #include "CSelectGDI.h"
-#include "CPlayer.h"
-
-#include "CBgMap.h"
-
 #include "CCollisionMgr.h"
 
+//object
+#include "CTileMap.h"
 #include "CMonster.h"
 #include "Crawlid.h"
+#include "Colision.h"
+#include "CCameraBound.h"
+#include "CPlayer.h"
+#include "CAttack_Eft.h"
+#include "CBgMap.h"
+#include "CEffect.h"
+#include "CTile.h"
 
 #include "MonsterFlipbook.h"
-#include "CAttack_Eft.h"
 
-#include "CEffect.h"
+
+
 
 
 
@@ -50,6 +50,8 @@ CLevel_Editor::CLevel_Editor()
 	, mEditMode(EditMode::None)
 	, mEnimeName(EnimesName::None)
 	, mMonsPtnPos(Vec2())
+	, _Size(1.0f)
+	, m_TileName(L"")
 {
 }
 
@@ -78,17 +80,17 @@ void CLevel_Editor::Begin()
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
-	
-	// Player 생성
-	mPlayer = new CPlayer;
-	mPlayer->SetName(L"Player");
-	mPlayer->SetPos(Vec2(1954,1348));
-	AddObject(mPlayer, LAYER_TYPE::PLAYER);
+	//
+	// //Player 생성
+	//mPlayer = new CPlayer;
+	//mPlayer->SetName(L"Player");
+	//mPlayer->SetPos(Vec2(1954,1348));
+	//AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	
-	m_Play_Effact = new CAttack_Eft;
-	m_Play_Effact->LoadPlayer(mPlayer);
-	AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
+	//
+	//m_Play_Effact = new CAttack_Eft;
+	//m_Play_Effact->LoadPlayer(mPlayer);
+	//AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
 
 
 	// 샘플퓖EMap 오틒E㎷?생성
@@ -107,18 +109,25 @@ void CLevel_Editor::Begin()
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::COLLIDER, LAYER_TYPE::MONSTER);
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);
 	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::CAMERABOUND);
+	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::ATTCK_TILE);
+	CCollisionMgr::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::ATTCK_TILE);
 
 
 
 
-	wchar_t m_Path[255] = L"King Load";
-	LoadColider(m_Path);
 
-	wchar_t m_Path2[255] = L"1-1";
-	EnimeLoad(m_Path2);
 
-	wchar_t m_Path3[255] = L"1-1";
-	CameraBoundLoad(m_Path3);
+	//wchar_t m_Path[255] = L"KingLoad";
+	//LoadColider(m_Path);
+
+	//wchar_t m_Path2[255] = L"1-1";
+	//EnimeLoad(m_Path2);
+
+	//wchar_t m_Path3[255] = L"KingLoad";
+	//CameraBoundLoad(m_Path3);
+
+	wchar_t m_Path4[255] = L"KingLoad";
+	TileLoad(m_Path4);
 
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
 	CLevel::Begin();
@@ -143,28 +152,32 @@ void CLevel_Editor::Tick()
 	MouseRenderPos = CCamera::GetInst()->GetDiff() + CKeyMgr::GetInst()->GetMousePos();
 	EditRenderPos = CKeyMgr::GetInst()->GetEditMousePos();
 
-	if (CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_NONE)
+
+	if (mPlayer == nullptr)
 	{
-		if (KEY_PRESSED(KEY::LEFT))
+		if (CKeyMgr::GetInst()->GetLeftOrRight() == LeftOrRight::LR_NONE)
 		{
-			CCamera::GetInst()->SetPlusCameraPos(Vec2(-10.0f, 0.0f));
-		}
+			if (KEY_PRESSED(KEY::LEFT))
+			{
+				CCamera::GetInst()->SetPlusCameraPos(Vec2(-10.0f, 0.0f));
+			}
 
-		if (KEY_PRESSED(KEY::RIGHT))
-		{
-			CCamera::GetInst()->SetPlusCameraPos(Vec2(10.0f, 0.0f));
-		}
+			if (KEY_PRESSED(KEY::RIGHT))
+			{
+				CCamera::GetInst()->SetPlusCameraPos(Vec2(10.0f, 0.0f));
+			}
 
-		if (KEY_PRESSED(KEY::UP))
-		{
-			CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0, -10.0f));
-		}
+			if (KEY_PRESSED(KEY::UP))
+			{
+				CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0, -10.0f));
+			}
 
-		if (KEY_PRESSED(KEY::DOWN))
-		{
-			CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0f, 10.0f));
+			if (KEY_PRESSED(KEY::DOWN))
+			{
+				CCamera::GetInst()->SetPlusCameraPos(Vec2(0.0f, 10.0f));
 
 
+			}
 		}
 	}
 
@@ -183,10 +196,10 @@ void CLevel_Editor::Tick()
 		EnimesPattern();
 		break;
 	case EditMode::CameraMode:
-		CameraBound();
+		CameraBound(m_BoundName);
 		break;
 	case EditMode::TileMode:
-		InsertTile();
+		InsertTile(m_TileName);
 	case EditMode::None:
 		break;
 
@@ -329,6 +342,50 @@ void CLevel_Editor::Render()
 		
 	}
 
+	if (mEditMode == EditMode::TileMode)
+	{
+		BLENDFUNCTION blend = {};
+
+		blend.BlendOp = AC_SRC_OVER;
+		blend.BlendFlags = 0;
+		blend.SourceConstantAlpha = 255;
+		blend.AlphaFormat = AC_SRC_ALPHA;
+		HDC subdc = CEngine::GetInst()->GetEditSecondDC();
+		Vec2 subPos = CEngine::GetInst()->GetEditResolution() / 2;
+		HDC mdc = CEngine::GetInst()->GetSecondDC();
+
+		AlphaBlend(subdc
+			, 0//m_Tex->GetWidth() / 2.f*/
+			, 0 //m_Tex->GetHeight() / 2.f*/
+			, mSubTexture->GetWidth()
+			, mSubTexture->GetHeight()
+			, mSubTexture->GetDC()
+			, 0, 0
+			, mSubTexture->GetWidth()
+			, mSubTexture->GetHeight()
+			, blend);
+
+
+		blend.BlendOp = AC_SRC_OVER;
+		blend.BlendFlags = 0;
+		blend.SourceConstantAlpha = 255;
+		blend.AlphaFormat = AC_SRC_ALPHA;
+		HDC dc = CEngine::GetInst()->GetMainDC();
+		Vec2 mPos = Vec2(CKeyMgr::GetInst()->GetMousePos().x - mTexture->GetWidth() /4, CKeyMgr::GetInst()->GetMousePos().y - mTexture->GetHeight() /2);
+
+		AlphaBlend(mdc
+			, mPos.x
+			, mPos.y
+			, mTexture->GetWidth()  * _Size
+			, mTexture->GetHeight() * _Size
+			, mTexture->GetDC()
+			, 0, 0
+			, mTexture->GetWidth() 
+			, mTexture->GetHeight()
+			, blend);
+
+	}
+
 
 	//wchar_t word1[50] = L"";
 	//swprintf_s(word1, 50, L"%f, %f", mPlayer->GetPos().x, mPlayer->GetPos().y);
@@ -422,7 +479,7 @@ void CLevel_Editor::SaveColider()
 	{
 		CCollider* mCollider = mColision->GetComponent<CCollider>();
 		//Colider의 스테이트 값 저픸E
-		fwprintf_s(File, L"[Name]\n");
+		fwprintf_s(File, L"[Name]\n",255);
 		fwprintf_s(File, L"%s\n\n", mCollider->GetName().c_str());
 
 		fwprintf_s(File, L"[Position]\n");
@@ -626,7 +683,7 @@ void CLevel_Editor::EnimeSave()
 	for(CMonster* mMonstor : mMonsters)
 	{
 		//Monstor의 스테이트 값 저픸E
-		fwprintf_s(File, L"[Name]\n");
+		fwprintf_s(File, L"[Name]\n",255);
 		fwprintf_s(File, L"%s\n\n", mMonstor->GetName().c_str());
 
 		fwprintf_s(File, L"[InitPosition]\n");
@@ -735,6 +792,7 @@ void CLevel_Editor::ColliderMode()
 				fabs(mColider->GetFinalPos().y - MouseRenderPos.y) < mColider->GetScale().y / 2)
 			{
 				(*iter)->SetDead();
+				mDrawCol.erase(iter);
 				return;
 			}
 		}
@@ -749,8 +807,8 @@ void CLevel_Editor::ColliderMode()
 		Colision* mColision = new Colision;
 		AddObject(mColision, LAYER_TYPE::COLLIDER);
 		CCollider* mCollider = new CCollider;
-		mColision->SetPos(ColBeginPos);
 		mCollider->SetScale(ColEndPos - ColBeginPos);
+		mColision->SetPos(ColBeginPos);
 		mCollider->SetOffset(mCollider->GetScale() / 2);
 		mCollider->SetName(L"Tile");
 		(CCollider*)mColision->AddComponent(mCollider);
@@ -770,7 +828,6 @@ void CLevel_Editor::EnimeMode()
 	Vec2 MinTileSize(0, 0);
 	Vec2 TileSize = Vec2(100, 100);
 
-	
 
 	if (mSubTexture->GetKey() == L"EditEnimes01" && KEY_TAP(LBTN) && MinTileSize <= EditRenderPos)
 	{
@@ -825,9 +882,14 @@ void CLevel_Editor::EnimesPattern()
 
 }
 
-void CLevel_Editor::CameraBound()
+void CLevel_Editor::CameraBound(wstring _name)
 {
 	mEditMode = EditMode::CameraMode;
+	m_BoundName = _name;
+
+
+
+
 
 	if (KEY_RELEASED(KEY::LBTN))
 	{
@@ -843,17 +905,37 @@ void CLevel_Editor::CameraBound()
 		ColBeginPos = MouseRenderPos;
 	}
 
+	if (KEY_TAP(KEY::RBTN))
+	{
+		for (auto iter = mCameraBounds.begin(); iter != mCameraBounds.end();)
+		{
+			CCameraBound* mCameraBound = *iter;
+
+			if (fabs(mCameraBound->GetPos().x - MouseRenderPos.x)  < mCameraBound->GetScale().x / 2 
+				&& fabs(mCameraBound->GetPos().y - MouseRenderPos.y) < mCameraBound->GetScale().y / 2)
+			{
+				iter = mCameraBounds.erase(iter);
+				mCameraBound->SetDead();
+			}
+
+			else
+			{
+				++iter;
+			}
+		}
+	}
+
+
 
 	if (ColEndPos != Vec2(-1, -1))
 	{
 		CCameraBound* mCameraBound = new CCameraBound;
 		AddObject(mCameraBound, LAYER_TYPE::CAMERABOUND);
 		CCollider* mCollider = new CCollider;
-		mCameraBound->SetPos(ColBeginPos);
+		mCameraBound->SetName(m_BoundName);
 		mCameraBound->SetScale(ColEndPos - ColBeginPos);
-		mCameraBound->SetName(L"CameraBound");
+		mCameraBound->SetPos(ColBeginPos + mCameraBound->GetScale()/2);
 		mCollider->SetScale(mCameraBound->GetScale());
-		mCollider->SetOffset(mCollider->GetScale() / 2);
 		mCameraBound->AddComponent(mCollider);
 
 		mCameraBounds.push_back(mCameraBound);
@@ -890,14 +972,14 @@ void CLevel_Editor::CameraBoundSave()
 
 	for (CCameraBound* mCameraBound : mCameraBounds)
 	{
+		fwprintf_s(File, L"[Name]\n");
+		fwprintf_s(File, L"%s \n\n", mCameraBound->GetName().c_str(), 255);
+
 		fwprintf_s(File, L"[Position]\n");
 		fwprintf_s(File, L"%d, %d \n\n", (int)mCameraBound->GetPos().x, (int)mCameraBound->GetPos().y);
 
 		fwprintf_s(File, L"[Scale]\n");
 		fwprintf_s(File, L"%d, %d \n\n", (int)mCameraBound->GetComponent<CCollider>()->GetScale().x, (int)mCameraBound->GetComponent<CCollider>()->GetScale().y);
-
-		fwprintf_s(File, L"[Offset]\n");
-		fwprintf_s(File, L"%d, %d \n\n", (int)mCameraBound->GetComponent<CCollider>()->GetOffset().x, (int)mCameraBound->GetComponent<CCollider>()->GetOffset().y);
 	}
 	fclose(File);
 
@@ -935,7 +1017,17 @@ void CLevel_Editor::CameraBoundLoad(wchar_t* Path = nullptr)
 		int fx = 0, fy = 0;
 
 		CCameraBound* mCameraBound = new CCameraBound;
-		CCollider* mCollider = new CCollider;
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Name]"))
+		{
+			fwscanf_s(File, L"%s", &szBuff,255);
+			mCameraBound->SetName(szBuff);
+		}
 
 		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
 		{
@@ -956,7 +1048,130 @@ void CLevel_Editor::CameraBoundLoad(wchar_t* Path = nullptr)
 		if (!wcscmp(szBuff, L"[Scale]"))
 		{
 			fwscanf_s(File, L"%d, %d", &fx, &fy);
-			mCollider->SetScale(Vec2(fx, fy));
+			mCameraBound->SetScale(Vec2(fx, fy));
+		}
+;
+		AddObject(mCameraBound, LAYER_TYPE::CAMERABOUND);
+		mCameraBounds.push_back(mCameraBound);
+	}
+	fclose(File);
+}
+
+void CLevel_Editor::InsertTile(wstring _name)
+{
+	mEditMode = EditMode::TileMode;
+	m_TileName = _name;
+	if (m_TileName == L"KingLoad")
+	{
+		mSubTexture = CAssetMgr::GetInst()->LoadTexture(L"EditTile", L"Texture\\Map\\King Load Tile.png", CEngine::GetInst()->GetEditSecondDC());
+		mTexture = CAssetMgr::GetInst()->LoadTexture(L"KingLoadTile", L"Texture\\Map\\Tile1.png", CEngine::GetInst()->GetSecondDC());
+
+		if (CKeyMgr::GetInst()->GetMouseheel() > 0)
+			_Size += 0.01;
+		else if (CKeyMgr::GetInst()->GetMouseheel() < 0)
+			_Size -= 0.01;
+
+		if (KEY_TAP(KEY::LBTN))
+		{
+			CTile* mtile = new CTile;
+			mtile->SetName(L"KingLoad");
+			mtile->SetPos(Vec2(MouseRenderPos.x - mTexture->GetWidth() / 4, MouseRenderPos.y - mTexture->GetHeight() / 2));
+			mtile->SetScale(Vec2(mTexture->GetWidth() * _Size, mTexture->GetHeight() * _Size));
+			mtile->Begin();
+			//mtile->SetSize(_Size);
+
+			AddObject(mtile, LAYER_TYPE::ATTCK_TILE);
+
+			mTiles.push_back(mtile);
+		}
+
+		
+	}
+	
+}
+
+void CLevel_Editor::TileSave()
+{
+	wstring strContentPath = CPathMgr::GetContentPath();
+	strContentPath += L"Tile\\";
+
+	// 파일 경로 문자열
+	wchar_t szFilePath[255] = {};
+
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = szFilePath;	// 최종적으로 과滔 경로를 받아낼 목적햨E
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"Tiles\0*.tiles\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+	if (false == GetSaveFileName(&Desc))
+		return;
+
+	FILE* File = nullptr;
+	_wfopen_s(&File, szFilePath, L"w");
+
+	for (CTile* mTile : mTiles)
+	{
+		fwprintf_s(File, L"[Name]\n");
+		fwprintf_s(File, L"%s\n\n", mTile->GetName().c_str());
+
+		fwprintf_s(File, L"[Position]\n");
+		fwprintf_s(File, L"%d, %d \n\n", (int)mTile->GetPos().x, (int)mTile->GetPos().y);
+
+		fwprintf_s(File, L"[Scale]\n");
+		fwprintf_s(File, L"%d, %d \n\n", (int)mTile->GetScale().x, (int)mTile->GetScale().y);
+
+	}
+	fclose(File);
+
+
+}
+
+void CLevel_Editor::TileLoad(wchar_t* Path)
+{
+	wstring strContentPath = CPathMgr::GetContentPath();
+
+	strContentPath += L"Tile\\";
+	strContentPath += Path;
+
+	//파일 경로 문자열
+	const wchar_t* m_Path = strContentPath.c_str();
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = Path;
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"Tiles\0*.tiles\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, m_Path, L"r");
+
+	while (true)
+	{
+		wchar_t szBuff[255] = {};
+		int fx = 0, fy = 0;
+
+		CTile* mtile = new CTile;
+
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Name]"))
+		{
+			fwscanf_s(File, L"%s", szBuff,255);
+			mtile->SetName(szBuff);
+
 		}
 
 		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
@@ -964,30 +1179,29 @@ void CLevel_Editor::CameraBoundLoad(wchar_t* Path = nullptr)
 			break;
 		}
 
-		if (!wcscmp(szBuff, L"[Offset]"))
+		if (!wcscmp(szBuff, L"[Position]"))
 		{
 			fwscanf_s(File, L"%d, %d", &fx, &fy);
-			mCollider->SetOffset(Vec2(fx, fy));
+			mtile->SetPos(Vec2(fx, fy));
 		}
 
-		mCameraBound->AddComponent(mCollider);
-		AddObject(mCameraBound, LAYER_TYPE::CAMERABOUND);
-		mCameraBounds.push_back(mCameraBound);
+		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
+		{
+			break;
+		}
+
+		if (!wcscmp(szBuff, L"[Scale]"))
+		{
+			fwscanf_s(File, L"%d, %d", &fx, &fy);
+			mtile->SetScale(Vec2(fx, fy));
+		}
+
+		AddObject(mtile, LAYER_TYPE::ATTCK_TILE);
+		mTiles.push_back(mtile);
 	}
 	fclose(File);
+
 }
-
-void CLevel_Editor::InsertTile()
-{
-	mSubTexture = CAssetMgr::GetInst()->LoadTexture(L"EditTile", L"Texture\\Map\\Tile.png", CEngine::GetInst()->GetEditDC());
-
-	mEditMode = EditMode::TileMode;
-}
-
-
-
-
-
 
 
 // =======
@@ -1229,15 +1443,35 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		return true;
 	}
 
-	case ID_CAMERA_BOUND:
+	case ID_BOUND_ALL:
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
 		assert(pEditorLevel);
 
-		pEditorLevel->CameraBound();
+		pEditorLevel->CameraBound(L"AllBoundBox");
 		return true;
 	}
+	case ID_BOUND_XBOUND:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->CameraBound(L"XBoundBox");
+		return true;
+	}
+
+	case ID_BOUND_YBOUND:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->CameraBound(L"YBoundBox");
+		return true;
+	}
+
 
 	case ID_CAMERA_SAVE:
 	{
@@ -1259,13 +1493,25 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		return true;
 	}
 
-	case ID_TILE_INSERT:
+	case ID_INSERT_KINGLOAD:
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
 		assert(pEditorLevel);
 
-		pEditorLevel->InsertTile();
+		pEditorLevel->InsertTile(L"KingLoad");
+
+		return true;
+	}
+
+	case ID_TILE_SAVE:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->TileSave();
+
 		return true;
 	}
 

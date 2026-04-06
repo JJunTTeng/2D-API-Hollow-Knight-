@@ -68,6 +68,8 @@ private:
 
 	LeftOrRight			m_LeftOrRight;
 
+	int					m_mouseheel;
+
 public:
 	KEY_STATE GetKeyState(KEY _key) { return m_vecKeyInfo[_key].State; }
 	Vec2 GetMousePos() { return m_MousePos; }	
@@ -79,6 +81,10 @@ public:
 	bool IsMouseOffScreen();
 
 	void LeftORRightKey();
+
+	void AddMouseheel(int _delta) { m_mouseheel += _delta; }
+	int GetMouseheel() { return m_mouseheel; };
+	void Reset() { m_mouseheel = 0; }
 
 public:
 	void Init();

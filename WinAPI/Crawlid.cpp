@@ -13,9 +13,6 @@
 
 #include "CKeyMgr.h"
 
-
-
-
 Crawlid::Crawlid()
 	:m_HITtime(0.0f)
 	, m_Hit(false)

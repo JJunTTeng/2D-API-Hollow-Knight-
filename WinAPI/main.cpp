@@ -2,6 +2,7 @@
 
 #include "WinAPI.h"
 #include "CEngine.h"
+#include "CKeyMgr.h"
 
 HINSTANCE g_hInst = nullptr;
 HWND      g_hDlg = nullptr;
@@ -16,7 +17,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance   // 프로세스 주소(ID)
                     , HINSTANCE hPrevInstance // 안쓰이는 인자
                     , LPWSTR lpCmdLine
                     , int   nCmdShow)
-{    
+ {    
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     //_CrtSetBreakAlloc(18);
 
@@ -150,6 +151,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
+    case WM_MOUSEWHEEL:
+    {
+        int delta = GET_WHEEL_DELTA_WPARAM(wParam);
+
+        CKeyMgr::GetInst()->AddMouseheel(delta);
+    }
+    break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }

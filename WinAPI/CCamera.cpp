@@ -9,7 +9,6 @@
 
 #include "CAssetMgr.h"
 #include "CTexture.h"
-#include "CEngine.h"
 #include "CSelectGDI.h"
 
 CCamera::CCamera()
@@ -20,6 +19,7 @@ CCamera::CCamera()
 	, m_Time(0.f)
 	, m_Dir(1.f)
 	, m_bOscillation(false)
+	, m_BoundType(BOUND_TYPE::NONE)
 {
 	Vec2 vResolution = CEngine::GetInst()->GetResolution();
 	m_CamTex = CAssetMgr::GetInst()->CreateTexture(L"CameraTex", (UINT)vResolution.x, (UINT)vResolution.y);
@@ -58,10 +58,7 @@ void CCamera::Tick()
 		m_LookAt.x += DT * 500.f;
 
 
-	if (m_Target)
-	{
-		m_LookAt = m_Target->GetPos() + m_Offset;
-	}
+	CalculateCameraTarget();
 	
 	// 카메라 진동 효과
 	Oscillation();
@@ -162,4 +159,35 @@ void CCamera::Oscillation()
 		int a = 0;
 
 	}	
+}
+
+Vec2 CCamera::Lerp(Vec2 _Pos1, Vec2 _finalPos2, float _v)
+{
+	Vec2 LerpPos = _Pos1 + (_finalPos2 - _Pos1) * _v;
+
+	return LerpPos;
+}
+
+void CCamera::CalculateCameraTarget()
+{
+	if (m_BoundTarget == nullptr)
+	{
+		if (m_Target)
+		{
+			m_LookAt = Lerp(m_LookAt, m_Target->GetPos() + m_Offset,0.04);
+			return;
+		}
+	}
+
+	if (m_BoundType == BOUND_TYPE::ALL)
+	{
+		m_LookAt = Lerp(m_LookAt,m_BoundTarget->GetPos(),0.008);
+	}
+
+	else if (m_BoundType == BOUND_TYPE::Ypos)
+	{
+		Vec2 LerpValue = Vec2(m_Target->GetPos().x, m_BoundTarget->GetPos().y);
+		m_LookAt = Lerp(m_LookAt, LerpValue,0.008);
+	}
+
 }

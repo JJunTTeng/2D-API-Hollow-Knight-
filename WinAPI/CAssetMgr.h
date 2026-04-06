@@ -20,7 +20,9 @@ public:
 	CTexture* FindTexture(const wstring& _Key);
 	CTexture* LoadTexture(const wstring& _Key, const wstring& _RelativePath, bool FullPath = 0);
 	CTexture* LoadTexture(const wstring& _Key, const wstring& _RelativePath, HDC _hdc, bool FullPath = 0);
+	CTexture* DrawTexture(CTexture* _texture,Vec2 _Renderpos, Vec2 _scale);
 	CTexture* CreateTexture(const wstring& _Key, UINT _Width, UINT _Height, HDC _hdc = nullptr);
+
 
 	CSprite* FindSprite(const wstring& _Key);
 	CSprite* LoadSprite(const wstring& _Key, const wstring& _RelativePath);

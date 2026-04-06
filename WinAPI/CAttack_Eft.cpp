@@ -15,6 +15,8 @@
 #include "CLevelMgr.h"
 #include "CLevel.h"
 
+#include "CTile.h"
+
 enum PLAYER_ETTACK_STATE
 {
 	LEFT_SLASHEFFAT,
@@ -44,7 +46,7 @@ void CAttack_Eft::Begin()
 	SetName(L"Attack_Eft");
 
 	m_CAttack = new CCollider;
-	m_CAttack->SetScale(Vec2(100, 50));
+	m_CAttack->SetScale(Vec2(120, 100));
 	m_CAttack->IsActive(false);
 	AddComponent(m_CAttack);
 
@@ -172,6 +174,8 @@ void CAttack_Eft::FlipbookLoad()
 
 void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
+	CPlayer* mm_Player = dynamic_cast<CPlayer*>(m_Player);
+
 	if (_OtherObject->GetLayerType() == LAYER_TYPE::MONSTER && m_AttackActive == true)
 	{
 		CMonster* mMonster = dynamic_cast<CMonster*>(_OtherObject);
@@ -185,12 +189,20 @@ void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollid
 		if(mMonster->GetMonInfo().CurHP > 0.0f)
 		mMonster->ApplyKnockback(mDir, 300.0f);
 
-		CPlayer* mm_Player = dynamic_cast<CPlayer*>(m_Player);
+		
 		mDir = m_Player->GetPos() - mMonster->GetPos();
 		mm_Player->PApplyKnockback(mDir, 300.0f);
 
 		m_HitEffect->Play(HITEFFT, 10.0f, false);
+	}
 
+	if (_OtherObject->GetLayerType() == LAYER_TYPE::ATTCK_TILE)
+	{
+		CTile* mtile = dynamic_cast<CTile*>(_OtherObject);
+
+		mtile->OnHit();
+		Vec2 _dir = mm_Player->GetPos() - _OtherObject->GetPos();
+		mm_Player->PApplyKnockback(_dir, 300.0f);
 	}
 
 }

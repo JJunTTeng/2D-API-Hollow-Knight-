@@ -38,6 +38,7 @@ UINT KeyValue[KEY::KEY_END] =
 
 
 CKeyMgr::CKeyMgr()
+	:m_mouseheel(0)
 {
 
 }
@@ -202,3 +203,4 @@ void CKeyMgr::LeftORRightKey()
 	else
 		m_LeftOrRight = LeftOrRight::LR_RIGHT;
 }
+

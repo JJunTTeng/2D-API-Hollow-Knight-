@@ -159,10 +159,7 @@ private:
     void CreatePlayerFlipbook();
     void CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int MaxFrame, bool IsRight = false);
 
-    void UpdateAnimation();
-
-    void Move();
-
+    void UpdateAnimation(); 
 
     
 

@@ -31,6 +31,9 @@ void CObj::FinalTick()
 	{
 		m_Component[i]->FinalTick();
 	}
+
+	if (m_Dead == true)
+		DeleteObject(this);
 }
 
 void CObj::Render()

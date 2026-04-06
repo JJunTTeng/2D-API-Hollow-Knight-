@@ -229,6 +229,9 @@
     <ClInclude Include="CEffect.h">
       <Filter>Game\05. Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>Game\05. Object\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -441,6 +444,9 @@
     <ClCompile Include="CEffect.cpp">
       <Filter>Game\05. Object\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>Game\05. Object\Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -622,6 +628,9 @@
     </Filter>
     <Filter Include="Game\05. Object\Effect">
       <UniqueIdentifier>{66e8a760-594a-463e-bf11-9d3e91df90d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Tile">
+      <UniqueIdentifier>{a36a9e24-21cb-4921-bf85-2184fe0b6d47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

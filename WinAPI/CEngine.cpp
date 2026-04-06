@@ -199,6 +199,9 @@ void CEngine::Progress()
 
     // TaskMgr µ¿ÀÛ
     CTaskMgr::GetInst()->Tick();
+
+    // ¸¶¿ì½ºÈÙ
+    CKeyMgr::GetInst()->Reset();
 }
 
 

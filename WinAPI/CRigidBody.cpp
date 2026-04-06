@@ -2,6 +2,7 @@
 #include "CRigidBody.h"
 
 #include "CTimeMgr.h"
+#include "CKeyMgr.h"
 
 CRigidBody::CRigidBody()
 	: CComponent(COMPONENT_TYPE::RIGIDBODY)
@@ -12,12 +13,13 @@ CRigidBody::CRigidBody()
 	, m_Friction(100.f)
 	, m_bPrevMove(false)
 	, m_bMove(false)
-	, m_GravityAccel(Vec2(0.f, 1200.f))
+	, m_GravityAccel(Vec2(0.f, 2000.f))
 	, m_Mode(RIGIDBODY_MODE::TOPVIEW)
-	, m_JumpStack(1)
-	, m_MaxJumpStack(1)
 	, m_MaxGravitySpeed(1200.0f)
 	, m_JumpVelocity(Vec2(0,0))
+	, m_JumpStack(0)
+	, m_MaxJumpStack(1)
+
 {
 
 }
@@ -103,12 +105,15 @@ void CRigidBody::FinalTick_BeltScroll()
 	{
 		m_VelocityY.y = 0.f;
 		m_JumpVelocity.y = 0.f;
-		m_JumpTime = 0.f;
+		m_JumpTime = 0.4f;
 	}
 	
-	
-	if (m_JumpVelocity.y >= 1.f)
-		m_JumpVelocity.y += 8 * DT;
+	if (m_JumpVelocity.y >= 1.f && KEY_PRESSED(Z))
+		Jumping();
+
+	if (KEY_RELEASED(Z) && m_JumpVelocity.y >= 1.f)
+		m_JumpVelocity.y = 0.0f;
+		
 
 	if (m_VelocityY.y > m_MaxGravitySpeed)
 		m_VelocityY.y = m_MaxGravitySpeed;
@@ -213,13 +218,24 @@ void CRigidBody::CalcMaxSpeed_BeltScroll()
 	}
 }
 
-void CRigidBody::Jump(float JumpSpeed)
+void CRigidBody::Jump()
 {
-	if (RIGIDBODY_MODE::TOPVIEW == m_Mode || m_JumpStack <= 0 || m_JumpTime > 0.75f)
+	if (RIGIDBODY_MODE::TOPVIEW == m_Mode || m_bGround == false || m_JumpStack > m_MaxJumpStack)
 		return;
 
-	m_JumpTime += DT;
-	m_VelocityY.y = JumpSpeed;
+	m_JumpStack += 1;
 	m_JumpVelocity.y = 1.f;
 	m_bGround = false;
+	m_VelocityY.y = -1.0f;
+	m_JumpVelocity.y += 8 * DT;
+}
+
+void CRigidBody::Jumping()
+{
+	if (m_JumpStack > m_MaxJumpStack && m_JumpTime < 0)
+		return;
+
+	m_JumpVelocity.y += 8 * DT;
+	m_JumpTime -= DT;
+	m_VelocityY.y = -800.0f;
 }

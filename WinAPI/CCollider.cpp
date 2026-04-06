@@ -23,6 +23,11 @@ void CCollider::FinalTick()
 
 	m_FinalPos = m_Offset + GetOwner()->GetPos();
 
+	if (GetOwner()->GetLayerType() == LAYER_TYPE::CAMERABOUND)
+	{
+		int a = 0;
+	}
+
 	// Collider 등록하기
 	LAYER_TYPE LayerType = GetOwner()->GetLayerType();
 	CLevelMgr::GetInst()->GetCurrentLevel()->RegisterCollider(this, LayerType);

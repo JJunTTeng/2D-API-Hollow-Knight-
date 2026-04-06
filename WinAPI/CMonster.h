@@ -57,8 +57,6 @@ public:
     virtual void TakeDamage(float damage);
     virtual void OnHit();
 
-    
-
     const tMonInfo& GetMonInfo() { return m_Info; }
     void SetMonsInfo(tMonInfo _monsInfo) { m_Info = _monsInfo; }
     

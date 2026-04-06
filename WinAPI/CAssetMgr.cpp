@@ -5,6 +5,7 @@
 #include "CSprite.h"
 #include "CFlipbook.h"
 #include "CSound.h"
+#include "CEngine.h"
 
 CAssetMgr::CAssetMgr()
 {
@@ -96,6 +97,32 @@ CTexture* CAssetMgr::LoadTexture(const wstring& _Key, const wstring& _RelativePa
     m_mapTex.insert(make_pair(_Key, (CTexture*)pTex));
 
     return (CTexture*)pTex;
+}
+
+CTexture* CAssetMgr::DrawTexture(CTexture* _texture, Vec2 _Renderpos, Vec2 _scale)
+{
+    HDC dc = CEngine::GetInst()->GetSecondDC();
+
+    BLENDFUNCTION blend = {};
+
+    blend.BlendOp = AC_SRC_OVER;
+    blend.BlendFlags = 0;
+    blend.SourceConstantAlpha = 255;
+    blend.AlphaFormat = AC_SRC_ALPHA;
+
+    AlphaBlend(dc
+        , _Renderpos.x
+        , _Renderpos.y
+        , _scale.x
+        , _scale.y
+        , _texture->GetDC()
+        , 0, 0
+        , _texture->GetWidth()
+        , _texture->GetHeight()
+        , blend);
+
+
+    return nullptr;
 }
 
 CTexture* CAssetMgr::CreateTexture(const wstring& _Key, UINT _Width, UINT _Height, HDC _hdc)
@@ -245,3 +272,5 @@ CSound* CAssetMgr::LoadSound(const wstring& _Key, const wstring& _RelativePath)
 
     return (CSound*)pSound;
 }
+
+

@@ -73,6 +73,7 @@ void CMonster::TakeDamage(float damage)
 
 void CMonster::OnHit()
 {
+
 }
 
 void CMonster::Begin()
@@ -126,6 +127,9 @@ void CMonster::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 {
 	if (CPlayer* mPlayer = dynamic_cast<CPlayer*>(_OtherObject))
 	{
+		if (GetMonInfo().CurHP <= 0)
+			return;
+
 		tPlayInfo m_info = mPlayer->GetPlayInfo();
 		m_info.CurHP -= 1;
 

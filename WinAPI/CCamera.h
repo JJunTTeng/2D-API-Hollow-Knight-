@@ -9,6 +9,14 @@ enum POST_PROCESS
 	HEART,
 };
 
+enum class BOUND_TYPE
+{
+	ALL,
+	Xpos,
+	Ypos,
+
+	NONE
+};
 
 
 struct tCamEffect
@@ -26,10 +34,8 @@ private:
 	Vec2				m_Diff;		// 카메라가 보는 지점과 해상도 중앙의 위치 차이값
 	Vec2				m_Offset;	// 카메라가 바라보는 위치에서 추가적인 Offset
 
-	CObj*				m_Target;	// 카메라 타겟 오브젝트
-
-	CObj*				m_TargetX;	// 만약 이 타겟이 Null 값이 아니면 X,Y를 Object 2개로 한다.
-	CObj*				m_TargetY;	// 
+	CObj*				m_Target;		// 카메라 타겟 오브젝트
+	CObj*				m_BoundTarget;	// 카메라 바운드용 오브젝트
 
 	float				m_Duration;    // 진동 유지시간
 	float				m_Amplitude;   // 진촉
@@ -43,7 +49,7 @@ private:
 
 	list<tCamEffect>	m_CamEffectList;
 	
-	
+	BOUND_TYPE			m_BoundType;
 
 
 public:
@@ -53,7 +59,8 @@ public:
 
 private:
 	void Oscillation();
-
+	void CalculateCameraTarget();
+	Vec2 Lerp(Vec2 _Pos1, Vec2 _finalPos2, float _v);
 public:
 	Vec2 GetRenderPos(Vec2 _RealPos)  {  return _RealPos - m_Diff;  }
 	Vec2 GetRealPos(Vec2 _RenderPos) { return _RenderPos + m_Diff; }
@@ -66,6 +73,8 @@ public:
 	Vec2 GetDiff() { return m_Diff; }
 
 	void SetTarget(CObj* _Target) { m_Target = _Target; }
+	void SetBoundTarget(CObj* _Target, BOUND_TYPE _type) { m_BoundTarget = _Target;  m_BoundType = _type; }
+	void DeleteBoundTarget() { m_BoundTarget = nullptr;  m_BoundType = BOUND_TYPE::NONE; }
 
 	void SetOffset(Vec2 _Pos) { m_Offset = _Pos; }
 	void Oscillation(float _Duration, float _Amplitude, float _Frequency)

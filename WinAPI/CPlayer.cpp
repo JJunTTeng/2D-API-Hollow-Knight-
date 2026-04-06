@@ -255,9 +255,9 @@ void CPlayer::Tick()
 		SetUd(UD::NONE);
 	}
 
-	if (KEY_PRESSED(KEY::Z))
+	if (KEY_TAP(KEY::Z))
 	{
-		m_RigidBody->Jump(-600.0f);
+		m_RigidBody->Jump();
 	}
 
 	m_CAttackEft->IsActive(false);
@@ -300,6 +300,7 @@ void CPlayer::PApplyKnockback(Vec2 _dir, float power)
 	m_KnockbackTime = m_KnockbackDuration;
 
 	m_Velocity = _dir.Normalize() * power;
+
 }
 
 void CPlayer::CreatePlayerFlipbook()
@@ -572,81 +573,5 @@ void CPlayer::UpdateAnimation()
 
 }
 
-void CPlayer::Move()
-{
-	//이미지
-	{	
-		if (CKeyMgr::GetInst()->GetNoneKey() == true)
-		{
-			if(GetDir() == Dir::LEFT)
-				m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
 
-			else
-				m_FlipbookPlayer->Play(IDLE_RIGHT, 30.f, true);
-
-
-		}
-
-		if (KEY_TAP(LEFT))
-		{
-			SetDir(Dir::LEFT);
-			m_FlipbookPlayer->Play(MOVE_LEFT, 15.f, true);
-		}
-		if (KEY_TAP(RIGHT))
-		{
-			SetDir(Dir::RIGHT);
-			m_FlipbookPlayer->Play(MOVE_RIGHT, 15.f, true);
-		}
-
-		if (KEY_TAP(UP))
-		{
-			if (GetDir() == Dir::LEFT)
-				m_FlipbookPlayer->Play(LEFT_UP, 3.f, true);
-			else
-				m_FlipbookPlayer->Play(RIGHT_UP, 3.f, true);
-
-		 
-		}
-
-		if (KEY_TAP(DOWN))
-		{
-
-			if (GetDir() == Dir::LEFT)
-				m_FlipbookPlayer->Play(LEFT_DOWN, 3.f, true);
-
-			else
-				m_FlipbookPlayer->Play(RIGHT_DOWN, 3.f, true);
-		}
-		
-
-		if (KEY_RELEASED(UP))
-		{
-			if (GetDir() == Dir::LEFT)
-				m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
-
-			else
-				m_FlipbookPlayer->Play(IDLE_RIGHT, 30.f, true);
-
-		}
-		if (KEY_RELEASED(DOWN))
-		{
-			if (GetDir() == Dir::LEFT)
-				m_FlipbookPlayer->Play(IDLE_LEFT, 30.f, true);
-
-			else
-				m_FlipbookPlayer->Play(IDLE_RIGHT, 30.f, true);
-		}
-	}
-
-	//움직이는 속도
-	{
-		if (KEY_PRESSED(LEFT))
-			SetPos(GetPos().x - 500.0f * DT,GetPos().y);
-			//m_RigidBody->AddForce(Vec2(-1000.f, 0.f), true);
-		if (KEY_PRESSED(RIGHT))
-			SetPos(GetPos().x + 500.0f * DT, GetPos().y);
-
-			//m_RigidBody->AddForce(Vec2(1000.f, 0.f), true);
-	}
-}
 
