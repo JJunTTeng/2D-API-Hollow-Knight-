@@ -81,7 +81,7 @@ void CLevel_Editor::Begin()
 
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	//
-	// //Player 생성
+	 //Player 생성
 	//mPlayer = new CPlayer;
 	//mPlayer->SetName(L"Player");
 	//mPlayer->SetPos(Vec2(1954,1348));
@@ -117,16 +117,16 @@ void CLevel_Editor::Begin()
 
 
 
-	//wchar_t m_Path[255] = L"KingLoad";
-	//LoadColider(m_Path);
+	wchar_t m_Path[255] = L"KingLoad";
+	LoadColider(m_Path);
 
-	//wchar_t m_Path2[255] = L"1-1";
-	//EnimeLoad(m_Path2);
+	wchar_t m_Path2[255] = L"1-1";
+	EnimeLoad(m_Path2);
 
-	//wchar_t m_Path3[255] = L"KingLoad";
-	//CameraBoundLoad(m_Path3);
+	wchar_t m_Path3[255] = L"KingLoad";
+	CameraBoundLoad(m_Path3);
 
-	wchar_t m_Path4[255] = L"KingLoad";
+	wchar_t m_Path4[255] = L"KingLoad2";
 	TileLoad(m_Path4);
 
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
@@ -187,7 +187,7 @@ void CLevel_Editor::Tick()
 	case EditMode::FilbookMode:
 		break;
 	case EditMode::ColliderMode:
-		ColliderMode();
+		ColliderMode(m_ColliderName);
 		break;
 	case EditMode::EnimesMode:
 		EnimeMode();
@@ -366,6 +366,9 @@ void CLevel_Editor::Render()
 			, blend);
 
 
+		if (mTexture == nullptr)
+			return;
+
 		blend.BlendOp = AC_SRC_OVER;
 		blend.BlendFlags = 0;
 		blend.SourceConstantAlpha = 255;
@@ -446,9 +449,70 @@ void CLevel_Editor::LoadTileMap()
 	}	
 }
 
-void CLevel_Editor::Collider()
+
+void CLevel_Editor::ColliderMode(wstring _name)
 {
 	mEditMode = EditMode::ColliderMode;
+	m_ColliderName = _name;
+
+	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+	Vec2 vRenMousePos = CKeyMgr::GetInst()->GetEditMousePos();
+
+	if (KEY_RELEASED(KEY::LBTN))
+	{
+		if (ColBeginPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+			ColEndPos = MouseRenderPos;
+	}
+
+	if (KEY_RELEASED(KEY::LBTN))
+	{
+		if (ColEndPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
+			return;
+
+		ColBeginPos = MouseRenderPos;
+	}
+
+
+	if (KEY_TAP(KEY::RBTN))
+	{
+		list<Colision*>::iterator iter = mDrawCol.begin();
+
+		for (; iter != mDrawCol.end(); iter++)
+		{
+			CCollider* mColider = (*iter)->GetComponent<CCollider>();
+
+			if (fabs(mColider->GetFinalPos().x - MouseRenderPos.x) < mColider->GetScale().x / 2 &&
+				fabs(mColider->GetFinalPos().y - MouseRenderPos.y) < mColider->GetScale().y / 2)
+			{
+				(*iter)->SetDead();
+				mDrawCol.erase(iter);
+				return;
+			}
+		}
+	}
+
+	if (ColEndPos != Vec2(-1, -1))
+	{
+
+		//Vec2 pos = mPlayer->GetPos();
+
+		//ColEndPos = MouseRenderPos;
+		Colision* mColision = new Colision;
+		AddObject(mColision, LAYER_TYPE::COLLIDER);
+		CCollider* mCollider = new CCollider;
+		mCollider->SetScale(ColEndPos - ColBeginPos);
+		mColision->SetPos(ColBeginPos);
+		mCollider->SetOffset(mCollider->GetScale() / 2);
+		mColision->SetName(m_ColliderName);
+		(CCollider*)mColision->AddComponent(mCollider);
+
+		mDrawCol.push_back(mColision);
+
+		ColBeginPos = Vec2(-1, -1);
+		ColEndPos = Vec2(-1, -1);
+
+	}
+
 }
 
 void CLevel_Editor::SaveColider()
@@ -480,7 +544,7 @@ void CLevel_Editor::SaveColider()
 		CCollider* mCollider = mColision->GetComponent<CCollider>();
 		//Colider의 스테이트 값 저픸E
 		fwprintf_s(File, L"[Name]\n",255);
-		fwprintf_s(File, L"%s\n\n", mCollider->GetName().c_str());
+		fwprintf_s(File, L"%s\n\n", mColision->GetName().c_str());
 
 		fwprintf_s(File, L"[Position]\n");
 		fwprintf_s(File, L"%d, %d\n\n", (int)mCollider->GetOwner()->GetPos().x, (int)mCollider->GetOwner()->GetPos().y);
@@ -537,7 +601,7 @@ void CLevel_Editor::LoadColider(wchar_t* Path = nullptr)
 			if (!wcscmp(szBuff, L"[Name]"))
 			{
 				fwscanf_s(File, L"%s", szBuff, 255);
-				mCollider->SetName(szBuff);
+				mColision->SetName(szBuff);
 			}
 
 			if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
@@ -757,69 +821,6 @@ void CLevel_Editor::EnimeLoad(wchar_t* Path = nullptr)
 		mMonsters.push_back(mMonstor);
 	}
 	fclose(File);
-
-}
-
-void CLevel_Editor::ColliderMode()
-{
-	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
-	Vec2 vRenMousePos = CKeyMgr::GetInst()->GetEditMousePos();
-
-	if (KEY_RELEASED(KEY::LBTN))
-	{
-		if (ColBeginPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
-		ColEndPos = MouseRenderPos;
-	}
-
-	if (KEY_RELEASED(KEY::LBTN))
-	{
-		if (ColEndPos > Vec2(-1, -1) && MouseRenderPos.x > 0 && MouseRenderPos.y > 0)
-			return;
-
-		ColBeginPos = MouseRenderPos;
-	}
-
-
-	if (KEY_TAP(KEY::RBTN))
-	{
-		list<Colision*>::iterator iter = mDrawCol.begin();
-
-		for (; iter != mDrawCol.end(); iter++)
-		{
-			CCollider* mColider = (*iter)->GetComponent<CCollider>();
-
-			if (fabs(mColider->GetFinalPos().x - MouseRenderPos.x) < mColider->GetScale().x / 2 &&
-				fabs(mColider->GetFinalPos().y - MouseRenderPos.y) < mColider->GetScale().y / 2)
-			{
-				(*iter)->SetDead();
-				mDrawCol.erase(iter);
-				return;
-			}
-		}
-	}
-
-	if (ColEndPos != Vec2(-1,-1))
-	{
-
-		//Vec2 pos = mPlayer->GetPos();
-
-		//ColEndPos = MouseRenderPos;
-		Colision* mColision = new Colision;
-		AddObject(mColision, LAYER_TYPE::COLLIDER);
-		CCollider* mCollider = new CCollider;
-		mCollider->SetScale(ColEndPos - ColBeginPos);
-		mColision->SetPos(ColBeginPos);
-		mCollider->SetOffset(mCollider->GetScale() / 2);
-		mCollider->SetName(L"Tile");
-		(CCollider*)mColision->AddComponent(mCollider);
-
-		mDrawCol.push_back(mColision);
-
-		ColBeginPos = Vec2(-1, -1);
-		ColEndPos = Vec2(-1, -1);
-
-
-	}
 
 }
 
@@ -1064,17 +1065,52 @@ void CLevel_Editor::InsertTile(wstring _name)
 	if (m_TileName == L"KingLoad")
 	{
 		mSubTexture = CAssetMgr::GetInst()->LoadTexture(L"EditTile", L"Texture\\Map\\King Load Tile.png", CEngine::GetInst()->GetEditSecondDC());
-		mTexture = CAssetMgr::GetInst()->LoadTexture(L"KingLoadTile", L"Texture\\Map\\Tile1.png", CEngine::GetInst()->GetSecondDC());
+
+		if (fabs(125.0f - EditRenderPos.x) < 125.0f && fabs(125.0f - EditRenderPos.y) < 125.0f)
+		{
+			if (KEY_TAP(KEY::LBTN))
+			{
+				mTexture = CAssetMgr::GetInst()->LoadTexture(L"KingLoad", L"Texture\\Map\\Tile1.png", CEngine::GetInst()->GetSecondDC());
+			}
+		}
+
+		else if (fabs(375.0f - EditRenderPos.x) < 125.0f && fabs(125.0f - EditRenderPos.y) < 125.0f)
+		{
+			if (KEY_TAP(KEY::LBTN))
+			{
+				mTexture = CAssetMgr::GetInst()->LoadTexture(L"KingLoad2", L"Texture\\Map\\Tile2.png", CEngine::GetInst()->GetSecondDC());
+			}
+		}
+
+		else if (fabs(125.0f - EditRenderPos.x) < 125.0f && fabs(375.0f - EditRenderPos.y) < 125.0f)
+		{
+			if (KEY_TAP(KEY::LBTN))
+			{
+				mTexture = CAssetMgr::GetInst()->LoadTexture(L"KingLoad3", L"Texture\\Map\\Tile3.png", CEngine::GetInst()->GetSecondDC());
+			}
+		}
+
+		else if (fabs(375.0f - EditRenderPos.x) < 125.0f && fabs(375.0f - EditRenderPos.y) < 125.0f)
+		{
+			if (KEY_TAP(KEY::LBTN))
+			{
+				mTexture = CAssetMgr::GetInst()->LoadTexture(L"KingLoad4", L"Texture\\Map\\Tile4.png", CEngine::GetInst()->GetSecondDC());
+			}
+		}
+
 
 		if (CKeyMgr::GetInst()->GetMouseheel() > 0)
 			_Size += 0.01;
 		else if (CKeyMgr::GetInst()->GetMouseheel() < 0)
 			_Size -= 0.01;
 
-		if (KEY_TAP(KEY::LBTN))
+		if (KEY_TAP(KEY::LBTN) && CEngine::GetInst()->GetResolution().x >= CKeyMgr::GetInst()->GetMousePos().x && CEngine::GetInst()->GetResolution().y >= CKeyMgr::GetInst()->GetMousePos().y)
 		{
+			if (mTexture == nullptr)
+				return;
+
 			CTile* mtile = new CTile;
-			mtile->SetName(L"KingLoad");
+			mtile->SetName(mTexture->GetKey());
 			mtile->SetPos(Vec2(MouseRenderPos.x - mTexture->GetWidth() / 4, MouseRenderPos.y - mTexture->GetHeight() / 2));
 			mtile->SetScale(Vec2(mTexture->GetWidth() * _Size, mTexture->GetHeight() * _Size));
 			mtile->Begin();
@@ -1331,15 +1367,33 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		return true;
 	}
 		
-	case ID_Colliders:
+
+	case ID_COLLIDERS_GROUND:
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
 		assert(pEditorLevel);
 
-		pEditorLevel->Collider();
+		pEditorLevel->ColliderMode(L"Ground");
+		return true;
+
+		/*	ID_COLLIDERS_GROUND
+		ID_COLLIDERS_HURT
+		ID_COLLIDERS_FIRE
+		ID_COLLIDERS_POISON*/
+	}
+
+	case ID_COLLIDERS_HURT:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->ColliderMode(L"Hurt");
 		return true;
 	}
+
+
 
 	case Col_Save:
 	{

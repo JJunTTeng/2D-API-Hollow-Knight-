@@ -19,14 +19,12 @@ CCollider::~CCollider()
 void CCollider::FinalTick()
 {
 	if (m_Active == false)
+	{
+		m_OverlapCount = 0;
 		return;
+	}
 
 	m_FinalPos = m_Offset + GetOwner()->GetPos();
-
-	if (GetOwner()->GetLayerType() == LAYER_TYPE::CAMERABOUND)
-	{
-		int a = 0;
-	}
 
 	// Collider 등록하기
 	LAYER_TYPE LayerType = GetOwner()->GetLayerType();

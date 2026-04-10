@@ -63,6 +63,10 @@
 #define ID_BOUND_ALL                    32817
 #define ID_BOUND_XBOUND                 32818
 #define ID_BOUND_YBOUND                 32819
+#define ID_COLLIDERS_GROUND             32820
+#define ID_COLLIDERS_HURT               32821
+#define ID_COLLIDERS_FIRE               32823
+#define ID_COLLIDERS_POISON             32824
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -71,7 +75,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        131
-#define _APS_NEXT_COMMAND_VALUE         32820
+#define _APS_NEXT_COMMAND_VALUE         32825
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

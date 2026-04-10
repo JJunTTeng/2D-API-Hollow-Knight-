@@ -1,5 +1,5 @@
 [Name]
-Tile
+Ground
 
 [Position]
 1329, 5749
@@ -11,7 +11,7 @@ Tile
 941, 15
 
 [Name]
-Tile
+Ground
 
 [Position]
 3206, 5735
@@ -23,7 +23,7 @@ Tile
 1323, 50
 
 [Name]
-Tile
+Ground
 
 [Position]
 5849, 5835
@@ -35,7 +35,7 @@ Tile
 156, 14
 
 [Name]
-Tile
+Ground
 
 [Position]
 6093, 5733
@@ -47,7 +47,7 @@ Tile
 587, 104
 
 [Name]
-Tile
+Ground
 
 [Position]
 7261, 5932
@@ -59,7 +59,7 @@ Tile
 131, 76
 
 [Name]
-Tile
+Ground
 
 [Position]
 7520, 6044
@@ -71,7 +71,7 @@ Tile
 457, 37
 
 [Name]
-Tile
+Ground
 
 [Position]
 8396, 5990
@@ -83,7 +83,7 @@ Tile
 304, 26
 
 [Name]
-Tile
+Ground
 
 [Position]
 8115, 5800
@@ -95,7 +95,7 @@ Tile
 54, 48
 
 [Name]
-Tile
+Ground
 
 [Position]
 7828, 5575
@@ -107,7 +107,7 @@ Tile
 49, 50
 
 [Name]
-Tile
+Ground
 
 [Position]
 7466, 5689
@@ -119,7 +119,7 @@ Tile
 102, 22
 
 [Name]
-Tile
+Ground
 
 [Position]
 8018, 5370
@@ -131,7 +131,7 @@ Tile
 62, 15
 
 [Name]
-Tile
+Ground
 
 [Position]
 7714, 5138
@@ -143,7 +143,7 @@ Tile
 73, 16
 
 [Name]
-Tile
+Ground
 
 [Position]
 7391, 5192
@@ -155,7 +155,7 @@ Tile
 47, 68
 
 [Name]
-Tile
+Ground
 
 [Position]
 6914, 5105
@@ -167,7 +167,7 @@ Tile
 146, 161
 
 [Name]
-Tile
+Ground
 
 [Position]
 6773, 4904
@@ -179,7 +179,7 @@ Tile
 72, 102
 
 [Name]
-Tile
+Ground
 
 [Position]
 5249, 4692
@@ -191,7 +191,7 @@ Tile
 761, 108
 
 [Name]
-Tile
+Ground
 
 [Position]
 4157, 4899
@@ -203,7 +203,7 @@ Tile
 546, 16
 
 [Name]
-Tile
+Ground
 
 [Position]
 3531, 4948
@@ -215,7 +215,7 @@ Tile
 312, 5
 
 [Name]
-Tile
+Ground
 
 [Position]
 3302, 4749
@@ -227,7 +227,7 @@ Tile
 50, 46
 
 [Name]
-Tile
+Ground
 
 [Position]
 3379, 4345
@@ -239,7 +239,7 @@ Tile
 68, 20
 
 [Name]
-Tile
+Ground
 
 [Position]
 3639, 4580
@@ -251,7 +251,7 @@ Tile
 97, 78
 
 [Name]
-Tile
+Ground
 
 [Position]
 3635, 4109
@@ -263,7 +263,7 @@ Tile
 117, 69
 
 [Name]
-Tile
+Ground
 
 [Position]
 3206, 3897
@@ -275,7 +275,7 @@ Tile
 169, 49
 
 [Name]
-Tile
+Ground
 
 [Position]
 4235, 4699
@@ -287,7 +287,7 @@ Tile
 68, 17
 
 [Name]
-Tile
+Ground
 
 [Position]
 4506, 4494
@@ -299,7 +299,7 @@ Tile
 50, 50
 
 [Name]
-Tile
+Ground
 
 [Position]
 4241, 4378
@@ -311,7 +311,7 @@ Tile
 39, 11
 
 [Name]
-Tile
+Ground
 
 [Position]
 4812, 4325
@@ -323,7 +323,7 @@ Tile
 49, 69
 
 [Name]
-Tile
+Ground
 
 [Position]
 5008, 4171
@@ -335,7 +335,7 @@ Tile
 66, 13
 
 [Name]
-Tile
+Ground
 
 [Position]
 4597, 4047
@@ -347,7 +347,7 @@ Tile
 106, 23
 
 [Name]
-Tile
+Ground
 
 [Position]
 4318, 3858
@@ -359,7 +359,7 @@ Tile
 103, 52
 
 [Name]
-Tile
+Ground
 
 [Position]
 4156, 3750
@@ -371,7 +371,7 @@ Tile
 81, 52
 
 [Name]
-Tile
+Ground
 
 [Position]
 3913, 3597
@@ -383,7 +383,7 @@ Tile
 125, 68
 
 [Name]
-Tile
+Ground
 
 [Position]
 3787, 3388
@@ -395,7 +395,7 @@ Tile
 60, 100
 
 [Name]
-Tile
+Ground
 
 [Position]
 3535, 3248
@@ -407,7 +407,7 @@ Tile
 129, 63
 
 [Name]
-Tile
+Ground
 
 [Position]
 2900, 3302
@@ -419,7 +419,7 @@ Tile
 315, 12
 
 [Name]
-Tile
+Ground
 
 [Position]
 4157, 3199
@@ -431,7 +431,7 @@ Tile
 287, 14
 
 [Name]
-Tile
+Ground
 
 [Position]
 4729, 3103
@@ -443,7 +443,7 @@ Tile
 148, 44
 
 [Name]
-Tile
+Ground
 
 [Position]
 5013, 3047
@@ -455,7 +455,7 @@ Tile
 178, 18
 
 [Name]
-Tile
+Ground
 
 [Position]
 7929, 3032
@@ -467,7 +467,7 @@ Tile
 1198, 13
 
 [Name]
-Tile
+Ground
 
 [Position]
 5367, 3036
@@ -479,7 +479,7 @@ Tile
 387, 17
 
 [Name]
-Tile
+Ground
 
 [Position]
 5664, 3516
@@ -491,7 +491,7 @@ Tile
 321, 216
 
 [Name]
-Tile
+Ground
 
 [Position]
 6298, 3930
@@ -503,7 +503,7 @@ Tile
 294, 92
 
 [Name]
-Tile
+Ground
 
 [Position]
 6881, 4097
@@ -515,7 +515,7 @@ Tile
 136, 190
 
 [Name]
-Tile
+Ground
 
 [Position]
 7141, 4462
@@ -527,7 +527,7 @@ Tile
 153, 30
 
 [Name]
-Tile
+Ground
 
 [Position]
 7146, 4461
@@ -539,7 +539,7 @@ Tile
 152, 30
 
 [Name]
-Tile
+Ground
 
 [Position]
 7212, 4286
@@ -551,7 +551,7 @@ Tile
 68, 19
 
 [Name]
-Tile
+Ground
 
 [Position]
 7680, 4292
@@ -563,7 +563,7 @@ Tile
 63, 16
 
 [Name]
-Tile
+Ground
 
 [Position]
 8125, 4269
@@ -575,7 +575,7 @@ Tile
 42, 14
 
 [Name]
-Tile
+Ground
 
 [Position]
 8324, 4054
@@ -587,7 +587,7 @@ Tile
 110, 111
 
 [Name]
-Tile
+Ground
 
 [Position]
 8486, 3788
@@ -599,7 +599,7 @@ Tile
 115, 150
 
 [Name]
-Tile
+Ground
 
 [Position]
 8119, 3521
@@ -611,7 +611,7 @@ Tile
 137, 53
 
 [Name]
-Tile
+Ground
 
 [Position]
 7583, 3373
@@ -623,7 +623,7 @@ Tile
 276, 76
 
 [Name]
-Tile
+Ground
 
 [Position]
 8301, 4513
@@ -635,7 +635,7 @@ Tile
 314, 35
 
 [Name]
-Tile
+Ground
 
 [Position]
 9501, 4521
@@ -647,7 +647,7 @@ Tile
 53, 29
 
 [Name]
-Tile
+Ground
 
 [Position]
 9962, 4519
@@ -659,7 +659,7 @@ Tile
 108, 47
 
 [Name]
-Tile
+Ground
 
 [Position]
 10434, 4298
@@ -671,7 +671,7 @@ Tile
 64, 208
 
 [Name]
-Tile
+Ground
 
 [Position]
 10499, 4718
@@ -683,7 +683,7 @@ Tile
 62, 274
 
 [Name]
-Tile
+Ground
 
 [Position]
 9841, 5262
@@ -695,7 +695,7 @@ Tile
 400, 109
 
 [Name]
-Tile
+Ground
 
 [Position]
 9262, 5474
@@ -707,7 +707,7 @@ Tile
 309, 61
 
 [Name]
-Tile
+Ground
 
 [Position]
 8844, 5584
@@ -719,7 +719,7 @@ Tile
 242, 47
 
 [Name]
-Tile
+Ground
 
 [Position]
 8463, 5422
@@ -729,4 +729,40 @@ Tile
 
 [OFFset]
 120, 149
+
+[Name]
+Hurt
+
+[Position]
+7453, 4488
+
+[Scale]
+833, 34
+
+[OFFset]
+416, 17
+
+[Name]
+Hurt
+
+[Position]
+8933, 4546
+
+[Scale]
+553, 31
+
+[OFFset]
+276, 15
+
+[Name]
+Hurt
+
+[Position]
+9612, 4549
+
+[Scale]
+336, 24
+
+[OFFset]
+168, 12
 

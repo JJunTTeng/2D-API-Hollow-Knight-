@@ -36,7 +36,7 @@
 
 
 CPlayer::CPlayer()
-	: m_Speed(200.f)
+	: m_Speed(250.f)
 	, m_AttSpeed(10.f)
 	, m_AccTime(0.f)
 	, m_AttackTime(0.0f)
@@ -62,7 +62,7 @@ CPlayer::CPlayer()
 	  { 
 		  m_PlayInfo.MaxHP = 10,
 		  m_PlayInfo.CurHP = 10,
-		  m_PlayInfo.damageCooldown = 0.0f,
+		  m_PlayInfo.m_HITtime = 0.f
 	  }
 
 {
@@ -173,6 +173,9 @@ void CPlayer::Tick()
 {
 	Dir m_prevDir = GetDir();
 
+	if (m_PlayInfo.m_HITtime <= 0.f)
+		m_PlayInfo.m_HITtime -= DT;
+
 	if (m_IsKnockback)
 	{
 		m_KnockbackTime -= DT;
@@ -184,7 +187,7 @@ void CPlayer::Tick()
 		}
 
 		SetPlusPos(Vec2(m_Velocity.x, 0.0f) * DT);
-
+		return;
 	}
 
 	SetPrevPos(GetPos());
@@ -274,6 +277,17 @@ void CPlayer::Tick()
 void CPlayer::Render()
 {
 	m_FlipbookPlayer->Render();
+}
+
+void CPlayer::OnHit(Vec2 _dir , float _power)
+{
+	if (m_PlayInfo.m_HITtime > 0.0f)
+		return;
+
+	m_PlayInfo.m_HITtime = 0.25f;
+	m_PlayInfo.CurHP -= 1;
+
+	PApplyKnockback(_dir, _power);
 }
 
 void CPlayer::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)

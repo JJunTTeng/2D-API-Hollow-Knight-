@@ -27,6 +27,8 @@ private:
 
     CObj*       m_Player;
 
+    float       m_HITtime;
+
 protected:
     Vec2        m_InitPos;
 
@@ -49,6 +51,9 @@ public:
     void SetDistance(float _Dist) { m_Dist = _Dist; }
 
     void ApplyKnockback(Vec2 _dir, float power);
+
+    CCollider* GetCollider() { return m_Collider; }
+    void SetCollider(CCollider* _Collider) { m_Collider = _Collider; }
 
     //void LoopPlay(bool _Chase);
     //void ChaseObject(CObj* _Player);

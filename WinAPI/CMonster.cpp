@@ -25,11 +25,12 @@ CMonster::CMonster()
 	, m_KnockbackTime(0.0f)
 	, m_KnockbackDuration(0.2f)
 	, m_Velocity(0.0f,0.0f)
+	, m_HITtime(0.0f)
 {
 	//m_Tex = CAssetMgr::GetInst()->LoadTexture(L"Character", L"Texture\\TX_GlowScene_2.png");
 
 	//// Collider 컴포넌트 추가
-	//m_Collider = (CCollider*)AddComponent(new CCollider);
+	m_Collider = (CCollider*)AddComponent(new CCollider);
 	//m_Collider->SetScale(Vec2(100.f, 100.f));
 
 	//// 몬스터 스탯
@@ -64,8 +65,12 @@ void CMonster::ApplyKnockback(Vec2 _dir, float power)
 void CMonster::TakeDamage(float damage)
 {
 	if (m_Info.CurHP <= 0)
+		m_Collider->IsActive(false);
+
+	if (m_HITtime > 0.0f)
 		return;
 
+	m_HITtime = 0.25f;
 	m_Info.CurHP -= damage;
 
 	OnHit();
@@ -97,7 +102,8 @@ void CMonster::Tick()
 
 	}
 
-
+	if (m_HITtime > 0.0f)
+		m_HITtime -= DT;
 
 
 	if (!m_Loop)
@@ -138,7 +144,4 @@ void CMonster::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 
 		mPlayer->PApplyKnockback(dir, 300.0f);
 	}
-
-	
-
 } 

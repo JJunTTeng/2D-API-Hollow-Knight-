@@ -34,7 +34,6 @@ private:
 
 
     CCollider* m_CAttack;
-    bool       m_AttackActive;
     float      m_AttackTime;
 
     //일자모형 파티클

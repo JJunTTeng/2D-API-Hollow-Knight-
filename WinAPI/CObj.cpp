@@ -27,10 +27,24 @@ void CObj::Begin()
 
 void CObj::FinalTick()
 {
+	for (auto iter = m_Component.begin(); iter != m_Component.end();)
+	{
+		if ((*iter)->GetDead())
+		{
+			iter = m_Component.erase(iter);
+		}
+
+		else
+		{
+			++iter;
+		}
+	}
+
 	for (size_t i = 0; i < m_Component.size(); ++i)
 	{
 		m_Component[i]->FinalTick();
 	}
+
 
 	if (m_Dead == true)
 		DeleteObject(this);
@@ -79,6 +93,7 @@ CComponent* CObj::GetComponent(COMPONENT_TYPE _Type)
 
 	return nullptr;
 }
+
 
 Vec2 CObj::GetRenderPos()
 {

@@ -11,11 +11,13 @@
 #include "CMonster.h"
 #include "CPlayer.h"
 
-#include "CEffect.h"
 #include "CLevelMgr.h"
 #include "CLevel.h"
 
 #include "CTile.h"
+#include "CEffectManager.h"
+
+#include "CRigidBody.h"
 
 enum PLAYER_ETTACK_STATE
 {
@@ -29,8 +31,7 @@ enum PLAYER_ETTACK_STATE
 
 
 CAttack_Eft::CAttack_Eft()
-	:m_AttackActive(false)
-	, m_AttackTime(0.0f)
+	:m_AttackTime(0.08f)
 {
 
 }
@@ -43,12 +44,12 @@ CAttack_Eft::~CAttack_Eft()
 
 void CAttack_Eft::Begin()
 {
-	SetName(L"Attack_Eft");
+	//SetName(L"Attack_Eft");
 
-	m_CAttack = new CCollider;
-	m_CAttack->SetScale(Vec2(120, 100));
-	m_CAttack->IsActive(false);
-	AddComponent(m_CAttack);
+	//m_CAttack = new CCollider;
+	//m_CAttack->SetScale(Vec2(120, 100));
+	//m_CAttack->IsActive(false);
+	//AddComponent(m_CAttack);
 
 	m_FilpbookAttack = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
 	m_HitEffect = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
@@ -58,54 +59,51 @@ void CAttack_Eft::Begin()
 
 void CAttack_Eft::Tick()
 {
-	if (m_FilpbookAttack->IsFinish() == false)
-		return;
+	if (m_AttackTime > 0.0f)
+		m_AttackTime -= DT;
 
-
-	Dir pl_Dir = m_Player->GetDir();
-	UD pl_UD = m_Player->GetUD();
-
-	if (pl_UD == UD::UP)
-		SetPos(Vec2(m_Player->GetPos().x, m_Player->GetPos().y - 80));
-
-	else if (pl_UD == UD::DOWN)
-		SetPos(Vec2(m_Player->GetPos().x, m_Player->GetPos().y + 80));
-
-	else if (pl_Dir == Dir::LEFT)
+	if (m_AttackTime <= 0.0f && m_CAttack != nullptr && m_CAttack->GetDead() == false)
 	{
-		SetPos(Vec2(m_Player->GetPos().x - 80, m_Player->GetPos().y));
-		SetDir(Dir::LEFT);
-	}
-
-	else if (pl_Dir == Dir::RIGHT)
-	{
-		SetPos(Vec2(m_Player->GetPos().x + 80, m_Player->GetPos().y));
-		SetDir(Dir::RIGHT);
-	}
-
-	if (m_AttackActive == true && m_AttackTime < 0.2f)
-	{
-		m_AttackTime += DT;
+		m_CAttack->IsDead(true);
 		return;
 	}
 
-	else if (m_AttackTime >= 0.2f)
-	{
-		m_AttackTime = 0.0f;
-		m_AttackActive = false;
-		m_CAttack->IsActive(false);
-	}
 
 	if (KEY_TAP(X))
 	{
+		m_CAttack = new CCollider;
+		m_CAttack->SetScale(Vec2(120, 100));
+		AddComponent(m_CAttack);
 
-		m_CAttack->IsActive(true);
-		m_AttackActive = true;
+		m_AttackTime = 0.2f;
 
 		Dir pl_Dir = m_Player->GetDir();
 		UD pl_UD = m_Player->GetUD();
 
+		m_CAttack->SetOffset(Vec2(0, 0));
 
+		CRigidBody* pRigidbody = m_Player->GetComponent<CRigidBody>();
+
+		if (pl_UD == UD::UP)
+			SetPos(Vec2(m_Player->GetPos().x, m_Player->GetPos().y - 80));
+
+	
+		else if (pl_UD == UD::DOWN && pRigidbody->IsGround() == false)
+		{
+			SetPos(Vec2(m_Player->GetPos().x, m_Player->GetPos().y + 80));
+		}
+
+		else if (pl_Dir == Dir::LEFT)
+		{
+			SetPos(Vec2(m_Player->GetPos().x - 80, m_Player->GetPos().y));
+			SetDir(Dir::LEFT);
+		}
+
+		else if (pl_Dir == Dir::RIGHT)
+		{
+			SetPos(Vec2(m_Player->GetPos().x + 80, m_Player->GetPos().y));
+			SetDir(Dir::RIGHT);
+		}
 
 		if (pl_UD == UD::UP)
 		{
@@ -113,7 +111,7 @@ void CAttack_Eft::Tick()
 			return;
 		}
 
-		else if (pl_UD == UD::DOWN)
+		if (pl_UD == UD::DOWN && pRigidbody->IsGround() == false)
 		{
 			m_FilpbookAttack->Play(DOWNSLASHEFFAT, 30.0f, false);
 			return;
@@ -152,7 +150,7 @@ void CAttack_Eft::FlipbookLoad()
 	mFlipbook->CreateFlipbook(L"Up_SlashEffect", mTexture, Vec2(0, 0), Vec2(170, 189), 0, 6);
 
 	mTexture = CAssetMgr::GetInst()->LoadTexture(L"Down_SlashEffect", L"Texture\\Knight\\016.DownSlashEffect\\DownSlashEffect.png");
-	mFlipbook->CreateFlipbook(L"Down_SlashEffect", mTexture, Vec2(0, 0), Vec2(170, 189), 0, 6);
+	mFlipbook->CreateFlipbook(L"Down_SlashEffect", mTexture, Vec2(0, 0), Vec2(183, 210), 0, 6);
 
 
 	m_FilpbookAttack->AddFlipbook(LEFT_SLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Attac_Effact", L"Flipbook\\Attac_Effact"));
@@ -176,16 +174,13 @@ void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollid
 {
 	CPlayer* mm_Player = dynamic_cast<CPlayer*>(m_Player);
 
-	if (_OtherObject->GetLayerType() == LAYER_TYPE::MONSTER && m_AttackActive == true)
+	if (_OtherObject->GetLayerType() == LAYER_TYPE::MONSTER)
 	{
 		CMonster* mMonster = dynamic_cast<CMonster*>(_OtherObject);
 
-		if (mMonster->GetMonInfo().CurHP <= 0.0f)
-			return;
-
-		Vec2 mDir = mMonster->GetPos() - m_Player->GetPos();
 		mMonster->TakeDamage(1.0f);
 
+		Vec2 mDir = mMonster->GetPos() - m_Player->GetPos();
 		if(mMonster->GetMonInfo().CurHP > 0.0f)
 		mMonster->ApplyKnockback(mDir, 300.0f);
 
@@ -202,8 +197,11 @@ void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollid
 
 		mtile->OnHit();
 		Vec2 _dir = mm_Player->GetPos() - _OtherObject->GetPos();
+		CEffectManager::GetInst()->SpawnTileHit(GetPos(), 0.f);
 		mm_Player->PApplyKnockback(_dir, 300.0f);
 	}
+
+
 
 }
 

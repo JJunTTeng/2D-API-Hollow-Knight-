@@ -46,10 +46,12 @@ public:
     virtual void End() override;
 
 public:
+    void SetEditMode(EditMode _editmode) { mEditMode = _editmode; }
+
     void SaveTileMap();
     void LoadTileMap();
 
-    void Collider();
+    void ColliderMode(wstring _name);
     void SaveColider();
     void LoadColider(wchar_t* Path);
 
@@ -63,10 +65,9 @@ public:
     void EnimeSave();
     void EnimeLoad(wchar_t* Path);
 
-    void ColliderMode();
+
     void EnimeMode();
     void EnimeRenderer();
-
     void EnimesPattern();
 
     void CameraBound(wstring _name);
@@ -110,6 +111,7 @@ private:
 
     Vec2 mMonsPtnPos;
 
+    wstring m_ColliderName;
     wstring m_TileName;
     wstring m_BoundName;
     float _Size;

@@ -10,10 +10,10 @@ Down_SlashEffect
 Texture\Knight\016.DownSlashEffect\DownSlashEffect.png
 
 [LEFT_TOP]
-680, 0
+732, 0
 
 [SLICE]
-170, 189
+183, 210
 
 [OFFSET]
 0, 0

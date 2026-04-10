@@ -88,7 +88,6 @@ void CCollisionMgr::CollisionBtwLayer(LAYER_TYPE _Left, LAYER_TYPE _Right)
 		}
 	}
 }
-
 void CCollisionMgr::CollisionBtwCollider(CCollider* _LeftCol, CCollider* _RightCol)
 {
 	COLLISION_ID ColID = {};

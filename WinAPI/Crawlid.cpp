@@ -14,17 +14,17 @@
 #include "CKeyMgr.h"
 
 Crawlid::Crawlid()
-	:m_HITtime(0.0f)
-	, m_Hit(false)
 {
 	SetDir(Dir::LEFT);
 	LoadFlipbook();
 	SetName(L"Crawlid");
 	SetScale(Vec2(100,100));
 	m_Flipbook->Play(WALK, 10, true);
-	CCollider* mCollider = new CCollider;
+
+	CCollider* mCollider = GetCollider();
 	mCollider->SetScale(Vec2(97, 80));
-	AddComponent(mCollider);
+	SetCollider(mCollider);
+
 	tMonInfo m_Info = GetMonInfo();
 	m_Info.MaxHP = 3;
 	m_Info.CurHP = 3;
@@ -202,20 +202,14 @@ void Crawlid::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* 
 
 void Crawlid::OnHit()
 {
+
 	tMonInfo m_Info = GetMonInfo();
 
-	if (m_Info.damageCooldown > 0.0f)
-		return;
-
-	if (m_Info.CurHP > 0)
-	{
-		m_Info.damageCooldown = 0.5f;
-	}
-
-	else
+	if (m_Info.CurHP <= 0)
 	{
 		Death();
 	}
+
 
 	SetMonsInfo(m_Info);
 
@@ -229,8 +223,6 @@ void Crawlid::Death()
 	else if (GetDir() == Dir::RIGHT)
 		m_STATE = R_DEATH;
 
-
-
 	if (m_STATE == DEATH)
 	{
 		m_Flipbook->Play(m_STATE, 15, false);
@@ -242,6 +234,9 @@ void Crawlid::Death()
 		m_Flipbook->Play(m_STATE, 15, false);
 		return;
 	}
+
+	CCollider* mcollider = GetCollider();
+	mcollider->IsDead(true);
 }
 
 void Crawlid::DeathAni()

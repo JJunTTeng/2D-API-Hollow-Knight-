@@ -34,7 +34,7 @@ private:
     CFlipbookPlayer* m_Animation;
     CTexture* m_Texture;
     float m_Size;
-
+    float m_HitTile;
 
     int CurHP;
 };

@@ -33,8 +33,6 @@ private:
     Vec2        m_InitPos;
     float       m_Dist;
 
-    float       m_HITtime;
-    bool        m_Hit;
 
 
 

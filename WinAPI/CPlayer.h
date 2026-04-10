@@ -24,7 +24,7 @@ struct tPlayInfo
     float DetectRange;
 
     float Speed;
-    float damageCooldown;
+    float m_HITtime;
 };
 
 
@@ -139,6 +139,8 @@ public:
     virtual void BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
+
+    void OnHit(Vec2 _dir, float _power);
 
 
 	CFlipbookPlayer* GetFlipbookPlayer() { return m_FlipbookPlayer; }
