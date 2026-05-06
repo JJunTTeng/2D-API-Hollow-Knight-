@@ -13,6 +13,17 @@ void Delete_Vector(vector<T*>& _vec)
 	_vec.clear();
 }
 
+template<typename T>
+void Delete_List(list<T*>& _list)
+{
+	for (auto it = _list.begin(); it != _list.end(); ++it)
+	{
+		DELETE(*it);
+	}
+
+	_list.clear();
+}
+
 
 template<typename T, int ArraySize>
 void Delete_Array(T* (&arr)[ArraySize])

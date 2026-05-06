@@ -139,30 +139,28 @@ void CAttack_Eft::Render()
 
 void CAttack_Eft::FlipbookLoad()
 {
-
 	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Attack_Effact", L"Texture\\Knight\\007.SlashEffect\\Attack_Effact.png");
-	mFlipbook->CreateFlipbook(L"Attac_Effact", mTexture, Vec2(0, 0), Vec2(157, 114), 0, 6);
+	CAssetMgr::GetInst()->CreateFlipbook(L"Attac_Effact", mTexture, Vec2(0, 0), Vec2(157, 114), 0, 6);
 
 	mTexture = CAssetMgr::GetInst()->LoadTexture(L"R_Attack_Effact", L"Texture\\Knight\\007.SlashEffect\\R_Attack_Effact.png");
-	mFlipbook->CreateFlipbook(L"R_Attac_Effact", mTexture, Vec2(0, 0), Vec2(157, 114), 0, 6, true);
+	CAssetMgr::GetInst()->CreateFlipbook(L"R_Attac_Effact", mTexture, Vec2(0, 0), Vec2(157, 114), 0, 6, true);
 
 	mTexture = CAssetMgr::GetInst()->LoadTexture(L"Up_SlashEffect", L"Texture\\Knight\\015.UpSlashEffect\\UpSlashEffect.png");
-	mFlipbook->CreateFlipbook(L"Up_SlashEffect", mTexture, Vec2(0, 0), Vec2(170, 189), 0, 6);
+	CAssetMgr::GetInst()->CreateFlipbook(L"Up_SlashEffect", mTexture, Vec2(0, 0), Vec2(170, 189), 0, 6);
 
 	mTexture = CAssetMgr::GetInst()->LoadTexture(L"Down_SlashEffect", L"Texture\\Knight\\016.DownSlashEffect\\DownSlashEffect.png");
-	mFlipbook->CreateFlipbook(L"Down_SlashEffect", mTexture, Vec2(0, 0), Vec2(183, 210), 0, 6);
+	CAssetMgr::GetInst()->CreateFlipbook(L"Down_SlashEffect", mTexture, Vec2(0, 0), Vec2(183, 210), 0, 6);
 
 
 	m_FilpbookAttack->AddFlipbook(LEFT_SLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Attac_Effact", L"Flipbook\\Attac_Effact"));
 	m_FilpbookAttack->AddFlipbook(RIGHT_SLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"R_Attac_Effact", L"Flipbook\\R_Attac_Effact"));
 	m_FilpbookAttack->AddFlipbook(UPSLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Up_SlashEffect", L"Flipbook\\Up_SlashEffect"));
-	m_FilpbookAttack->AddFlipbook(DOWNSLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Down_SlashEffect", L"Flipbook\\Down_SlashEffect"));
+	m_FilpbookAttack->AddFlipbook(DOWNSLASHEFFAT, CAssetMgr::GetInst()->LoadFlipbook(L"Down_SlashEffect", L"Flipbook\\Down_Sla0 hEffect"));
 
 
 
 	mTexture = CAssetMgr::GetInst()->LoadTexture(L"HitEffect", L"Texture\\Knight\\106.NA Charged Effect\\HitEffect2.png");
-	mFlipbook->CreateFlipbook(L"HitEffect", mTexture, Vec2(0, 0), Vec2(317, 295), 0, 2);
-
+	CAssetMgr::GetInst()->CreateFlipbook(L"HitEffect", mTexture, Vec2(0, 0), Vec2(317, 295), 0, 2);
 	m_HitEffect->AddFlipbook(HITEFFT, CAssetMgr::GetInst()->LoadFlipbook(L"HitEffect", L"Flipbook\\HitEffect"));
 	//AttackEffact
 
@@ -173,6 +171,7 @@ void CAttack_Eft::FlipbookLoad()
 void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
 	CPlayer* mm_Player = dynamic_cast<CPlayer*>(m_Player);
+	CRigidBody* p_rigid = mm_Player->GetComponent<CRigidBody>();
 
 	if (_OtherObject->GetLayerType() == LAYER_TYPE::MONSTER)
 	{
@@ -186,7 +185,7 @@ void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollid
 
 		
 		mDir = m_Player->GetPos() - mMonster->GetPos();
-		mm_Player->PApplyKnockback(mDir, 300.0f);
+		p_rigid->PApplyKnockback(mDir, 300.0f);
 
 		m_HitEffect->Play(HITEFFT, 10.0f, false);
 	}
@@ -198,7 +197,7 @@ void CAttack_Eft::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollid
 		mtile->OnHit();
 		Vec2 _dir = mm_Player->GetPos() - _OtherObject->GetPos();
 		CEffectManager::GetInst()->SpawnTileHit(GetPos(), 0.f);
-		mm_Player->PApplyKnockback(_dir, 300.0f);
+		p_rigid->PApplyKnockback(_dir, 300.0f);
 	}
 
 

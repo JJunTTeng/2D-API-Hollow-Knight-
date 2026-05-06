@@ -122,14 +122,6 @@ private:
     P_Action            m_prevpAction;
     P_Action            m_pAction;
 
-
-    // ³Ë¹é
-    Vec2                m_Velocity;
-    bool                m_IsKnockback;
-
-    float               m_KnockbackTime;
-    float               m_KnockbackDuration;
-
     tPlayInfo           m_PlayInfo;
 public:
     virtual void Begin() override;
@@ -140,7 +132,9 @@ public:
     virtual void Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
     virtual void EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider);
 
-    void OnHit(Vec2 _dir, float _power);
+    bool OnHit();
+
+
 
 
 	CFlipbookPlayer* GetFlipbookPlayer() { return m_FlipbookPlayer; }
@@ -151,7 +145,7 @@ public:
 	CFSM* GetMoveFSM() { return m_MoveFSM; }
     CFSM* GetActionFSM() { return m_ActionFSM; }
 
-    void PApplyKnockback(Vec2 _dir, float power);
+
 
     void SetPlayInfo(tPlayInfo _Playinfo) { m_PlayInfo = _Playinfo; }
     tPlayInfo GetPlayInfo() { return m_PlayInfo; }

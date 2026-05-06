@@ -19,7 +19,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance   // 프로세스 주소(ID)
                     , int   nCmdShow)
  {    
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(18);
+   //_CrtSetBreakAlloc(11279);
 
     g_hInst = hInstance; // 프로세스 시작 주소
 

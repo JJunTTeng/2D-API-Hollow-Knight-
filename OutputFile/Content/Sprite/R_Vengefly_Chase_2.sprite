@@ -1,0 +1,20 @@
+[KEY]
+R_Vengefly_Chase_2
+
+[PATH]
+Sprite\R_Vengefly_Chase_2.sprite
+
+[ATLAS_KEY]
+R_Vengefly
+[ATLAS_PATH]
+Texture\Enime\Vengefly\R_Vengefly.png
+
+[LEFT_TOP]
+165, 530
+
+[SLICE]
+143, 136
+
+[OFFSET]
+0, 0
+

@@ -51,13 +51,7 @@ CPlayer::CPlayer()
 
 	, m_pMove(P_Move::NONE)
 	, m_pAction(P_Action::NONE)
-
-	, m_Velocity(0,0),
-	  m_IsKnockback(false),
-
-	  m_KnockbackTime(0.0f),
-	  m_KnockbackDuration(0.2f),
-
+	,
 	  m_PlayInfo
 	  { 
 		  m_PlayInfo.MaxHP = 10,
@@ -96,15 +90,15 @@ CPlayer::CPlayer()
 	//왼쪽 히트박스
 	m_CLeft = new CCollider;
 	m_CLeft->SetName(L"LeftBox");
-	m_CLeft->SetScale(Vec2(5.f, 120.f));
-	m_CLeft->SetOffset(Vec2(-30.5f, 0.0f));
+	m_CLeft->SetScale(Vec2(5.f, 20.f));
+	m_CLeft->SetOffset(Vec2(-30.5f, -30.0f));
 	AddComponent(m_CLeft);
 
 	//오른쪽 히트박스
 	m_CRight = new CCollider;
 	m_CRight->SetName(L"RightBox");
-	m_CRight->SetScale(Vec2(5.f, 120.f));
-	m_CRight->SetOffset(Vec2(30.5f, 0.0f));
+	m_CRight->SetScale(Vec2(5.f, 20.f));
+	m_CRight->SetOffset(Vec2(30.5f, -30.0f));
 	AddComponent(m_CRight);
 
 	//공격 박스
@@ -173,22 +167,8 @@ void CPlayer::Tick()
 {
 	Dir m_prevDir = GetDir();
 
-	if (m_PlayInfo.m_HITtime <= 0.f)
+	if (m_PlayInfo.m_HITtime > 0.f)
 		m_PlayInfo.m_HITtime -= DT;
-
-	if (m_IsKnockback)
-	{
-		m_KnockbackTime -= DT;
-
-		if (m_KnockbackTime <= 0.0f)
-		{
-			m_IsKnockback = false;
-			m_Velocity = Vec2(0.0f, 0.0f);
-		}
-
-		SetPlusPos(Vec2(m_Velocity.x, 0.0f) * DT);
-		return;
-	}
 
 	SetPrevPos(GetPos());
 
@@ -279,15 +259,17 @@ void CPlayer::Render()
 	m_FlipbookPlayer->Render();
 }
 
-void CPlayer::OnHit(Vec2 _dir , float _power)
+bool CPlayer::OnHit()
 {
 	if (m_PlayInfo.m_HITtime > 0.0f)
-		return;
+	{
+		return false;
+	}
 
-	m_PlayInfo.m_HITtime = 0.25f;
+	m_PlayInfo.m_HITtime = 1.f;
 	m_PlayInfo.CurHP -= 1;
 
-	PApplyKnockback(_dir, _power);
+	return true;
 }
 
 void CPlayer::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
@@ -304,17 +286,6 @@ void CPlayer::Overlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _Othe
 
 void CPlayer::EndOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _OtherCollider)
 {
-}
-
-void CPlayer::PApplyKnockback(Vec2 _dir, float power)
-{
-	m_IsKnockback = true;
-
-	//넉백 지속시간
-	m_KnockbackTime = m_KnockbackDuration;
-
-	m_Velocity = _dir.Normalize() * power;
-
 }
 
 void CPlayer::CreatePlayerFlipbook()

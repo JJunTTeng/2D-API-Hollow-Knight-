@@ -16,6 +16,7 @@ enum class EditMode
 enum class EnimesName
 {
     Crawlid,
+    Vengefly,
     None
 };
 
@@ -68,7 +69,6 @@ public:
 
     void EnimeMode();
     void EnimeRenderer();
-    void EnimesPattern();
 
     void CameraBound(wstring _name);
     void CameraBoundSave();

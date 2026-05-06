@@ -4,7 +4,7 @@
 class CRigidBody;
 class CFlipbookPlayer;
 
-enum Crawlid_STATE
+enum class Crawlid_STATE
 {
     WALK,
     TURN,
@@ -32,10 +32,6 @@ private:
     float       m_Speed;
     Vec2        m_InitPos;
     float       m_Dist;
-
-
-
-
 
     CFlipbookPlayer* m_Flipbook;
 

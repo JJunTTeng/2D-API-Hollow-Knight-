@@ -734,35 +734,71 @@ Ground
 Hurt
 
 [Position]
-7453, 4488
+7454, 4462
 
 [Scale]
-833, 34
+726, 16
 
 [OFFset]
-416, 17
+363, 8
 
 [Name]
 Hurt
 
 [Position]
-8933, 4546
+8940, 4522
 
 [Scale]
-553, 31
+551, 24
 
 [OFFset]
-276, 15
+275, 12
 
 [Name]
 Hurt
 
 [Position]
-9612, 4549
+9613, 4528
 
 [Scale]
-336, 24
+339, 18
 
 [OFFset]
-168, 12
+169, 9
+
+[Name]
+Ground
+
+[Position]
+7453, 4494
+
+[Scale]
+754, 14
+
+[OFFset]
+377, 7
+
+[Name]
+Ground
+
+[Position]
+8937, 4549
+
+[Scale]
+560, 22
+
+[OFFset]
+280, 11
+
+[Name]
+Ground
+
+[Position]
+9610, 4549
+
+[Scale]
+347, 21
+
+[OFFset]
+173, 10
 

@@ -36,6 +36,12 @@ private:
 
     RIGIDBODY_MODE  m_Mode;         // 동작 모드
 
+    //넉백
+    Vec2            m_KnockbackVelocity;
+    bool            m_IsKnockback;
+    float           m_KnockbackTime;
+    float           m_KnockbackDuration;
+
 public:
     Vec2 GetForce() { return m_Force; }
     void AddForce(Vec2 _Force, bool _Self = false) { m_Force += _Force; m_Self = _Self; }
@@ -64,20 +70,16 @@ public:
     Vec2 GetGravityAccel() { return m_GravityAccel; }
 
     bool IsGround() { return m_bGround; }
-    void SetGround(bool _Ground) {
-        m_bGround = _Ground; 
-
-        if (m_bGround)
-        {
-            m_JumpStack = m_MaxJumpStack;
-        }
-    }
+    void SetGround(bool _Ground) {m_bGround = _Ground; }
 
     void Jump();
     void Jumping();
 
     RIGIDBODY_MODE GetMode() { return m_Mode; }
     void SetMode(RIGIDBODY_MODE _Mode) { m_Mode = _Mode; }
+    
+    void PApplyKnockback(Vec2 _dir, float power);
+    void PApplyKnockback(Vec2 power);
 
 public:
     virtual void FinalTick() override;

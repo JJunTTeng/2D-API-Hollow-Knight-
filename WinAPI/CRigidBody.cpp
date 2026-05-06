@@ -19,6 +19,10 @@ CRigidBody::CRigidBody()
 	, m_JumpVelocity(Vec2(0,0))
 	, m_JumpStack(0)
 	, m_MaxJumpStack(1)
+	, m_KnockbackVelocity(Vec2(0,0))
+	, m_IsKnockback(false)
+	, m_KnockbackTime(0.0f)
+	, m_KnockbackDuration(0.2f)
 
 {
 
@@ -103,17 +107,30 @@ void CRigidBody::FinalTick_BeltScroll()
 
 	else if(0.f < m_VelocityY.y )
 	{
+		m_JumpStack = 0.f;
 		m_VelocityY.y = 0.f;
 		m_JumpVelocity.y = 0.f;
 		m_JumpTime = 0.4f;
 	}
+
+
 	
-	if (m_JumpVelocity.y >= 1.f && KEY_PRESSED(Z))
+	if (m_JumpVelocity.y >= 1.f)
 		Jumping();
 
-	if (KEY_RELEASED(Z) && m_JumpVelocity.y >= 1.f)
-		m_JumpVelocity.y = 0.0f;
+
 		
+	if (m_IsKnockback)
+	{
+		m_KnockbackTime -= DT;
+
+		if (m_KnockbackTime <= 0.0f)
+		{
+			m_IsKnockback = false;
+			m_KnockbackVelocity = Vec2(0.0f, 0.0f);
+		}
+
+	}
 
 	if (m_VelocityY.y > m_MaxGravitySpeed)
 		m_VelocityY.y = m_MaxGravitySpeed;
@@ -122,6 +139,8 @@ void CRigidBody::FinalTick_BeltScroll()
 
 	m_VelocityY += m_JumpVelocity;
 	m_Velocity = m_VelocityX + m_VelocityY;
+	m_Velocity += m_KnockbackVelocity;
+
 
 	// 속도에 따른 이동
 	Vec2 vPos = pObject->GetPos();
@@ -232,10 +251,40 @@ void CRigidBody::Jump()
 
 void CRigidBody::Jumping()
 {
-	if (m_JumpStack > m_MaxJumpStack && m_JumpTime < 0)
+	if (m_JumpStack > m_MaxJumpStack || m_JumpTime < 0)
 		return;
+
+	if (KEY_RELEASED(Z))
+	{
+		m_JumpVelocity.y += 10.0f;
+
+		m_JumpTime = 0.0f;
+	}
 
 	m_JumpVelocity.y += 8 * DT;
 	m_JumpTime -= DT;
-	m_VelocityY.y = -800.0f;
+	m_VelocityY.y = -700.0f;
+
+}
+
+void CRigidBody::PApplyKnockback(Vec2 _dir, float power)
+{
+	m_IsKnockback = true;
+
+	//넉백 지속시간
+	m_KnockbackTime = m_KnockbackDuration;
+
+	m_KnockbackVelocity.x = _dir.Normalize().x * power;
+
+}
+
+void CRigidBody::PApplyKnockback(Vec2 power)
+{
+	m_IsKnockback = true;
+
+	//넉백 지속시간
+	m_KnockbackTime = m_KnockbackDuration;
+
+	m_KnockbackVelocity = power;
+
 }

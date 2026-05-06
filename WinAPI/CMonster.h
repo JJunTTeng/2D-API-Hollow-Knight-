@@ -1,6 +1,7 @@
 #pragma once
 #include "CObj.h"
 
+class CPlayer;
 class CCollider;
 class CTexture;
 class CFSM;
@@ -25,7 +26,7 @@ private:
     bool        m_Chase;
     bool        m_Loop;
 
-    CObj*       m_Player;
+    CPlayer*    m_Player;
 
     float       m_HITtime;
 
@@ -46,8 +47,12 @@ public:
     Vec2  GetFrnLpMove() { return FrnLpMove; }
     Vec2  GetEndLpMove() { return EndLpMove; }
 
+
     void SetInitPos(Vec2 _Pos) {  m_InitPos = _Pos; }
+
+    float GetSpeed() { return m_Speed; }
     void SetSpeed(float _Speed) { m_Speed = _Speed; }
+
     void SetDistance(float _Dist) { m_Dist = _Dist; }
 
     void ApplyKnockback(Vec2 _dir, float power);
@@ -56,16 +61,16 @@ public:
     void SetCollider(CCollider* _Collider) { m_Collider = _Collider; }
 
     //void LoopPlay(bool _Chase);
-    //void ChaseObject(CObj* _Player);
-    //void Chase();
+	void ChaseObject(CPlayer* _Player) { m_Player = _Player; }
+    CPlayer* GetChasePlayer() { return m_Player; }
 
     virtual void TakeDamage(float damage);
     virtual void OnHit();
+    virtual void Chase();
 
     const tMonInfo& GetMonInfo() { return m_Info; }
     void SetMonsInfo(tMonInfo _monsInfo) { m_Info = _monsInfo; }
     
-
 public:
     virtual void Begin() override;
     virtual void Tick() override;

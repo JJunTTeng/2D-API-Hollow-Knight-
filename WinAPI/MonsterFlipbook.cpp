@@ -19,18 +19,15 @@ void MonsterFlipbook::CreateFlipbook()
 	{
 		//Crawlid
  		mTexture = CAssetMgr::GetInst()->LoadTexture(L"Crawlid", L"Texture\\Enime\\Crawlid\\Crawlid.png");
-		mFlipBook->CreateFlipbook(L"Crawlid_Walk", mTexture, Vec2(3, 22), Vec2(116, 85), 3, 4);
-		mFlipBook->CreateFlipbook(L"Crawlid_turn", mTexture, Vec2(3, 129), Vec2(96, 83), 3, 2);
-		mFlipBook->CreateFlipbook(L"Crawlid_death", mTexture, Vec2(3, 234), Vec2(117, 120), 3, 3);
+		CAssetMgr::GetInst()->CreateFlipbook(L"Crawlid_Walk", mTexture, Vec2(3, 22), Vec2(116, 85), 3, 4);
+		CAssetMgr::GetInst()->CreateFlipbook(L"Crawlid_turn", mTexture, Vec2(3, 129), Vec2(96, 83), 3, 2);
+		CAssetMgr::GetInst()->CreateFlipbook(L"Crawlid_death", mTexture, Vec2(3, 234), Vec2(117, 120), 3, 3);
 
 		//R
 		mTexture = CAssetMgr::GetInst()->LoadTexture(L"R_Crawlid", L"Texture\\Enime\\Crawlid\\R_Crawlid.png");
-		mFlipBook->CreateFlipbook(L"R_Crawlid_Walk", mTexture, Vec2(3, 22), Vec2(116, 85), 3, 4,true);
-		mFlipBook->CreateFlipbook(L"R_Crawlid_turn", mTexture, Vec2(281, 129), Vec2(96, 83), 3, 2,true);
-		mFlipBook->CreateFlipbook(L"R_Crawlid_death", mTexture, Vec2(119, 234), Vec2(117, 120), 3, 3,true);
-
-
-
+		CAssetMgr::GetInst()->CreateFlipbook(L"R_Crawlid_Walk", mTexture, Vec2(3, 22), Vec2(116, 85), 3, 4,true);
+		CAssetMgr::GetInst()->CreateFlipbook(L"R_Crawlid_turn", mTexture, Vec2(281, 129), Vec2(96, 83), 3, 2,true);
+		CAssetMgr::GetInst()->CreateFlipbook(L"R_Crawlid_death", mTexture, Vec2(119, 234), Vec2(117, 120), 3, 3,true);
 	}
 
 }

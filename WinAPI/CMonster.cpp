@@ -19,6 +19,9 @@
 
 #include "CPlayer.h"
 
+#include "CLevelMgr.h"
+#include "CLevel.h"
+
 CMonster::CMonster()
 	:m_SponTime(0.0f)
 	, m_IsKnockback(false)
@@ -35,7 +38,7 @@ CMonster::CMonster()
 
 	//// ¸ó½ºÅÍ ½ºÅÈ
 	//m_Info.MaxHP = 100.f;
-	//m_Info.CurHP = 100.f;
+	m_Info.CurHP = 100.f;
 	//m_Info.AttRange = 100.f;
 	//m_Info.DetectRange = 200.f;
 	//m_Info.Speed = 100.f;
@@ -83,7 +86,11 @@ void CMonster::OnHit()
 
 void CMonster::Begin()
 {
-	//MonsterFlipbook::GetInst()->CreateFlipbook();
+	const vector<CObj*>& mobj = CLevelMgr::GetInst()->GetCurrentLevel()->GetObjects(LAYER_TYPE::PLAYER);
+
+	if (mobj[0]->GetName() == L"Player")
+		m_Player = dynamic_cast<CPlayer*>(mobj[0]);
+	
 }
 
 void CMonster::Tick()
@@ -117,14 +124,14 @@ void CMonster::Tick()
 
 	}
 
-
-	//if (fabs(m_Player->GetPos().x + m_Player->GetPos().y - (GetPos().x + GetPos().y)) <= 100)
-	//	m_Chase = true;
-
-
 }
 
 void CMonster::Render()
+{
+
+}
+
+void CMonster::Chase()
 {
 
 }
@@ -133,6 +140,7 @@ void CMonster::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 {
 	if (CPlayer* mPlayer = dynamic_cast<CPlayer*>(_OtherObject))
 	{
+		CRigidBody* p_rigid = mPlayer->GetComponent< CRigidBody>();
 		if (GetMonInfo().CurHP <= 0)
 			return;
 
@@ -142,6 +150,6 @@ void CMonster::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 		Vec2 dir = _OtherObject->GetPos() - GetPos();
 		dir = dir.Normalize();
 
-		mPlayer->PApplyKnockback(dir, 300.0f);
+		p_rigid->PApplyKnockback(dir, 300.0f);
 	}
 } 

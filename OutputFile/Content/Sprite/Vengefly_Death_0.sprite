@@ -1,0 +1,20 @@
+[KEY]
+Vengefly_Death_0
+
+[PATH]
+Sprite\Vengefly_Death_0.sprite
+
+[ATLAS_KEY]
+Vengefly
+[ATLAS_PATH]
+Texture\Enime\Vengefly\Vengefly.png
+
+[LEFT_TOP]
+3, 688
+
+[SLICE]
+140, 128
+
+[OFFSET]
+0, 0
+

@@ -25,7 +25,10 @@
 //object
 #include "CTileMap.h"
 #include "CMonster.h"
+
 #include "Crawlid.h"
+#include "Vengefly.h"
+
 #include "Colision.h"
 #include "CCameraBound.h"
 #include "CPlayer.h"
@@ -82,15 +85,15 @@ void CLevel_Editor::Begin()
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	//
 	 //Player 积己
-	//mPlayer = new CPlayer;
-	//mPlayer->SetName(L"Player");
-	//mPlayer->SetPos(Vec2(1954,1348));
-	//AddObject(mPlayer, LAYER_TYPE::PLAYER);
+	mPlayer = new CPlayer;
+	mPlayer->SetName(L"Player");
+	mPlayer->SetPos(Vec2(1954,1348));
+	AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	//
-	//m_Play_Effact = new CAttack_Eft;
-	//m_Play_Effact->LoadPlayer(mPlayer);
-	//AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
+	
+	m_Play_Effact = new CAttack_Eft;
+	m_Play_Effact->LoadPlayer(mPlayer);
+	AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
 
 
 	// 基敲縼EMap 坷簛E?积己
@@ -191,9 +194,6 @@ void CLevel_Editor::Tick()
 		break;
 	case EditMode::EnimesMode:
 		EnimeMode();
-		break;
-	case EditMode::PatternMode:
-		EnimesPattern();
 		break;
 	case EditMode::CameraMode:
 		CameraBound(m_BoundName);
@@ -802,6 +802,11 @@ void CLevel_Editor::EnimeLoad(wchar_t* Path = nullptr)
 				mMonstor = new Crawlid;
 			}
 
+			if (wcscmp(szBuff, L"Vengefly") == 0)
+			{
+				mMonstor = new Vengefly;
+			}
+
 		}
 
 		if (EOF == fwscanf_s(File, L"%s", szBuff, 255))
@@ -827,16 +832,31 @@ void CLevel_Editor::EnimeLoad(wchar_t* Path = nullptr)
 void CLevel_Editor::EnimeMode()
 {
 	Vec2 MinTileSize(0, 0);
-	Vec2 TileSize = Vec2(100, 100);
+	Vec2 TileSize = Vec2((float)mSubTexture->GetWidth() / 3, (float)mSubTexture->GetHeight() / 3);
 
 
 	if (mSubTexture->GetKey() == L"EditEnimes01" && KEY_TAP(LBTN) && MinTileSize <= EditRenderPos)
 	{
-		if (EditRenderPos <= TileSize)
+		float x = fabs(TileSize.x / 2 - EditRenderPos.x);
+		float y = fabs(TileSize.y / 2 - EditRenderPos.y);
+
+		if (x <= TileSize.x / 2 && y <= TileSize.y / 2)
 		{
 			mEnimeName = EnimesName::Crawlid;
 		}
 	}
+
+	if (mSubTexture->GetKey() == L"EditEnimes01" && KEY_TAP(LBTN) && MinTileSize <= EditRenderPos)
+	{
+		float x = fabs(150.0f - EditRenderPos.x);
+		float y = fabs(150.0f - EditRenderPos.y);
+
+		if (x <= TileSize.x + TileSize.x / 2 && y <= TileSize.y + TileSize.y / 2)
+		{
+			mEnimeName = EnimesName::Vengefly;
+		}
+	}
+	
 	
 
 	if (KEY_TAP(LBTN) && CKeyMgr::GetInst()->IsMouseOffScreen() == false)
@@ -859,26 +879,17 @@ void CLevel_Editor::EnimeRenderer()
 		mMonsters.push_back(mMonstor);
 	}
 		break;
-	case EnimesName::None:
+	case EnimesName::Vengefly:
+	{
+		CMonster* mMonstor = new Vengefly;
+		mMonstor->SetInitPos(MouseRenderPos);
+		mMonstor->SetPos(MouseRenderPos);
+		AddObject(mMonstor, LAYER_TYPE::MONSTER);
+		mMonsters.push_back(mMonstor);
+	}
 		break;
 	default:
 		break;
-	}
-
-}
-
-void CLevel_Editor::EnimesPattern()
-{
-	mEditMode = EditMode::PatternMode;
-	
-	for (CMonster* mMonstor : mMonsters)
-	{
-		if (MouseRenderPos >= (mMonstor->GetPos() - mMonstor->GetScale() / 2) && MouseRenderPos <= (mMonstor->GetPos() + mMonstor->GetScale() / 2))
-			if (KEY_TAP(LBTN) && SelectMons != mMonstor)
-			{
-				SelectMons = mMonstor;
-				return;
-			}
 	}
 
 }
@@ -1484,16 +1495,6 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		assert(pEditorLevel);
 
 		pEditorLevel->EnimeLoad();
-		return true;
-	}
-
-	case ID_ENIMES_PATTERN:
-	{
-		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
-		assert(pEditorLevel);
-
-		pEditorLevel->EnimesPattern();
 		return true;
 	}
 

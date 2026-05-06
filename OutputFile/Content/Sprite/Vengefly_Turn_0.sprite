@@ -1,0 +1,20 @@
+[KEY]
+Vengefly_Turn_0
+
+[PATH]
+Sprite\Vengefly_Turn_0.sprite
+
+[ATLAS_KEY]
+Vengefly
+[ATLAS_PATH]
+Texture\Enime\Vengefly\Vengefly.png
+
+[LEFT_TOP]
+3, 181
+
+[SLICE]
+117, 151
+
+[OFFSET]
+0, 0
+

@@ -12,6 +12,8 @@
 #include "CAttack_Eft.h"
 #include "CTimeMgr.h"
 
+#include "CRigidbody.h"
+
 CTile::CTile()
 	:m_Size(1.0f)
 	, CurHP(3)
@@ -87,9 +89,10 @@ void CTile::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* _O
 	if (GetName() == L"KingLoad" && _OtherObject->GetName() == L"Player")
 	{
 		CPlayer* mPlayer = dynamic_cast<CPlayer*>(_OtherObject);
+		CRigidBody* p_rigid = mPlayer->GetComponent< CRigidBody>();
 
 		Vec2 _dir = _OtherObject->GetPos() - GetPos();
-		mPlayer->PApplyKnockback(_dir, 2000.0f);
+		p_rigid->PApplyKnockback(_dir, 2000.0f);
 	}
 
 	if (GetName() == L"KingLoad2" && _OtherObject->GetName() == L"Player")

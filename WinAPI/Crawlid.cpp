@@ -12,6 +12,7 @@
 #include "CObj.h"
 
 #include "CKeyMgr.h"
+#include "Vengefly.h"
 
 Crawlid::Crawlid()
 {
@@ -19,7 +20,7 @@ Crawlid::Crawlid()
 	LoadFlipbook();
 	SetName(L"Crawlid");
 	SetScale(Vec2(100,100));
-	m_Flipbook->Play(WALK, 10, true);
+	m_Flipbook->Play((int)Crawlid_STATE::WALK, 10, true);
 
 	CCollider* mCollider = GetCollider();
 	mCollider->SetScale(Vec2(97, 80));
@@ -62,29 +63,29 @@ void Crawlid::Tick()
 	SetprevDir(GetDir());
 	CMonster::Tick();
 
-	if (m_STATE == DEATH || m_STATE == R_DEATH)
+	if (m_STATE == Crawlid_STATE::DEATH || m_STATE == Crawlid_STATE::R_DEATH)
 	{
 		if (m_Flipbook->IsFinish() == true)
 		{
-			if (m_STATE == DEATH)
+			if (m_STATE == Crawlid_STATE::DEATH)
 			{
 				SetPos(GetPos().x, GetPos().y + 20);
-				m_STATE = DEATHANI;
-				m_Flipbook->Play(m_STATE, 0.1, true);
+				m_STATE = Crawlid_STATE::DEATHANI;
+				m_Flipbook->Play((int)m_STATE, 0.1, true);
 
 			}
 
-			else if (m_STATE == R_DEATH)
+			else if (m_STATE == Crawlid_STATE::R_DEATH)
 			{
 				SetPos(GetPos().x, GetPos().y + 20);
-				m_STATE = R_DEATHANI;
-				m_Flipbook->Play(m_STATE, 0.1, true);
+				m_STATE = Crawlid_STATE::R_DEATHANI;
+				m_Flipbook->Play((int)m_STATE, 0.1, true);
 			}
 
 		}
 	}
 
-	if (m_STATE == R_DEATHANI || m_STATE == DEATHANI)
+	if (m_STATE == Crawlid_STATE::R_DEATHANI || m_STATE == Crawlid_STATE::DEATHANI)
 	{
 		return;
 	}
@@ -135,28 +136,28 @@ void Crawlid::Tick()
 
 	if (GetprevDir() != GetDir() && GetprevDir() == Dir::LEFT)
 	{
-		m_STATE = TURN;
-		m_Flipbook->Play(m_STATE, 5, false);
+		m_STATE = Crawlid_STATE::TURN;
+		m_Flipbook->Play((int)m_STATE, 5, false);
 
 	}
 
 	if (GetprevDir() != GetDir() && GetprevDir() == Dir::RIGHT)
 	{
-		m_STATE = R_TURN;
-		m_Flipbook->Play(m_STATE, 5, false);
+		m_STATE = Crawlid_STATE::R_TURN;
+		m_Flipbook->Play((int)m_STATE, 5, false);
 	}
 
-	if (m_Flipbook->IsFinish() && m_STATE == TURN)
+	if (m_Flipbook->IsFinish() && m_STATE == Crawlid_STATE::TURN)
 	{
-		m_STATE = R_WALK;
-		m_Flipbook->Play(m_STATE, 10, true);
+		m_STATE = Crawlid_STATE::R_WALK;
+		m_Flipbook->Play((int)m_STATE, 10, true);
 
 	}
 
-	if (m_Flipbook->IsFinish() && m_STATE == R_TURN)
+	if (m_Flipbook->IsFinish() && m_STATE == Crawlid_STATE::R_TURN)
 	{
-		m_STATE = WALK;
-		m_Flipbook->Play(m_STATE, 10, true);
+		m_STATE = Crawlid_STATE::WALK;
+		m_Flipbook->Play((int)m_STATE, 10, true);
 
 	}
 
@@ -202,7 +203,6 @@ void Crawlid::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider* 
 
 void Crawlid::OnHit()
 {
-
 	tMonInfo m_Info = GetMonInfo();
 
 	if (m_Info.CurHP <= 0)
@@ -213,25 +213,26 @@ void Crawlid::OnHit()
 
 	SetMonsInfo(m_Info);
 
+
 }
 
 void Crawlid::Death()
 {
 	if(GetDir() == Dir::LEFT) 
-		m_STATE = DEATH;
+		m_STATE = Crawlid_STATE::DEATH;
 
 	else if (GetDir() == Dir::RIGHT)
-		m_STATE = R_DEATH;
+		m_STATE = Crawlid_STATE::R_DEATH;
 
-	if (m_STATE == DEATH)
+	if (m_STATE == Crawlid_STATE::DEATH)
 	{
-		m_Flipbook->Play(m_STATE, 15, false);
+		m_Flipbook->Play((int)m_STATE, 15, false);
 		return;
 	}
 
-	else if (m_STATE == R_DEATH)
+	else if (m_STATE == Crawlid_STATE::R_DEATH)
 	{
-		m_Flipbook->Play(m_STATE, 15, false);
+		m_Flipbook->Play((int)m_STATE, 15, false);
 		return;
 	}
 
@@ -247,7 +248,6 @@ void Crawlid::DeathAni()
 
 void Crawlid::LoadFlipbook()
 {
-	CFlipbook* mFlipbook = new CFlipbook;
 	m_Flipbook = (CFlipbookPlayer*)AddComponent(new CFlipbookPlayer);
 
 	//CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Crawlid_Death", L"Texture\\Enime\\Crawlid\\Crawlid.png");
@@ -263,17 +263,16 @@ void Crawlid::LoadFlipbook()
 	//mFlipbook->CreateFlipbook(L"R_Crawlid_deathLand", mTexture, Vec2(0, 376), Vec2(131, 90), 0, 2,true);
 
 
-	m_Flipbook->AddFlipbook(WALK, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Walk", L"Flipbook\\Crawlid_Walk.flip"));
-	m_Flipbook->AddFlipbook(TURN, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Turn", L"Flipbook\\Crawlid_turn.flip"));
-	m_Flipbook->AddFlipbook(DEATH, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Death", L"Flipbook\\Crawlid_death.flip"));
-	m_Flipbook->AddFlipbook(DEATHANI, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_DeathLand", L"Flipbook\\Crawlid_deathLand.flip"));
-
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::WALK, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Walk", L"Flipbook\\Crawlid_Walk.flip"));
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::TURN, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Turn", L"Flipbook\\Crawlid_turn.flip"));
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::DEATH, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_Death", L"Flipbook\\Crawlid_death.flip"));
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::DEATHANI, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_DeathLand", L"Flipbook\\Crawlid_deathLand.flip"));
 
 
 	//R
-	m_Flipbook->AddFlipbook(R_WALK, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_Walk", L"Flipbook\\R_Crawlid_Walk.flip"));
-	m_Flipbook->AddFlipbook(R_TURN, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_turn", L"Flipbook\\R_Crawlid_turn.flip"));
-	m_Flipbook->AddFlipbook(R_DEATH, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_DeathLand", L"Flipbook\\R_Crawlid_death.flip"));
-	m_Flipbook->AddFlipbook(R_DEATHANI, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_deathLand", L"Flipbook\\R_Crawlid_deathLand.flip"));
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::R_WALK, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_Walk", L"Flipbook\\R_Crawlid_Walk.flip"));
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::R_TURN, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_turn", L"Flipbook\\R_Crawlid_turn.flip"));
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::R_DEATH, CAssetMgr::GetInst()->LoadFlipbook(L"Crawlid_DeathLand", L"Flipbook\\R_Crawlid_death.flip"));
+	m_Flipbook->AddFlipbook((int)Crawlid_STATE::R_DEATHANI, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_deathLand", L"Flipbook\\R_Crawlid_deathLand.flip"));
 
 }
