@@ -46,11 +46,14 @@ void Vengefly::Begin()
 
 void Vengefly::Tick()
 {
+	if (GetCollider() == nullptr || GetCollider()->GetDead() == true)
+		return;
+
 	if (GetChasePlayer() == nullptr)
 		return;
 
-
 	SetprevDir(GetDir());
+	CMonster::Tick();
 
 	if (fabs(GetChasePlayer()->GetPos().x + GetChasePlayer()->GetPos().y - (GetPos().x + GetPos().y)) <= 100)
 		m_Chase = true;
@@ -97,19 +100,6 @@ void Vengefly::Tick()
 	{
 
 	}
-
-
-	if (m_IsKnockback)
-	{
-		m_KnockbackTime -= DT;
-
-		if (m_KnockbackTime <= 0.0f)
-		{
-			m_IsKnockback = false;
-			m_KnockbackVelocity = Vec2(0.0f, 0.0f);
-		}
-
-	}
 }
 
 void Vengefly::Render()
@@ -129,16 +119,6 @@ void Vengefly::BeginOverlap(CCollider* _Collider, CObj* _OtherObject, CCollider*
 	CMonster::BeginOverlap(_Collider, _OtherObject, _OtherCollider);
 }
 
-void Vengefly::PApplyKnockback(Vec2 power)
-{
-	m_IsKnockback = true;
-
-	//넉백 지속시간
-	m_KnockbackTime = m_KnockbackDuration;
-
-	m_KnockbackVelocity = power;
-}
-
 void Vengefly::OnHit()
 {
 	tMonInfo m_Info = GetMonInfo();
@@ -154,7 +134,6 @@ void Vengefly::OnHit()
 
 void Vengefly::Chase()
 {	
-
 
 	Vec2 Dir = GetChasePlayer()->GetPos() - GetPos();
 	if (Dir.x > 0.0f)
@@ -182,6 +161,7 @@ void Vengefly::Death()
 
 	CCollider* mcollider = GetCollider();
 	mcollider->IsDead(true);
+	SetCollider(mcollider);
 }
 
 void Vengefly::LoadFlipbook()
