@@ -4,6 +4,9 @@
 #include "CEngine.h"
 #include "CKeyMgr.h"
 
+#include "CLevelMgr.h"
+#include "CLevel.h"
+
 HINSTANCE g_hInst = nullptr;
 HWND      g_hDlg = nullptr;
 

@@ -232,6 +232,15 @@
     <ClInclude Include="Vengefly.h">
       <Filter>Game\05. Object\Monster\Monsters\Vengefly</Filter>
     </ClInclude>
+    <ClInclude Include="CLevel_Dirtmouth.h">
+      <Filter>Game\04. Level\Level02_Dirtmouth</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel_KingPass.h">
+      <Filter>Game\04. Level\Level01_KingPass</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevelLoader.h">
+      <Filter>Game\04. Level\LevelLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -447,6 +456,15 @@
     <ClCompile Include="Vengefly.cpp">
       <Filter>Game\05. Object\Monster\Monsters\Vengefly</Filter>
     </ClCompile>
+    <ClCompile Include="CLevel_Dirtmouth.cpp">
+      <Filter>Game\04. Level\Level02_Dirtmouth</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel_KingPass.cpp">
+      <Filter>Game\04. Level\Level01_KingPass</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevelLoader.cpp">
+      <Filter>Game\04. Level\LevelLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -634,6 +652,15 @@
     </Filter>
     <Filter Include="Game\05. Object\Monster\Monsters\Vengefly">
       <UniqueIdentifier>{8576a5d6-6716-4285-96ab-db09f11e32fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level02_Dirtmouth">
+      <UniqueIdentifier>{1ca66336-472d-4a3b-aaba-4366ecfadc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level01_KingPass">
+      <UniqueIdentifier>{9d53df0a-1f8e-4b78-b312-4b2c32f508d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\LevelLoader">
+      <UniqueIdentifier>{f15f038c-7feb-4cf2-bd40-eeca9978e434}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

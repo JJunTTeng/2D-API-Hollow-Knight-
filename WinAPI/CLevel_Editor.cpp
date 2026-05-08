@@ -85,23 +85,25 @@ void CLevel_Editor::Begin()
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	//
 	 //Player 생성
-	mPlayer = new CPlayer;
-	mPlayer->SetName(L"Player");
-	mPlayer->SetPos(Vec2(1954,1348));
-	AddObject(mPlayer, LAYER_TYPE::PLAYER);
+	//mPlayer = new CPlayer;
+	//mPlayer->SetName(L"Player");
+	//mPlayer->SetPos(Vec2(1954,1348));
+	//AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	
-	m_Play_Effact = new CAttack_Eft;
-	m_Play_Effact->LoadPlayer(mPlayer);
-	AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
+	//
+	//m_Play_Effact = new CAttack_Eft;
+	//m_Play_Effact->LoadPlayer(mPlayer);
+	//AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
 
 
 	// 샘플퓖EMap 오틒E㎷?생성
 	m_MapObj = new CMap;
-	AddObject(m_MapObj, LAYER_TYPE::TILE);
+	m_MapObj->SetName(L"Dirtmouth");
+	AddObject(m_MapObj, LAYER_TYPE::BACKGROUND);
 
-	CBgMap* mBgMap = new CBgMap;
-	AddObject(mBgMap, LAYER_TYPE::FrontBg);
+	//CBgMap* mBgMap = new CBgMap;
+	//mBgMap->SetName(L"KingPass");
+	//AddObject(mBgMap, LAYER_TYPE::FrontBg);
 
 	
 
@@ -120,17 +122,17 @@ void CLevel_Editor::Begin()
 
 
 
-	wchar_t m_Path[255] = L"KingLoad";
-	LoadColider(m_Path);
+	//wchar_t m_Path[255] = L"KingPass";
+	//LoadColider(m_Path);
 
-	wchar_t m_Path2[255] = L"1-1";
-	EnimeLoad(m_Path2);
+	//wchar_t m_Path2[255] = L"KingPass";
+	//EnimeLoad(m_Path2);
 
-	wchar_t m_Path3[255] = L"KingLoad";
-	CameraBoundLoad(m_Path3);
+	//wchar_t m_Path3[255] = L"KingPass";
+	//CameraBoundLoad(m_Path3);
 
-	wchar_t m_Path4[255] = L"KingLoad2";
-	TileLoad(m_Path4);
+	//wchar_t m_Path4[255] = L"KingPass";
+	//TileLoad(m_Path4);
 
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
 	CLevel::Begin();
@@ -823,7 +825,6 @@ void CLevel_Editor::EnimeLoad(wchar_t* Path = nullptr)
 
 		mMonstor->SetPos(mMonstor->GetInitPos());
 		AddObject(mMonstor, LAYER_TYPE::MONSTER);
-		mMonsters.push_back(mMonstor);
 	}
 	fclose(File);
 
@@ -1064,7 +1065,6 @@ void CLevel_Editor::CameraBoundLoad(wchar_t* Path = nullptr)
 		}
 ;
 		AddObject(mCameraBound, LAYER_TYPE::CAMERABOUND);
-		mCameraBounds.push_back(mCameraBound);
 	}
 	fclose(File);
 }

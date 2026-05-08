@@ -5,7 +5,6 @@
 #include "CTexture.h"
 #include "CTileMap.h"
 #include "CEngine.h"
-#include "CTexture.h"
 
 
 CBgMap::CBgMap()
@@ -25,7 +24,12 @@ void CBgMap::Tick()
 
 void CBgMap::Render()
 {
-	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"BgMap", L"Texture\\Map\\BG Kings Pass.png");
+	wstring _name;
+	if (GetName() == L"KingPass")
+		_name = L"Texture\\Map\\BG Kings Pass.png";
+
+
+	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"BgMap", _name);
 	HDC dc = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetRenderPos();
 	Vec2 vScale = GetScale();

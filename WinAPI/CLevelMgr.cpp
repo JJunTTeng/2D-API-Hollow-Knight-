@@ -3,6 +3,8 @@
 #include "CLevel.h"
 #include "CLevel_Start.h"
 #include "CLevel_Editor.h"
+#include "CLevel_KingPass.h"
+#include "CLevel_Dirtmouth.h"
 
 
 
@@ -24,6 +26,10 @@ void CLevelMgr::Init()
 	// 레벨 제작
     m_arrLevel[(UINT)LEVEL_TYPE::START] = new CLevel_Start;
     m_arrLevel[(UINT)LEVEL_TYPE::EDITOR] = new CLevel_Editor;
+    m_arrLevel[(UINT)LEVEL_TYPE::STAGE_0] = new CLevel_KingPass;
+    m_arrLevel[(UINT)LEVEL_TYPE::STAGE_1] = new CLevel_Dirtmouth;
+
+
 
     // 현재 레벨을 CLevel_Start 로 지정
     m_CurLevel = m_arrLevel[(UINT)LEVEL_TYPE::EDITOR];

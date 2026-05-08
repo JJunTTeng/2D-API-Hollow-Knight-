@@ -5,7 +5,6 @@
 #include "CTexture.h"
 #include "CTileMap.h"
 #include "CEngine.h"
-#include "CTexture.h"
 
 
 CMap::CMap()
@@ -25,7 +24,14 @@ void CMap::Tick()
 
 void CMap::Render()
 {
-	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Map", L"Texture\\Map\\Kings Pass.png");
+	wstring _name;
+	if (GetName() == L"KingPass")
+		_name = L"Texture\\Map\\Kings Pass.png";
+
+	if (GetName() == L"Dirtmouth")
+		_name = L"Texture\\Map\\Dirtmouth.png";
+
+	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Map", _name);
 	HDC dc = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetRenderPos();
 	Vec2 vScale = GetScale();
