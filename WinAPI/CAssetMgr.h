@@ -29,6 +29,8 @@ public:
 	void AddSprite(const wstring& _Key, CSprite* _Sprite);
 
 	void CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int _blank, int MaxFrame, bool IsRight = false);
+	void CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, Vec2 _blank, int MaxLine, int MaxFrame, bool IsRight = false);
+
 	void CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int _blank, int MaxFrame, bool IsRight, bool _Palindrome);
 
 	CFlipbook* FindFlipbook(const wstring& _Key);

@@ -81,29 +81,29 @@ void CLevel_Editor::Begin()
 
 	// 메뉴바가 추가되었콅E때문에, 윈도퓖E크기를 재조정한다.
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
-
+	Vec2 pos = CEngine::GetInst()->GetResolution();
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	//
-	 //Player 생성
-	//mPlayer = new CPlayer;
-	//mPlayer->SetName(L"Player");
-	//mPlayer->SetPos(Vec2(1954,1348));
-	//AddObject(mPlayer, LAYER_TYPE::PLAYER);
+	// Player 생성
+	mPlayer = new CPlayer;
+	mPlayer->SetName(L"Player");
+	mPlayer->SetPos(Vec2(2000,6));
+	AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
-	//
-	//m_Play_Effact = new CAttack_Eft;
-	//m_Play_Effact->LoadPlayer(mPlayer);
-	//AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
+	
+	m_Play_Effact = new CAttack_Eft;
+	m_Play_Effact->LoadPlayer(mPlayer);
+	AddObject(m_Play_Effact, LAYER_TYPE::PLAYER_OBJECT);
 
 
 	// 샘플퓖EMap 오틒E㎷?생성
 	m_MapObj = new CMap;
-	m_MapObj->SetName(L"Dirtmouth");
+	m_MapObj->SetName(L"KingPass");
 	AddObject(m_MapObj, LAYER_TYPE::BACKGROUND);
 
-	//CBgMap* mBgMap = new CBgMap;
-	//mBgMap->SetName(L"KingPass");
-	//AddObject(mBgMap, LAYER_TYPE::FrontBg);
+	CBgMap* mBgMap = new CBgMap;
+	mBgMap->SetName(L"KingPass");
+	AddObject(mBgMap, LAYER_TYPE::FrontBg);
 
 	
 
@@ -122,17 +122,17 @@ void CLevel_Editor::Begin()
 
 
 
-	//wchar_t m_Path[255] = L"KingPass";
-	//LoadColider(m_Path);
+	wchar_t m_Path[255] = L"KingPass";
+	LoadColider(m_Path);
 
-	//wchar_t m_Path2[255] = L"KingPass";
-	//EnimeLoad(m_Path2);
+	wchar_t m_Path2[255] = L"KingPass";
+	EnimeLoad(m_Path2);
 
-	//wchar_t m_Path3[255] = L"KingPass";
-	//CameraBoundLoad(m_Path3);
+	wchar_t m_Path3[255] = L"KingPass";
+	CameraBoundLoad(m_Path3);
 
-	//wchar_t m_Path4[255] = L"KingPass";
-	//TileLoad(m_Path4);
+	wchar_t m_Path4[255] = L"KingPass";
+	TileLoad(m_Path4);
 
 	// 레벨 소속 모탛E오틒E㎷??Begin 을 호출받을 펯E있도록 한다
 	CLevel::Begin();
@@ -1479,7 +1479,16 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		return true;
 	}
 
-	case ID_Enimes_SAVE:
+	case ID_ENIMES_BOSSES:
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		assert(pEditorLevel);
+
+		pEditorLevel->Enime();
+		return true;
+	}
+	
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
@@ -1510,7 +1519,7 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 	case ID_BOUND_XBOUND:
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);
+		CLevel_Editor* pEditorLevel = dynamic_cast<CLevel_Editor*>(pLevel);		
 		assert(pEditorLevel);
 
 		pEditorLevel->CameraBound(L"XBoundBox");

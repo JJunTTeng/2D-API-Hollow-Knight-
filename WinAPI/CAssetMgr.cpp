@@ -241,6 +241,57 @@ void CAssetMgr::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, V
     mFlipbook->Save(Path + _FlipbookName);
 }
 
+void CAssetMgr::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, Vec2 _blank, /*한줄에 최대 그림갯수*/int MaxLine, int MaxFrame, bool IsRight)
+{
+    for (int i = 0; i < MaxFrame; ++i)
+    {
+        int _y = (i - 1) / MaxLine + 1;
+        int _x = i - (_y - 1) * MaxLine;
+        CSprite* pSprite = new CSprite;
+
+        if (IsRight == true)
+        {
+            pSprite->Create(_Atlas, Vec2(_Atlas->GetWidth() - _LeftTop.x - (_Slice.x * (_x + 1)) - (_x * _blank.x), _LeftTop.y + (_blank.y * _y) + (_Slice.y * _y)), _Slice);
+        }
+        else
+        {
+            pSprite->Create(_Atlas, Vec2(_LeftTop.x + (_blank.x * _x) + (_Slice.x * _x), _LeftTop.y + (_blank.y * _y) + (_Slice.y * _y)), _Slice);
+        }
+        wchar_t Key[50] = {};
+        swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);
+        AddSprite(Key, pSprite);
+        wstring strSavePath = L"Sprite\\";
+        strSavePath += pSprite->GetKey();
+        pSprite->Save(strSavePath);
+    }
+
+
+
+    for (int i = 0; i < MaxFrame; ++i)
+    {
+        wchar_t Key[50] = {};
+        swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);
+        wstring Path = L"Sprite\\";
+        Path += Key;
+        CAssetMgr::GetInst()->LoadSprite(Key, Path + L".sprite");
+    }
+
+    CFlipbook* mFlipbook = new CFlipbook;
+    for (int i = 0; i < MaxFrame; ++i)
+    {
+        wchar_t Key[50] = {};
+        swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);
+        mFlipbook->AddSprite(FindSprite(Key));
+
+    }
+
+
+    CAssetMgr::GetInst()->AddFlipbook(_FlipbookName, mFlipbook);
+    wstring Path = L"Flipbook\\";
+    mFlipbook->Save(Path + _FlipbookName);
+
+}
+
 //좌우 반전
 void CAssetMgr::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, Vec2 _LeftTop, Vec2 _Slice, int _blank, int MaxFrame, bool IsRight, bool _Palindrome)
 {
@@ -253,9 +304,6 @@ void CAssetMgr::CreateFlipbook(const wstring& _FlipbookName, CTexture* _Atlas, V
         if (IsRight == true && _Palindrome == true)
         {
             pSprite->Create(_Atlas, Vec2(_Atlas->GetWidth() - _LeftTop.x  - (_Slice.x  * (i + 1)) - (i * _blank), _LeftTop.y), _Slice);
-
-            int a = _Atlas->GetWidth() - _LeftTop.x - (_Slice.x * (i + 1)) - (i * _blank);
-
         }
         wchar_t Key[50] = {};
         swprintf_s(Key, 50, (_FlipbookName + L"_%d").c_str(), i);

@@ -241,6 +241,18 @@
     <ClInclude Include="CLevelLoader.h">
       <Filter>Game\04. Level\LevelLoader</Filter>
     </ClInclude>
+    <ClInclude Include="CLevel_Title.h">
+      <Filter>Game\04. Level\Level_Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel_Forgotten.h">
+      <Filter>Game\04. Level\Level03_Forgotten</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel_FalseKnight.h">
+      <Filter>Game\04. Level\Level03_Forgotten\Level03_1_False Knight</Filter>
+    </ClInclude>
+    <ClInclude Include="CFalseKnight.h">
+      <Filter>Game\05. Object\Monster\Boss\FalseKnight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -465,6 +477,18 @@
     <ClCompile Include="CLevelLoader.cpp">
       <Filter>Game\04. Level\LevelLoader</Filter>
     </ClCompile>
+    <ClCompile Include="CLevel_Title.cpp">
+      <Filter>Game\04. Level\Level_Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel_Forgotten.cpp">
+      <Filter>Game\04. Level\Level03_Forgotten</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel_FalseKnight.cpp">
+      <Filter>Game\04. Level\Level03_Forgotten\Level03_1_False Knight</Filter>
+    </ClCompile>
+    <ClCompile Include="CFalseKnight.cpp">
+      <Filter>Game\05. Object\Monster\Boss\FalseKnight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -563,12 +587,6 @@
     <Filter Include="Game\05. Object\Map">
       <UniqueIdentifier>{41c04507-f2a4-4b7a-b2aa-d1905298950b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\04. Level\Level_Editor">
-      <UniqueIdentifier>{38f42483-fa84-408a-a87f-b2d5b023a947}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\04. Level\Level_Start">
-      <UniqueIdentifier>{917814d0-fe1e-4a73-ac74-aeb8c1df710e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\05. Object\UI">
       <UniqueIdentifier>{2e5b4e6b-0e1e-492d-bba6-822425950d2f}</UniqueIdentifier>
     </Filter>
@@ -661,6 +679,27 @@
     </Filter>
     <Filter Include="Game\04. Level\LevelLoader">
       <UniqueIdentifier>{f15f038c-7feb-4cf2-bd40-eeca9978e434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level_Title">
+      <UniqueIdentifier>{37eeccb9-f823-45c7-8f39-da64fd4ad800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level03_Forgotten">
+      <UniqueIdentifier>{557a4624-0d3e-44d3-9667-82c60e0b5572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level03_Forgotten\Level03_1_False Knight">
+      <UniqueIdentifier>{bcdfdc22-82c9-4c8a-837d-7015b9d7f25d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Monster\Boss">
+      <UniqueIdentifier>{fff0d1a2-6911-4eb9-8896-f7a1a26c44d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\Monster\Boss\FalseKnight">
+      <UniqueIdentifier>{693329ce-a42d-43ca-a097-7247c70973d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level_Editor">
+      <UniqueIdentifier>{38f42483-fa84-408a-a87f-b2d5b023a947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\Level_Start">
+      <UniqueIdentifier>{917814d0-fe1e-4a73-ac74-aeb8c1df710e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -26,12 +26,13 @@ void CLevel_Dirtmouth::Begin()
 	// 메뉴바가 추가되었콅E때문에, 윈도퓖E크기를 재조정한다.
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 
+
 	//MonsterFlipbook::GetInst()->CreateFlipbook();
 	//
 	 //Player 생성
 	CPlayer* mPlayer = new CPlayer;
 	mPlayer->SetName(L"Player");
-	mPlayer->SetPos(Vec2(1954, 1348));
+	mPlayer->SetPos(Vec2(851, 512));
 	AddObject(mPlayer, LAYER_TYPE::PLAYER);
 
 
@@ -62,9 +63,7 @@ void CLevel_Dirtmouth::Begin()
 
 	wchar_t _path[255] = L"Dirtmouth";
 	CLevelLoader::CameraBoundLoad(this, _path);
-	CLevelLoader::EnimeLoad(this, _path);
 	CLevelLoader::LoadColider(this, _path);
-	CLevelLoader::TileLoad(this, _path);
 
 	CLevel::Begin();
 }

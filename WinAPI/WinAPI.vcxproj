@@ -156,6 +156,7 @@
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEffectManager.h" />
     <ClInclude Include="CEngine.h" />
+    <ClInclude Include="CFalseKnight.h" />
     <ClInclude Include="CFlipbook.h" />
     <ClInclude Include="CFlipbookPlayer.h" />
     <ClInclude Include="CFSM.h" />
@@ -167,8 +168,11 @@
     <ClInclude Include="CLevelMgr.h" />
     <ClInclude Include="CLevel_Dirtmouth.h" />
     <ClInclude Include="CLevel_Editor.h" />
+    <ClInclude Include="CLevel_FalseKnight.h" />
+    <ClInclude Include="CLevel_Forgotten.h" />
     <ClInclude Include="CLevel_KingPass.h" />
     <ClInclude Include="CLevel_Start.h" />
+    <ClInclude Include="CLevel_Title.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
@@ -240,6 +244,7 @@
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEffectManager.cpp" />
     <ClCompile Include="CEngine.cpp" />
+    <ClCompile Include="CFalseKnight.cpp" />
     <ClCompile Include="CFlipbook.cpp" />
     <ClCompile Include="CFlipbookPlayer.cpp" />
     <ClCompile Include="CFSM.cpp" />
@@ -251,8 +256,11 @@
     <ClCompile Include="CLevelMgr.cpp" />
     <ClCompile Include="CLevel_Dirtmouth.cpp" />
     <ClCompile Include="CLevel_Editor.cpp" />
+    <ClCompile Include="CLevel_FalseKnight.cpp" />
+    <ClCompile Include="CLevel_Forgotten.cpp" />
     <ClCompile Include="CLevel_KingPass.cpp" />
     <ClCompile Include="CLevel_Start.cpp" />
+    <ClCompile Include="CLevel_Title.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />

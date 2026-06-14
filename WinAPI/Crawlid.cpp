@@ -13,6 +13,7 @@
 
 #include "CKeyMgr.h"
 #include "Vengefly.h"
+#include "CFalseKnight.h"
 
 Crawlid::Crawlid()
 {
@@ -240,6 +241,7 @@ void Crawlid::Death()
 	mcollider->IsDead(true);
 }
 
+
 void Crawlid::DeathAni()
 {
 }
@@ -258,7 +260,7 @@ void Crawlid::LoadFlipbook()
 
 	//CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Crawlid_DeathLand", L"Texture\\Enime\\Crawlid\\Crawlid.png");
 	//mFlipbook->CreateFlipbook(L"Crawlid_DeathLand", mTexture, Vec2(0, 376), Vec2(131, 90), 0, 2);
-
+	
 	//mTexture = CAssetMgr::GetInst()->LoadTexture(L"R_Crawlid_deathLand", L"Texture\\Enime\\Crawlid\\Crawlid.png");
 	//mFlipbook->CreateFlipbook(L"R_Crawlid_deathLand", mTexture, Vec2(0, 376), Vec2(131, 90), 0, 2,true);
 
@@ -276,3 +278,5 @@ void Crawlid::LoadFlipbook()
 	m_Flipbook->AddFlipbook((int)Crawlid_STATE::R_DEATHANI, CAssetMgr::GetInst()->LoadFlipbook(L"R_Crawlid_deathLand", L"Flipbook\\R_Crawlid_deathLand.flip"));
 
 }
+
+  

@@ -72,6 +72,18 @@ void CLevel_KingPass::Begin()
 
 void CLevel_KingPass::Tick()
 {
+	vector<CObj*> _TileObject = GetObjects(LAYER_TYPE::TILE);
+	
+	for(size_t i = 0; i < _TileObject.size(); ++i)
+	{
+		if(_TileObject[i]->GetName() == L"KingLoad3" && _TileObject[i]->IsDead())
+		{
+			ChangeLevel(LEVEL_TYPE::STAGE_1);
+			return;
+		}
+	}
+
+
 	CLevel::Tick();
 }
 

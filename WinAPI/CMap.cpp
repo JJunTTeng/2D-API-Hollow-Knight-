@@ -31,6 +31,12 @@ void CMap::Render()
 	if (GetName() == L"Dirtmouth")
 		_name = L"Texture\\Map\\Dirtmouth.png";
 
+	if (GetName() == L"Forgotten")
+		_name = L"Texture\\Map\\Forgotten Crossroads.png";
+
+	if (GetName() == L"FalseKnight")
+		_name = L"Texture\\Map\\False Knight.png";
+
 	CTexture* mTexture = CAssetMgr::GetInst()->LoadTexture(L"Map", _name);
 	HDC dc = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetRenderPos();
